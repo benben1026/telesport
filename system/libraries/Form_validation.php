@@ -35,7 +35,7 @@ class CI_Form_validation {
 	protected $_error_suffix		= '</p>';
 	protected $error_string			= '';
 	protected $_safe_form_data		= FALSE;
-
+    protected $language_string      = 'english';
 	/**
 	 * Constructor
 	 */
@@ -57,6 +57,9 @@ class CI_Form_validation {
 
 		log_message('debug', "Form Validation Class Initialized");
 	}
+    public function set_language($lang){
+        $this->language_string = $lang;
+    }
 
 	// --------------------------------------------------------------------
 
@@ -317,7 +320,7 @@ class CI_Form_validation {
 		}
 
 		// Load the language file containing error messages
-		$this->CI->lang->load('form_validation');
+		$this->CI->lang->load('form_validation',$this->language_string);
 
 		// Cycle through the rules for each field, match the
 		// corresponding $_POST item and test for errors
