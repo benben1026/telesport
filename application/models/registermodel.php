@@ -14,15 +14,7 @@ class RegisterModel extends CI_Model {
         parent::__construct();
     }
    function register($data){
-       return $this->db->insert("users",$data);
+       $a =  $this->db->insert("user",$data);
+       return $a;
    }
-   function getUserInfo(){
-       return array(
-           "username"=>"bruce",
-           "password"=>"password",
-           "message"=>"dwadwada"
-
-       );
-   }
-
 }

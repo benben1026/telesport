@@ -18,22 +18,27 @@ class Register extends CI_Controller {
 	 * @see http://codeigniter.com/user_guide/general/urls.html
 	 */
     public function index(){
-        $this->ajaxRegister();
+       // print_r( $this->session->all_userdata());
     }
 	public function ajaxRegister()
 	{
         $this->load->library('form_validation');
         $postData = $this->input->post();
+        if(empty($postData)){
+            show_404();
+        }
         $this->form_validation->set_language("chinese");
+        $this->form_validation->set_error_delimiters('','');
         $this->form_validation->set_rules('firstName', 'lang:firstName', 'trim|required|min_length[2]|max_length[12]|xss_clean');
         $this->form_validation->set_rules('lastName', 'lang:lastName', 'trim|required|min_length[2]|max_length[12]|xss_clean');
         $this->form_validation->set_rules('password', 'lang:password', 'trim|required|matches[passConf]|md5');
         $this->form_validation->set_rules('passConf', 'lang:passwordConfirmation', 'trim|required');
-        $this->form_validation->set_rules('email', 'lang:Email', 'trim|required|valid_email');
+        $this->form_validation->set_rules('email', 'lang:Email', 'trim|required|valid_email|is_unique[user.email]');
         $this->form_validation->set_rules('gender', 'lang:Gender', 'trim|required|numeric|callback_valid_gender');
-        $this->form_validation->set_rules('firstLanguage', 'lang:firstLanguage', 'trim|required:xss_clean|callback_valid_language');
-        $this->form_validation->set_rules('secondLanguage', 'lang:secondLanguage', 'trim|required:xss_clean|callback_valid_language');
-        $this->form_validation->set_rules('nationality', 'lang:nationality', 'trim|required:xss_clean|callback_valid_nationality');
+        $this->form_validation->set_rules('firstLanguage', 'lang:firstLanguage', 'trim|required|callback_valid_language');
+        $this->form_validation->set_rules('secondLanguage', 'lang:secondLanguage', 'trim|required|callback_valid_language');
+        $this->form_validation->set_rules('nationality', 'lang:nationality', 'trim|required|callback_valid_nationality');
+        $this->form_validation->set_rules('birthday', 'lang:birthday', 'trim|required');
         if($this->form_validation->run()){
 
             $this->load->model('registermodel');
@@ -41,7 +46,7 @@ class Register extends CI_Controller {
                 'firstName'=>$postData['firstName'],
                 'lastName'=>$postData['lastName'],
                 'email'=>$postData['email'],
-                'passsword'=>md5(md5($postData['password'])),
+                'password'=>md5(md5($postData['password'])),
                 'firstLanguage'=>$postData['firstLanguage'],
                 'secondLanguage'=>$postData['secondLanguage'],
                 'nationality'=>$postData['nationality'],
@@ -52,7 +57,20 @@ class Register extends CI_Controller {
                 'gender'=>$postData['gender'],
             );
 
-            $this->registermodel->register($data);
+            if($this->registermodel->register($data)){
+                printJson(array(
+                   'status'=>true,
+                ));
+                $this->session->set_userdata(array(
+                    "email"=>$postData['email'],
+                    "isLogin"=>true
+                ));
+            }else{
+                printJson(array(
+                    'status'=>false,
+                    'errorCode'=>$this->db->_error_number(),
+                ));
+            }
 
 
         }
@@ -64,7 +82,7 @@ class Register extends CI_Controller {
                     $errors[$key]= $error;
                 }
             }
-            echo  json_encode(array(
+            printJson(array(
                 'status'=>false,
                 'errors'=>$errors,
             ));
