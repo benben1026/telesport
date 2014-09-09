@@ -23,6 +23,19 @@ class Login extends CI_Controller {
         $data = $this->LoginModel->getUserInfo();
 		$this->load->view('login',$data);
 	}
+        
+        public function login(){
+            $postData = $this->input->post();
+            $this->load->model('loginmodel');
+            $data = array(
+                'email'=>$postData['email'],
+                'password'=>$postData['password'],
+            );
+            if($this->loginmodel->login($postData['email'], $postData['password'])){
+                
+            }
+            
+        }
 }
 
 /* End of file welcome.php */
