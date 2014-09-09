@@ -35,10 +35,10 @@ class Register extends CI_Controller {
         $this->form_validation->set_rules('passConf', 'lang:passwordConfirmation', 'trim|required');
         $this->form_validation->set_rules('email', 'lang:Email', 'trim|required|valid_email|is_unique[user.email]');
         $this->form_validation->set_rules('gender', 'lang:Gender', 'trim|required|numeric|callback_valid_gender');
-        $this->form_validation->set_rules('firstLanguage', 'lang:firstLanguage', 'trim|required|callback_valid_language');
-        $this->form_validation->set_rules('secondLanguage', 'lang:secondLanguage', 'trim|required|callback_valid_language');
-        $this->form_validation->set_rules('nationality', 'lang:nationality', 'trim|required|callback_valid_nationality');
-        $this->form_validation->set_rules('birthday', 'lang:birthday', 'trim|required');
+        $this->form_validation->set_rules('firstLanguage', 'lang:firstLanguage', 'trim|required|callback_valid_language|xss_clean');
+        $this->form_validation->set_rules('secondLanguage', 'lang:secondLanguage', 'trim|required|callback_valid_language|xss_clean');
+        $this->form_validation->set_rules('nationality', 'lang:nationality', 'trim|required|callback_valid_nationality|xss_clean');
+        $this->form_validation->set_rules('birthday', 'lang:birthday', 'trim|required|xss_clean');
         if($this->form_validation->run()){
 
             $this->load->model('registermodel');
@@ -89,6 +89,19 @@ class Register extends CI_Controller {
         }
 
 	}
+    public function checkEmailDuplicate(){
+        $this->load->model('registermodel');
+        $email = $this->input->get('email');
+        if($this->registermodel->checkDuplicate($email)){
+            printJson(array(
+               'status'=>true
+            ));
+        }else{
+           printJson(array(
+               'status'=>false
+           ));
+        }
+    }
     function valid_language($lang){
         return true;
     }

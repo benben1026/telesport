@@ -64,7 +64,7 @@ $autoload['libraries'] = array('session','database');
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('ajax');
+$autoload['helper'] = array('ajax','acl');
 
 
 /*
@@ -80,7 +80,7 @@ $autoload['helper'] = array('ajax');
 |
 */
 
-$autoload['config'] = array();
+$autoload['config'] = array('acl');
 
 
 /*
