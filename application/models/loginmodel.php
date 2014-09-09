@@ -14,13 +14,21 @@ class LoginModel extends CI_Model {
         parent::__construct();
     }
 
-   function getUserInfo(){
-       return array(
-           "username"=>"bruce",
-           "password"=>"password",
-           "message"=>"dwadwada"
+    function login($email, $password){
+        $sql = "SELECT userId, password FROM user WHERE email=?";
+        $query = $this->db->query($sql, $email);
+        $row = $query->result_array();
+        if(isset($row) && $row['password'] == md5(md5($password))){
+            $newdata = array(
+                'userId'=>$row['userId'],
+                'ifLogin'=>true,
+            );
+            $this->session->set_userdata($newdata);
+            return true;
+        }else{
+            return false;
+        }
+    }
 
-       );
-   }
 
 }
