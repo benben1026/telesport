@@ -7,22 +7,22 @@
  */
 
 class RegisterModel extends CI_Model {
-
     function __construct()
     {
         // Call the Model constructor
         parent::__construct();
     }
-   function register($data){
-       return $this->db->insert("users",$data);
-   }
-   function getUserInfo(){
-       return array(
-           "username"=>"bruce",
-           "password"=>"password",
-           "message"=>"dwadwada"
-
-       );
-   }
-
+    function register($data){
+       $a =  $this->db->insert("user",$data);
+       return $a;
+    }
+    function checkDuplicate($email){
+        $sql = "SELECT * FROM `user` WHERE `email` = ?";
+        $query =  $this->db->query($sql,array($email));
+        if($query->num_rows()>0){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

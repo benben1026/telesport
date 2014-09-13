@@ -16,14 +16,15 @@ $lang['numeric']			= "The %s field must contain only numbers.";
 $lang['is_numeric']			= "The %s field must contain only numeric characters.";
 $lang['integer']			= "The %s field must contain an integer.";
 $lang['regex_match']		= "The %s field is not in the correct format.";
-$lang['matches']			= "两次密码不相符";
-$lang['is_unique'] 			= "The %s field must contain a unique value.";
+$lang['matches']			= "两次%s不相符";
+$lang['is_unique'] 			= "%s 已经被注册";
 $lang['is_natural']			= "The %s field must contain only positive numbers.";
 $lang['is_natural_no_zero']	= "The %s field must contain a number greater than zero.";
 $lang['decimal']			= "The %s field must contain a decimal number.";
 $lang['less_than']			= "The %s field must contain a number less than %s.";
 $lang['greater_than']		= "The %s field must contain a number greater than %s.";
 $lang['valid_language']     = "不合法的语言名称";
+$lang['valid_gender']     = "不合法的性别";
 
 
 
