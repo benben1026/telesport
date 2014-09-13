@@ -17,24 +17,40 @@ class Login extends CI_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see http://codeigniter.com/user_guide/general/urls.html
 	 */
-	public function index()
-	{
-        $this->load->model("LoginModel");
-        $data = $this->LoginModel->getUserInfo();
-		$this->load->view('login',$data);
+	public function index(){
+            $this->load->model("loginmodel");
+            $postData = $this->input->post();
+            if(isset($postData['autoLogin'])){
+                autoLogin($postData['userId'], $postData['cookie']);
+            }else{
+                checkLogin($postData['email'], $postData['password'], $postData['rememberMe']);
+            }
 	}
         
-        public function login(){
-            $postData = $this->input->post();
-            $this->load->model('loginmodel');
-            $data = array(
-                'email'=>$postData['email'],
-                'password'=>$postData['password'],
-            );
-            if($this->loginmodel->login($postData['email'], $postData['password'])){
-                
+        public function autoLogin($userId, $cookie){
+            if($this->loginmodel->autoLogin($userId, $cookie)){
+                output(true);
+            }else{
+                output(false);
             }
-            
+        }
+        
+        public function checkLogin($email, $password, $rememberMe){
+            if($this->loginmodel->checkLogin($email, $password)){
+                if($rememberMe == 1){
+                    $this->loginmodel->rememberme($email);
+                }
+                output(true);
+            }else{
+                output(false);
+            }
+        }
+        
+        public function output($res){
+            $output = array(
+                    'result'=>$res
+                );
+            echo json_encode($output);
         }
 }
 
