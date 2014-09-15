@@ -20,37 +20,68 @@ class Login extends CI_Controller {
 	public function index(){
             $this->load->model("loginmodel");
             $postData = $this->input->post();
-            if(isset($postData['autoLogin'])){
-                autoLogin($postData['userId'], $postData['cookie']);
+            //echo("Hello World");
+            //echo("parameter=".$postData['cookie']);
+            
+            if(isset($postData['cookie'])){
+                $this->autoLogin($postData['userId'], $postData['cookie']);
             }else{
-                checkLogin($postData['email'], $postData['password'], $postData['rememberMe']);
+                $this->checkLogin($postData['email'], $postData['password'], $postData['rememberMe']);
             }
+             
 	}
         
         public function autoLogin($userId, $cookie){
             if($this->loginmodel->autoLogin($userId, $cookie)){
-                output(true);
+                $output = array(
+                            'AUTO_LOGIN'=>TRUE
+                        );
+                $this->output($output);
             }else{
-                output(false);
+                $output = array(
+                            'AUTO_LOGIN'=>FALSE
+                        );
+                $this->output($output);
             }
         }
         
         public function checkLogin($email, $password, $rememberMe){
-            if($this->loginmodel->checkLogin($email, $password)){
+            $res = $this->loginmodel->checkLogin($email, $password);
+            if( $res == 1 ){
                 if($rememberMe == 1){
-                    $this->loginmodel->rememberme($email);
+                    if($this->loginmodel->rememberme($email) == 1){
+                        $output = array(
+                            'LOGIN'=>TRUE,
+                            'REMEMBER'=>TRUE
+                        );
+                        $this->output($output);
+                        return;
+                    }
                 }
-                output(true);
+                $output = array(
+                            'LOGIN'=>TRUE,
+                            'REMEMBER'=>FALSE
+                        );
+                $this->output($output);
+            }else if($res == -2){
+                $output = array(
+                            'LOGIN'=>FALSE,
+                            'ERROR'=>'NOT_VARIFIED',
+                            'REMEMBER'=>FALSE
+                        );
+                $this->output($output);
             }else{
-                output(false);
+                $output = array(
+                            'LOGIN'=>FALSE,
+                            'ERROR'=>'MISMATCH',
+                            'REMEMBER'=>FALSE
+                        );
+                $this->output($output);
             }
         }
         
-        public function output($res){
-            $output = array(
-                    'result'=>$res
-                );
-            echo json_encode($output);
+        function output($res){
+            printJson($res);
         }
 }
 
