@@ -19,7 +19,7 @@ class RegisterModel extends CI_Model {
     function checkDuplicate($email){
         $sql = "SELECT * FROM `user` WHERE `email` = ?";
         $query =  $this->db->query($sql,array($email));
-        if($query->num_rows()>0){
+        if($query && $query->num_rows()>0){
             return true;
         }else{
             return false;

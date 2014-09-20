@@ -7,12 +7,6 @@
  */
 if ( ! function_exists('checkLogin')){
     function checkLogin(){
-        $ci  =& get_instance();
-        if($ci->session->userdata("isLogin")){
-            return $ci->session->userdata("email");
-        }else{
-            return false;
-        }
-
+       return 1;
     }
 }
