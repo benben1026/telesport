@@ -18,14 +18,20 @@ class Acl_Ajax_Controller extends CI_Controller {
     function __construct()
     {
         parent::__construct();
-        $this->user['id'] = checkLogin();
-        $acl = $this->config->item('acl');
-        $this->load->model('aclmodel');
-        $userType = $this->aclmodel->getUserType($this->user);
-        if(!isset($acl[$userType][get_class($this)]) || !$acl[$userType][get_class($this)]){
-            show_404();
+        $this->user['id'] = isLogin();
+
+        if($this->user['id']){
+            $this->user['type']= $this->session->userdata('userType');
+            $acl = $this->config->item('acl');
+            $this->load->model('aclmodel');
+
+            if(!isset($acl[ $this->user['type']][get_class($this)]) || !$acl[ $this->user['type']][get_class($this)]){
+                show_404();
+            }else{
+                echo "SUCCESS";
+            }
         }else{
-            echo "SUCCESS";
+            show_404();
         }
     }
 }

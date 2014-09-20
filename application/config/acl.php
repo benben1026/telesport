@@ -9,7 +9,7 @@ $ACL_LIST[TRAINEE] = array(
     "AdminController"=>false,
     "TrainerController"=>false,
     "TraineeController"=>true,
-    "loginTest"=>false,
+    "loginTest"=>true,
 );
 $ACL_LIST[TRAINER] = array(
     "AdminController"=>false,

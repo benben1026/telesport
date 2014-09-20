@@ -17,7 +17,6 @@ class ACLModel extends CI_Model {
     function getUserType($user){
         $user['email'] = isset($user["email"])? $user["email"]: NULL;
         $user['id'] = isset($user["id"])? $user["id"]: NULL;
-        print_r($user);
         $sql = "SELECT userType FROM user WHERE email=? OR userId=?";
         $query = $this->db->query($sql, array($user['email'],$user['id']));
         $row = $query->row_array();
@@ -27,6 +26,4 @@ class ACLModel extends CI_Model {
             return 0;
         }
     }
-
-
 }

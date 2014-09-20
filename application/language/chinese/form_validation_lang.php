@@ -25,9 +25,12 @@ $lang['less_than']			= "The %s field must contain a number less than %s.";
 $lang['greater_than']		= "The %s field must contain a number greater than %s.";
 $lang['valid_language']     = "不合法的语言名称";
 $lang['valid_gender']     = "不合法的性别";
+$lang['valid_birthday']     ="日期格式不正确";
+$lang['valid_time']     ="时间格式不正确";
+$lang['valid_phone']     ="电话格式不正确";
+$lang['valid_sports_time_per_day'] = "%s 不是一个合法的选项";
 
-
-
+/**Labels**/
 $lang['username']           = "用户名";
 $lang['password']           = "密码";
 $lang['firstName']          ="名";
@@ -35,6 +38,17 @@ $lang['lastName']           ="姓";
 $lang['passwordConfirmation']="密码";
 $lang['firstLanguage']      ="母语";
 $lang['secondLanguage']      ="第二语言";
-
+$lang['nationality']        ="国籍";
+$lang['birthday']           ="生日";
+$lang['occupation']         ="工作";
+$lang['phone']              ="电话";
+$lang['height']             ="身高";
+$lang['weight']             ="体重";
+$lang['sleepStart']         ="睡觉时间";
+$lang['sleepEnd']           ="起床时件";
+$lang['sportsTimePerDay']    ="每日运动时间";
+$lang['breakfastTime']      ="早餐时间";
+$lang['lunchTime']          ="午餐时间";
+$lang['supperTime']         ="晚饭时间";
 /* End of file form_validation_lang.php */
 /* Location: ./system/language/english/form_validation_lang.php */

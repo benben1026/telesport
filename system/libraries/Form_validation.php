@@ -210,11 +210,14 @@ class CI_Form_validation {
 	 */
 	public function error($field = '', $prefix = '', $suffix = '')
 	{
+
+        if(empty($field)){;
+            return $this->_error_array;
+        }
 		if ( ! isset($this->_field_data[$field]['error']) OR $this->_field_data[$field]['error'] == '')
 		{
 			return '';
 		}
-
 		if ($prefix == '')
 		{
 			$prefix = $this->_error_prefix;
@@ -338,7 +341,10 @@ class CI_Form_validation {
 				if (isset($_POST[$field]) AND $_POST[$field] != "")
 				{
 					$this->_field_data[$field]['postdata'] = $_POST[$field];
-				}
+				}else{
+                    $_POST[$field]="";
+                }
+
 			}
 
 			$this->_execute($row, explode('|', $row['rules']), $this->_field_data[$field]['postdata']);

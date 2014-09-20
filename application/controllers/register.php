@@ -23,26 +23,19 @@ class Register extends CI_Controller {
 	public function ajaxRegister()
 	{
         $this->load->library('form_validation');
+        $this->load->library("Tele_Form_validation");
         $postData = $this->input->post();
+
         if(empty($postData)){
             show_404();
         }
         $this->form_validation->set_language("chinese");
         $this->form_validation->set_error_delimiters('','');
-        $this->form_validation->set_rules('firstName', 'lang:firstName', 'trim|required|min_length[2]|max_length[12]|xss_clean');
-        $this->form_validation->set_rules('lastName', 'lang:lastName', 'trim|required|min_length[2]|max_length[12]|xss_clean');
-        $this->form_validation->set_rules('password', 'lang:password', 'trim|required|matches[passConf]|md5');
-        $this->form_validation->set_rules('passConf', 'lang:passwordConfirmation', 'trim|required');
-        $this->form_validation->set_rules('email', 'lang:Email', 'trim|required|valid_email|is_unique[user.email]');
-        $this->form_validation->set_rules('gender', 'lang:Gender', 'trim|required|numeric|callback_valid_gender');
-        $this->form_validation->set_rules('firstLanguage', 'lang:firstLanguage', 'trim|required|callback_valid_language|xss_clean');
-        $this->form_validation->set_rules('secondLanguage', 'lang:secondLanguage', 'trim|required|callback_valid_language|xss_clean');
-        $this->form_validation->set_rules('nationality', 'lang:nationality', 'trim|required|callback_valid_nationality|xss_clean');
-        $this->form_validation->set_rules('birthday', 'lang:birthday', 'trim|required|xss_clean');
-        if($this->form_validation->run()){
 
+        if($this->form_validation->run('register')){
+            $postData = $this->input->post();
             $this->load->model('registermodel');
-            $data = array(
+            $user = array(
                 'firstName'=>$postData['firstName'],
                 'lastName'=>$postData['lastName'],
                 'email'=>$postData['email'],
@@ -55,16 +48,43 @@ class Register extends CI_Controller {
                 'userType'=>TRAINEE,
                 'rank'=>DEFAULT_RANK,
                 'gender'=>$postData['gender'],
+                'phone'=>$postData['phone'],
+                'occupation'=>$postData['occupation'],
+            );
+            $trainee = array(
+                'height'=>$postData['height'],
+                'weight'=>$postData['weight'],
+                'sleepStart'=>$postData['sleepStart'],
+                'sleepEnd'=>$postData['sleepEnd'],
+                'sportsTimePerDay'=>$postData['sportsTimePerDay'],
+                'breakfast'=>$postData['breakfast'],
+                'lunch'=>$postData['lunch'],
+                'ifSmoke'=>$postData['ifSmoke']==0? false : true,
+                'ifDrink'=>$postData['ifDrink']==0? false: true,
+                'illness' =>$postData['illness'],
+                'illnessDescription'=>$postData['illnessDescription'],
+                'ifMedicine'=>$postData['ifMedicine']==0?false:true,
+                'medicineDescription'=>$postData['medicineDescription'],
+                'ifOperation'=>$postData['ifOperation']==0?false:true,
+                'operationDescription'=>$postData['operationDescription']==0?false:true,
+                'bodyStatus'=>$postData['bodyStatus'],
+                'gymTimeOneStart'=>$postData['gymTimeOneStart']||"",
+                'gymTimeOneEnd'=>$postData['gymTimeOneEnd']||"",
+                'gymTimeTwoStart'=>$postData['gymTimeTwoStart']||"",
+                'gymTimeTwoEnd'=>$postData['gymTimeTwoEnd'],
+                'ifGymRoom'=>$postData["ifGymRoom"]==0?false:true,
+                'toolDescription'=>$postData["toolDescription"],
+                'aim'=>$postData['aim'],
+                'expectation'=>$postData['expectation']
             );
 
-            if($this->registermodel->register($data)){
+            print_r($user);print_r($trainee);exit;
+            if($this->registermodel->register($user)){
                 printJson(array(
                    'status'=>true,
                 ));
-                $this->session->set_userdata(array(
-                    "email"=>$postData['email'],
-                    "isLogin"=>true
-                ));
+               $this->load->model("loginmodel");
+               $this->loginmodel->setLogin($this->db->insert_id(),TRAINEE);
             }else{
                 printJson(array(
                     'status'=>false,
@@ -75,13 +95,15 @@ class Register extends CI_Controller {
 
         }
         else{
-            $errors = array();
-            foreach($postData as $key=>$value){
+            $errors = form_error();
+           /* foreach($postData as $key=>$value){
                $error = form_error($key);
                if(!empty($error)){
                     $errors[$key]= $error;
                 }
             }
+            print_r(validation_errors());
+           */
             printJson(array(
                 'status'=>false,
                 'errors'=>$errors,
@@ -101,18 +123,6 @@ class Register extends CI_Controller {
                'status'=>false
            ));
         }
-    }
-    function valid_language($lang){
-        return true;
-    }
-    function valid_nationality($nation){
-        return true;
-    }
-    function valid_gender($gender){
-        if($gender==0||$gender==1)
-            return true;
-        else
-            return false;
     }
 }
 

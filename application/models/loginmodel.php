@@ -14,28 +14,24 @@ class LoginModel extends CI_Model {
         parent::__construct();
     }
 
-    function checklogin($email, $password){
-        $sql = "SELECT userId, password, isVarified FROM user WHERE email=?";
+    function checkLogin($email, $password){
+        $sql = "SELECT userId, password, isVerified, userType FROM user WHERE email=?";
         $query = $this->db->query($sql, $email);
         $row = $query->result_array();
-        if(!empty($row) && $row[0]['isVarified'] == 0){
+        if(!empty($row) && $row[0]['isVerified'] == 0){
             return -2;
         }else if(!empty($row) && $row[0]['password'] == md5(md5($password))){
-            $newdata = array(
-                'userId'=>$row[0]['userId'],
-                'isLogin'=>true,
-            );
-            $this->session->set_userdata($newdata);
+            $this->setLogin($row[0]['userId'],$row[0]['userType']);
             return 1;
         }else{
             return -1;
         }
     }
     
-    function rememberme($email){
+    function rememberMe($email){
         $this->load->helper('cookie');
         $rand = rand();
-        $sql = "SELECT `userId`, `password` FROM `user` WHERE `email`=?";
+        $sql = "SELECT `userId`, `password`,`userType` FROM `user` WHERE `email`=?";
         $query = $this->db->query($sql, array($email));
         $row = $query->result_array();
         if(!empty($row)){
@@ -56,11 +52,7 @@ class LoginModel extends CI_Model {
                     'expire' => '86500'
                 );
                 $this->input->set_cookie($cookie);
-                $newdata = array(
-                    'userId'=>$row[0]['userId'],
-                    'isLogin'=>true,
-                );
-                $this->session->set_userdata($newdata);
+                $this->setLogin($row[0]['userId'],$row[0]['userType']);
                 return 1;
             }else{
                 return -2;
@@ -71,22 +63,26 @@ class LoginModel extends CI_Model {
     }
     
     function autoLogin($id, $cookie){
-        $sql = "SELECT `email`, `password`, `token` FROM `user` WHERE `userId`=?";
+        $sql = "SELECT `email`, `password`, `token`,`userType` FROM `user` WHERE `userId`=?";
         $query = $this->db->query($sql, array($id));
         $row = $query->result_array();
         if(!empty($row)){
             $trueCookie = hash('ripemd256', $row[0]['email'] . $row[0]['password'] . $row[0]['token']);
             if($trueCookie == $cookie){
-                $newdata = array(
-                    'userId'=>$row[0]['userId'],
-                    'isLogin'=>true,
-                );
-                $this->session->set_userdata($newdata);
+                $this->setLogin($row[0]['userId'],$row[0]['userType']);
                 return true;
             }
         }
         //delete_cookie("USER_LOGIN");
         return false;
+    }
+    function setLogin($userId,$userType){
+        $newData = array(
+            'userId'=>$userId,
+            'userType'=>$userType,
+            'isLogin'=>true,
+        );
+        $this->session->set_userdata($newData);
     }
 
 }
