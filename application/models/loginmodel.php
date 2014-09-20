@@ -50,6 +50,12 @@ class LoginModel extends CI_Model {
                     'expire' => '86500'
                 );
                 $this->input->set_cookie($cookie);
+                $cookie = array(
+                    'name'   => 'USER_ID',
+                    'value'  => $id,
+                    'expire' => '86500'
+                );
+                $this->input->set_cookie($cookie);
                 $newdata = array(
                     'userId'=>$row[0]['userId'],
                     'isLogin'=>true,
@@ -71,6 +77,11 @@ class LoginModel extends CI_Model {
         if(!empty($row)){
             $trueCookie = hash('ripemd256', $row[0]['email'] . $row[0]['password'] . $row[0]['token']);
             if($trueCookie == $cookie){
+                $newdata = array(
+                    'userId'=>$row[0]['userId'],
+                    'isLogin'=>true,
+                );
+                $this->session->set_userdata($newdata);
                 return true;
             }
         }
