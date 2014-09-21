@@ -6,19 +6,16 @@
  * Time: 6:59 PM
  */
 $ACL_LIST[TRAINEE] = array(
-    "AdminController"=>false,
-    "TrainerController"=>false,
-    "TraineeController"=>true,
+    "Program"=>false,
     "loginTest"=>true,
 );
 $ACL_LIST[TRAINER] = array(
-    "AdminController"=>false,
-    "TrainerController"=>true,
-    "TraineeController"=>false,
+    "Program"=>true,
+    "Template"=>true,
 );
 $ACL_LIST[ADMIN] = array(
-    "AdminController"=>true,
-    "TrainerController"=>true,
-    "TraineeController"=>true,
+    "Program"=>true,
+    "Template"=>true,
+    "LoginTest"=>true,
 );
 $config['acl'] = $ACL_LIST;

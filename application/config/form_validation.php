@@ -4,187 +4,187 @@ $config = array(
         array(
             'field'=>'firstName',
             'label'=>'lang:firstName',
-            'rules'=>'trim|required|min_length[2]|max_length[12]|xss_clean'
+            'rules'=>'trim|isset|required|min_length[2]|max_length[12]|xss_clean'
         ),
         array(
             'field'=>'lastName',
             'label'=>'lang:lastName',
-            'rules'=> 'trim|required|min_length[2]|max_length[12]|xss_clean'
+            'rules'=> 'trim|isset|required|min_length[2]|max_length[12]|xss_clean'
         ),
         array(
             'field'=>'password',
             "label" =>'lang:password',
-            'rules'=> 'trim|required|matches[passConf]|min_length[6]|max_length[32]'
+            'rules'=> 'trim|isset|required|matches[passConf]|min_length[6]|max_length[32]'
         ),
         array(
             'field'=>'passConf',
             'label'=> 'lang:passwordConfirmation',
-            'rules'=>'trim|required'
+            'rules'=>'trim|isset|required'
         ),
         array(
             'field'=>'email',
             'label'=> 'lang:Email',
-            'rules'=>'trim|required|valid_email|is_unique[user.email]|xss_clean'
+            'rules'=>'trim|isset|required|valid_email|is_unique[user.email]|xss_clean'
         ),
         array(
             'field'=>'gender',
             'label'=>'lang:Gender',
-            'rules'=>'trim|required|alpha_numeric|valid_gender|xss_clean'
+            'rules'=>'trim|isset|required|alpha_numeric|valid_gender|xss_clean'
         ),
         array(
             'field'=>'firstLanguage',
             'label'=>'lang:firstLanguage',
-            'rules'=>'trim|required|alpha|valid_language|xss_clean'
+            'rules'=>'trim|isset|required|alpha|valid_language|xss_clean'
         ),
         array(
             'field'=>'secondLanguage',
             'label'=>'lang:secondLanguage',
-            'rules'=>'trim|required|alpha|valid_language|xss_clean'
+            'rules'=>'trim|isset|required|alpha|valid_language|xss_clean'
         ),
         array(
             'field'=>'nationality',
             'label'=>'lang:nationality',
-            'rules'=>'trim|required|alpha|valid_nationality|xss_clean'
+            'rules'=>'trim|isset|required|alpha|valid_nationality|xss_clean'
         ),
         array(
             'field'=>'birthday',
             'label'=>'lang:birthday',
-            'rules'=>'trim|required|xss_clean|valid_birthday'
+            'rules'=>'trim|isset|required|xss_clean|valid_birthday'
         ),
         array(
             'field'=>"occupation",
             'label'=>"lang:occupation",
-            'rules'=>'trim|alpha_dash|xss_clean'
+            'rules'=>'trim|isset|alpha_dash|xss_clean'
         ),
         array(
             'field'=>"phone",
             'label'=>"lang:phone",
-            'rules'=>'trim|alpha_dash|xss_clean|valid_phone'
+            'rules'=>'trim|isset|alpha_dash|xss_clean|valid_phone'
         ),
         array(
             'field'=>"height",
             'label'=>"lang:height",
-            'rules'=>"trim|required|numeric|greater_than[130]|less_than[250]",
+            'rules'=>"trim|isset|required|numeric|greater_than[130]|less_than[250]",
         ),
         array(
             'field'=>"weight",
             'label'=>"lang:weight",
-            'rules'=>"trim|required|numeric|greater_than[30]|less_than[250]",
+            'rules'=>"trim|isset|required|numeric|greater_than[30]|less_than[250]",
         ),
         array(
             'field'=>"sleepStart",
             'label'=>"lang:sleepStart",
-            'rules'=>"trim|required|valid_time",
+            'rules'=>"trim|isset|required|valid_time",
         ),
         array(
             'field'=>"sleepEnd",
             'label'=>"lang:sleepEnd",
-            'rules'=>"trim|required|valid_time",
+            'rules'=>"trim|isset|required|valid_time",
         ),
         array(
             'field'=>"sportsTimePerDay",
             'label'=>"lang:sportsTimePerDay",
-            'rules'=>"trim|required|numeric|valid_sports_time_per_day"
+            'rules'=>"trim|isset|required|numeric|valid_sports_time_per_day"
         ),
         array(
             'field'=>"breakfast",
             'label'=>"lang:breakfastTime",
-            'rules'=>"trim|required|valid_time"
+            'rules'=>"trim|isset|required|valid_time"
         ),
         array(
             'field'=>"lunch",
             'label'=>"lang:lunchTime",
-            'rules'=>"trim|required|valid_time",
+            'rules'=>"trim|isset|required|valid_time",
         ),
         array(
             'field'=>"supper",
             'label'=>"lang:supperTime",
-            'rules'=>"trim|required|valid_time",
+            'rules'=>"trim|isset|required|valid_time",
         ),
         array(
             'field'=>"ifSmoke",
             'label'=>"lang:ifSmoke",
-            'rules'=>"trim|required|numeric"
+            'rules'=>"trim|isset|required|numeric"
         ),
         array(
             'field'=>"ifMedicine",
             'label'=>"lang:ifMedicine",
-            'rules'=>"trim|required|numeric",
+            'rules'=>"trim|isset|required|numeric",
         ),
         array(
             'field'=>"ifOperation",
             'label'=>"lang:ifOperation",
-            'rules'=>"trim|required|numeric"
+            'rules'=>"trim|isset|required|numeric"
         ),
         array(
             'field'=>"ifDrink",
             'label'=>"lang:ifDrink",
-            'rules'=>"trim|required|numeric"
+            'rules'=>"trim|isset|required|numeric"
         ),
         array(
             'field'=>"operationDescription",
             'label'=>"lang:operationDescription",
-            'rules'=>"trim|xss_clean"
+            'rules'=>"trim|isset|xss_clean"
         ),
         array(
             'field'=>"medicineDescription",
             'label'=>"lang:medicineDescription",
-            "rules"=>"trim|xss_clean",
+            "rules"=>"trim|isset|xss_clean",
         ),
         array(
             'field'=>"illnessDescription",
             'label'=>"lang:illnessDescription",
-            "rules"=>"trim|xss_clean",
+            "rules"=>"trim|isset|xss_clean",
         ),
         array(
             'field'=>"illness",
             'label'=>"lang:illness",
-            'rules'=>"trim|xss_clean"
+            'rules'=>"trim|isset|xss_clean"
         ),
         array(
             'field'=>"aim",
             'label'=>"lang:aim",
-            'rules'=>"trim|numeric",
+            'rules'=>"trim|isset|numeric",
         ),
         array(
             'field'=>"expectation",
             'label'=>"lang:expectation",
-            'rules'=>"trim|xss_clean",
+            'rules'=>"trim|isset|xss_clean",
         ),
         array(
             'field'=>"bodyStatus",
             'label'=>"lang:bodyStatus",
-            'rules'=>"trim|numeric"
+            'rules'=>"trim|isset|numeric"
         ),
         array(
             'field'=>"gymTimeOneStart",
             'label'=>"lang:gymTimeOneStart",
-            'rules'=>"trim|xss_clean|valid_date"
+            'rules'=>"trim|isset|xss_clean|valid_date"
         ),
         array(
             'field'=>"gymTimeOneEnd",
             'label'=>"lang:gymTimeOneStart",
-            'rules'=>"trim|xss_clean|valid_date"
+            'rules'=>"trim|isset|xss_clean|valid_date"
         ),
         array(
             'field'=>"gymTimeTwoStart",
             'label'=>"lang:gymTimeTwoStart",
-            'rules'=>"trim|xss_clean|valid_date"
+            'rules'=>"trim|isset|xss_clean|valid_date"
         ),
         array(
             'field'=>"gymTimeTwoEnd",
             'label'=>"lang:gymTimeTwoStart",
-            'rules'=>"trim|xss_clean|valid_date"
+            'rules'=>"trim|isset|xss_clean|valid_date"
         ),
         array(
             'field'=>"ifGymRoom",
             'label'=>"lang:ifGymRoom",
-            'rules'=>"trim|numeric",
+            'rules'=>"trim|isset|numeric",
         ),
         array(
             'field'=>"toolDescription",
             'label'=>"lang:toolDescription",
-            'rules'=>"trim|xss_clean"
+            'rules'=>"trim|isset|xss_clean"
         )
     ),
 );

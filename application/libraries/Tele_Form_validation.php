@@ -14,6 +14,15 @@ class Tele_Form_validation extends CI_Form_validation
         return in_array($option,array_keys($this->ci->config->item("formConstant")["sportsPerDay"]));
         //return false;
     }
+    function valid_aim($option){
+        return in_array($option,array_keys($this->ci->config->item("formConstant")["aim"]));
+    }
+    function valid_illness($option){
+        return in_array($option,array_keys($this->ci->config->item("formConstant")["illness"]));
+    }
+    function valid_body_status($option){
+        return in_array($option,array_keys($this->ci->config->item("formConstant")["bodyStatus"]));
+    }
     function valid_language($lang){
         return true;
     }
@@ -21,19 +30,19 @@ class Tele_Form_validation extends CI_Form_validation
         return true;
     }
     function valid_gender($gender){
-        if($gender==0||$gender==1)
-            return true;
-        else
-            return false;
+        return preg_match("/^[01]{1}$/",$gender)>0?true:false;
     }
     function valid_birthday($birthday){
-        return preg_match("/^\d{4}(-\d{2}){2}$/",$birthday)>0?true:false;
+        return preg_match("/^(19[0-9]{2}|20[0-9]{2})-(0[0-9]|1[12])-([01][0-9]|2[0-4])$/",$birthday)>0?true:false;
+    }
+    function valid_date($date){
+        return preg_match("/^(19[0-9]{2}|20[0-9]{2})-(0[0-9]|1[12])-([01][0-9]|2[0-4])$/",$date)>0?true:false;
     }
     function valid_time($time){
         return preg_match("/^\d{2}(:\d{2}){1,2}$/",$time)>0?true:false;
     }
-    function valid_phone(){
-        return true;
+    function valid_phone($phone){
+        return preg_match("/^1[354][0-9]\d{8}$/",$phone)>0?true:false;
     }
 //...add more rules
 }

@@ -18,8 +18,8 @@ if ( ! function_exists('checkLogin')){
         if($ci->session->userdata("isLogin")){
             return $ci->session->userdata("userId");
         }
-        $loginCookie = $this->input->get_cookie('USER_LOGIN');
-        $idCookie = $this->input->get_cookie('USER_ID');
+        $loginCookie = $ci->input->cookie('USER_LOGIN');
+        $idCookie = $ci->input->cookie('USER_ID');
         if(!empty($loginCookie) && !empty($idCookie)){
             $sql = "SELECT `email`, `password`, `token`,`userType` FROM `user` WHERE `userId`=?";
             $query = $this->db->query($sql, array($idCookie));

@@ -342,7 +342,7 @@ class CI_Form_validation {
 				{
 					$this->_field_data[$field]['postdata'] = $_POST[$field];
 				}else{
-                    $_POST[$field]="";
+                    $_POST[$field]=null;
                 }
 
 			}
