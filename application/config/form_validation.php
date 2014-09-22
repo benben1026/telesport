@@ -4,12 +4,12 @@ $config = array(
         array(
             'field'=>'firstName',
             'label'=>'lang:firstName',
-            'rules'=>'trim|isset|required|min_length[2]|max_length[12]|xss_clean'
+            'rules'=>'trim|isset|min_length[2]|max_length[12]|xss_clean'
         ),
         array(
             'field'=>'lastName',
             'label'=>'lang:lastName',
-            'rules'=> 'trim|isset|required|min_length[2]|max_length[12]|xss_clean'
+            'rules'=> 'trim|isset|min_length[2]|max_length[12]|xss_clean'
         ),
         array(
             'field'=>'password',
@@ -34,17 +34,17 @@ $config = array(
         array(
             'field'=>'firstLanguage',
             'label'=>'lang:firstLanguage',
-            'rules'=>'trim|isset|required|alpha|valid_language|xss_clean'
+            'rules'=>'trim|isset|alpha|valid_language|xss_clean'
         ),
         array(
             'field'=>'secondLanguage',
             'label'=>'lang:secondLanguage',
-            'rules'=>'trim|isset|required|alpha|valid_language|xss_clean'
+            'rules'=>'trim|isset|alpha|valid_language|xss_clean'
         ),
         array(
             'field'=>'nationality',
             'label'=>'lang:nationality',
-            'rules'=>'trim|isset|required|alpha|valid_nationality|xss_clean'
+            'rules'=>'trim|isset|alpha|valid_nationality|xss_clean'
         ),
         array(
             'field'=>'birthday',
@@ -64,62 +64,62 @@ $config = array(
         array(
             'field'=>"height",
             'label'=>"lang:height",
-            'rules'=>"trim|isset|required|numeric|greater_than[130]|less_than[250]",
+            'rules'=>"trim|isset|numeric|greater_than[130]|less_than[250]",
         ),
         array(
             'field'=>"weight",
             'label'=>"lang:weight",
-            'rules'=>"trim|isset|required|numeric|greater_than[30]|less_than[250]",
+            'rules'=>"trim|isset|numeric|greater_than[30]|less_than[250]",
         ),
         array(
             'field'=>"sleepStart",
             'label'=>"lang:sleepStart",
-            'rules'=>"trim|isset|required|valid_time",
+            'rules'=>"trim|isset|valid_time",
         ),
         array(
             'field'=>"sleepEnd",
             'label'=>"lang:sleepEnd",
-            'rules'=>"trim|isset|required|valid_time",
+            'rules'=>"trim|isset|valid_time",
         ),
         array(
             'field'=>"sportsTimePerDay",
             'label'=>"lang:sportsTimePerDay",
-            'rules'=>"trim|isset|required|numeric|valid_sports_time_per_day"
+            'rules'=>"trim|isset|numeric|valid_sports_time_per_day"
         ),
         array(
             'field'=>"breakfast",
             'label'=>"lang:breakfastTime",
-            'rules'=>"trim|isset|required|valid_time"
+            'rules'=>"trim|isset|valid_time"
         ),
         array(
             'field'=>"lunch",
             'label'=>"lang:lunchTime",
-            'rules'=>"trim|isset|required|valid_time",
+            'rules'=>"trim|isset|valid_time",
         ),
         array(
             'field'=>"supper",
             'label'=>"lang:supperTime",
-            'rules'=>"trim|isset|required|valid_time",
+            'rules'=>"trim|isset|valid_time",
         ),
         array(
             'field'=>"ifSmoke",
             'label'=>"lang:ifSmoke",
-            'rules'=>"trim|isset|required|numeric"
+            'rules'=>"trim|isset|numeric"
         ),
         array(
             'field'=>"ifMedicine",
             'label'=>"lang:ifMedicine",
-            'rules'=>"trim|isset|required|numeric",
+            'rules'=>"trim|isset|numeric",
         ),
         array(
             'field'=>"ifOperation",
             'label'=>"lang:ifOperation",
-            'rules'=>"trim|isset|required|numeric"
+            'rules'=>"trim|isset|numeric"
         ),
         array(
             'field'=>"ifDrink",
             'label'=>"lang:ifDrink",
-            'rules'=>"trim|isset|required|numeric"
+            'rules'=>"trim|isset|numeric"
         ),
         array(
             'field'=>"operationDescription",
@@ -139,7 +139,7 @@ $config = array(
         array(
             'field'=>"illness",
             'label'=>"lang:illness",
-            'rules'=>"trim|isset|xss_clean"
+            'rules'=>"trim|isset|xss_clean|valid_illness"
         ),
         array(
             'field'=>"aim",
@@ -154,27 +154,27 @@ $config = array(
         array(
             'field'=>"bodyStatus",
             'label'=>"lang:bodyStatus",
-            'rules'=>"trim|isset|numeric"
+            'rules'=>"trim|isset|xss_clean|valid_body_status"
         ),
         array(
             'field'=>"gymTimeOneStart",
             'label'=>"lang:gymTimeOneStart",
-            'rules'=>"trim|isset|xss_clean|valid_date"
+            'rules'=>"trim|isset|xss_clean|valid_time"
         ),
         array(
             'field'=>"gymTimeOneEnd",
             'label'=>"lang:gymTimeOneStart",
-            'rules'=>"trim|isset|xss_clean|valid_date"
+            'rules'=>"trim|isset|xss_clean|valid_time"
         ),
         array(
             'field'=>"gymTimeTwoStart",
             'label'=>"lang:gymTimeTwoStart",
-            'rules'=>"trim|isset|xss_clean|valid_date"
+            'rules'=>"trim|isset|xss_clean|valid_time"
         ),
         array(
             'field'=>"gymTimeTwoEnd",
             'label'=>"lang:gymTimeTwoStart",
-            'rules'=>"trim|isset|xss_clean|valid_date"
+            'rules'=>"trim|isset|xss_clean|valid_time"
         ),
         array(
             'field'=>"ifGymRoom",
@@ -186,5 +186,37 @@ $config = array(
             'label'=>"lang:toolDescription",
             'rules'=>"trim|isset|xss_clean"
         )
+    ),
+    "program"=>array(
+        array(
+            'field'=>"name",
+            'label'=>"lang:name",
+            'rules'=>"trim|xss_clean|required"
+        ),
+        array(
+            'field'=>"introduction",
+            'label'=>"lang:introduction",
+            'rules'=>"trim|xss_clean|required"
+        ),
+        array(
+            'field'=>"prerequisite",
+            'label'=>"lang:prerequisite",
+            'rules'=>'trim|xss_clean'
+        ),
+        array(
+            'field'=>"goal",
+            "label"=>"lang:goal",
+            'rules'=>"trim|xss_clean",
+        ),
+       /* array(
+            'field'=>"numberOfUser",
+            'label'=>"lang:numberOfUser",
+            'rules'=>"trim|required|numeric|greater_than[0]|less_than[999]"
+        ),*/
+        array(
+            'field'=>"maxNumOfUser",
+            'label'=>"lang:maxNumOfUser",
+            'rules'=>"trim|required|numeric|greater_than[0]|less_than[999]"
+        ),
     ),
 );

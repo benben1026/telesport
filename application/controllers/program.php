@@ -10,7 +10,14 @@
  */
 
 class Login extends Acl_Ajax_Controller {
-    function __construct(){
+    public function index(){
 
     }
+    public function createProgram(){
+        //$postData = $this->input->post();
+        $this->form_validation->set_language("chinese");
+        $this->form_validation->set_error_delimiters('','');
+
+    }
+
 }

@@ -23,6 +23,9 @@ $lang['is_natural_no_zero']	= "%s只能是大于零的自然数";
 $lang['decimal']			= "%s只能是十进制整数";
 $lang['less_than']			= "%s必须小于%s";
 $lang['greater_than']		= "%s必须大于%s";
+
+
+/*callback check for register*/
 $lang['valid_language']     = "不合法的语言名称";
 $lang['valid_gender']     = "不合法的性别";
 $lang['valid_birthday']     ="日期格式不正确";
@@ -33,7 +36,13 @@ $lang['valid_aim']          ="%s不是一个合法的选项";
 $lang['valid_illness']          =   "没有这种疾病";
 $lang['valid_aim']          =   "%s不是一个合法的选项";
 $lang['valid_body_status']          =   "%s不是一个合法的选项";
-/**Labels**/
+$lang['valid_date']         ="不是一个合法的日期";
+/*call back for register end*/
+
+
+
+
+/**Labels for register**/
 $lang['username']           =   "用户名";
 $lang['password']           =   "密码";
 $lang['firstName']          =   "名";
@@ -66,5 +75,6 @@ $lang['illness']            =   "疾病";
 $lang["illnessDescription"] =   "疾病描述";
 $lang['operationDescription']=  "手术描述";
 $lang['medicineDescription']    =   "药物描述";
+/*Label for register end*/
 /* End of file form_validation_lang.php */
 /* Location: ./system/language/english/form_validation_lang.php */

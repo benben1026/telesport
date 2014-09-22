@@ -18,10 +18,23 @@ class Tele_Form_validation extends CI_Form_validation
         return in_array($option,array_keys($this->ci->config->item("formConstant")["aim"]));
     }
     function valid_illness($option){
-        return in_array($option,array_keys($this->ci->config->item("formConstant")["illness"]));
+        $illnesses = preg_split("/;/",$option);
+        foreach($illnesses as $illness){
+            if(!in_array($illness,array_keys($this->ci->config->item("formConstant")["illness"]))){
+                return false;
+            }
+        }
+        return true;
     }
     function valid_body_status($option){
-        return in_array($option,array_keys($this->ci->config->item("formConstant")["bodyStatus"]));
+        $statuses = preg_split("/;/",$option);
+
+        foreach($statuses as $status){
+            if(!in_array($status,array_keys($this->ci->config->item("formConstant")["bodyStatus"]))){
+                return false;
+            }
+        }
+        return true;
     }
     function valid_language($lang){
         return true;

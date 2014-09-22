@@ -21,7 +21,9 @@ class Register extends CI_Controller {
        // print_r( $this->session->all_userdata());
     }
 	public function ajaxRegister()
+
 	{
+
         $this->load->library('form_validation');
         $this->load->library("Tele_Form_validation");
         $postData = $this->input->post();
@@ -58,7 +60,7 @@ class Register extends CI_Controller {
                 'sleepEnd'=>$postData['sleepEnd'],
                 'sportsTimePerDay'=>$postData['sportsTimePerDay'],
                 'breakfast'=>$postData['breakfast'],
-                'lunch'=>$postData['lunch'],
+                'supper'=>$postData['supper'],
                 'ifSmoke'=>$postData['ifSmoke']==0? false : true,
                 'ifDrink'=>$postData['ifDrink']==0? false: true,
                 'illness' =>$postData['illness'],
@@ -66,7 +68,7 @@ class Register extends CI_Controller {
                 'ifMedicine'=>$postData['ifMedicine']==0?false:true,
                 'medicineDescription'=>$postData['medicineDescription'],
                 'ifOperation'=>$postData['ifOperation']==0?false:true,
-                'operationDescription'=>$postData['operationDescription']==0?false:true,
+                'operationDescription'=>$postData['operationDescription'],
                 'bodyStatus'=>$postData['bodyStatus'],
                 'gymTimeOneStart'=>$postData['gymTimeOneStart'],
                 'gymTimeOneEnd'=>$postData['gymTimeOneEnd'],
@@ -77,9 +79,7 @@ class Register extends CI_Controller {
                 'aim'=>$postData['aim'],
                 'expectation'=>$postData['expectation']
             );
-
-            print_r($user);print_r($trainee);exit;
-            if($this->registermodel->register($user)){
+            if($this->registermodel->register($user,$trainee)){
                 printJson(array(
                    'status'=>true,
                 ));
