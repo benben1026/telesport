@@ -29,7 +29,7 @@ $config = array(
         array(
             'field'=>'username',
             'label'=> 'lang:Username',
-            'rules'=>'trim|isset|required|alpha_dash|is_unique[user.username]|xss_clean'
+            'rules'=>'trim|required|alpha_dash|is_unique[user.username]|xss_clean'
         ),
         array(
             'field'=>"age",
@@ -59,7 +59,7 @@ $config = array(
         array(
             'field'=>'birthday',
             'label'=>'lang:birthday',
-            'rules'=>'trim|isset|required|xss_clean|valid_birthday'
+            'rules'=>'trim|isset|xss_clean|valid_birthday'
         ),
         array(
             'field'=>"occupation",
