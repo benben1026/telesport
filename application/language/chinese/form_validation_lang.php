@@ -47,6 +47,7 @@ $lang['username']           =   "用户名";
 $lang['password']           =   "密码";
 $lang['firstName']          =   "名";
 $lang['lastName']           =   "姓";
+$lang['age']                =   "年龄";
 $lang['passwordConfirmation']=  "密码";
 $lang['firstLanguage']      =   "母语";
 $lang['secondLanguage']     =   "第二语言";
