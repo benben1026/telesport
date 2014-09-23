@@ -13,7 +13,6 @@ class RegisterModel extends CI_Model {
         parent::__construct();
     }
     function register($user,$trainee){
-       $this->db->insert("user",$user);
        if($this->db->insert("user",$user)){
            $id = $this->db->insert_id();
            $trainee['userId'] = $id;
