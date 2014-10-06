@@ -96,7 +96,7 @@ class TemplateModel extends CI_Model {
         }
         $sql = "UPDATE template SET componentOrder=?, numOfCom=? WHERE templateId = ?";
         $query = $this->db->query($sql, array(json_encode($order), $i, $templateId));
-        return true;
+        return $order;
     }
     
     function createComponent($componentType, $templateId){
@@ -142,8 +142,66 @@ class TemplateModel extends CI_Model {
         return $res ? $componentId : false;
     }
     
-    function modifyTemplate(){
+    function modifyTemplate($templateId, $userId, $name, $remark, $json_component){
+        if(!isset($templateId)){
+            return false;
+        }
+        $sql = "UPDATE template SET `name`=?, remark=? WHERE `templateId`=?";
+        $res = $this->db->query($sql, array($name, $remark, $templateId));
+        if(!$res){
+            return false;
+        }
         
+        $component = json_decode($json_component, TRUE);
+        $order = array();
+        for($i = 0; $i < count($component); $i++){
+            if($component[$i]['componentId'] == -1){
+                if($component[$i]['componentType'] == 'generalItem'){
+                    $componentId = $this->createGeneralItem($templateId, $component[$i]['type'], $component[$i]['content']);
+                }else if($component[$i]['componentType'] == 'trainingItem'){
+                    $componentId = $this->createTrainingItem($templateId, $component[$i]['name'], $component[$i]['numOfSet'], $component[$i]['numPerSet'], $component[$i]['finishTime'], $component[$i]['remark']);
+                }else{
+                    $componentId = -1;
+                }
+                if($componentId != -1){
+                    $order[$i] = $componentId;
+                }
+            }else{
+                if($component[$i]['componentType'] == 'generalItem'){
+                    $res = $this->modifyGeneralItem($component[$i]['componentId'], $component[$i]['content']);
+                }else if($component[$i]['componentType'] == 'trainingItem'){
+                    $res = $this->modifyTrainingItem($component[$i]['componentId'], $component[$i]['name'], $component[$i]['numOfSet'], $component[$i]['numPerSet'], $component[$i]['finishTime'], $component[$i]['remark']);
+                }else{
+                    $res = false;
+                }
+                if($res){
+                    $order[$i] = $component[$i]['componentId'];
+                }
+            }
+        }
+        return $order;
+    }
+    
+    function modifyGeneralItem($componentId, $content){
+        if(isset($componentId)){
+            $sql = "UPDATE generalItem SET `content`=? WHERE `componentId`=?";
+            $res = $this->db->query($sql, array($content, $componentId));
+            if($res){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    function modifyTrainingItem($componentId, $name, $numOfSet, $numPerSet, $finishTime, $remark){
+        if(isset($componentId)){
+            $sql = "UPDATE trainingItem SET `name`=?, `numOfSet`=?, `numPerSet`=?, `finishTime`=?, `remark`=? WHERE `componentId`=?";
+            $res = $this->db->query($sql, array($name, $numOfSet, $numPerSet, $finishTime, $remark, $componentId));
+            if($res){
+                return true;
+            }
+        }
+        return false;
     }
     
     function delete($templateId, $userId){
