@@ -260,3 +260,7 @@ CREATE TABLE `customerResource`(
   `tc` MEDIUMTEXT,
   PRIMARY KEY (`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+ALTER TABLE  `user` ADD  `username` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL AFTER  `userId` ,
+ADD  `age` INT NOT NULL AFTER  `username` ;

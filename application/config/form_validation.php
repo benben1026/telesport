@@ -27,6 +27,16 @@ $config = array(
             'rules'=>'trim|isset|required|valid_email|is_unique[user.email]|xss_clean'
         ),
         array(
+            'field'=>'username',
+            'label'=> 'lang:Username',
+            'rules'=>'trim|required|alpha_dash|is_unique[user.username]|xss_clean'
+        ),
+        array(
+            'field'=>"age",
+            "label"=>"lang:Age",
+            'rules'=>"trim|required|numeric|greater_than[0]|less_than[100]"
+        ),
+        array(
             'field'=>'gender',
             'label'=>'lang:Gender',
             'rules'=>'trim|isset|required|alpha_numeric|valid_gender|xss_clean'
@@ -49,7 +59,7 @@ $config = array(
         array(
             'field'=>'birthday',
             'label'=>'lang:birthday',
-            'rules'=>'trim|isset|required|xss_clean|valid_birthday'
+            'rules'=>'trim|isset|xss_clean|valid_birthday'
         ),
         array(
             'field'=>"occupation",

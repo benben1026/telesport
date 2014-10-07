@@ -16,7 +16,7 @@ class LoginModel extends CI_Model {
 
     function checkLogin($email, $password){
         $sql = "SELECT userId, password, isVerified, userType FROM user WHERE email=?";
-        $query = $this->db->query($sql, $email);
+        $query = $this->db->query($sql, array($email));
         $row = $query->result_array();
         if(!empty($row) && $row[0]['isVerified'] == 0){
             return -2;

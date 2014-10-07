@@ -38,6 +38,7 @@ class Register extends CI_Controller {
             $postData = $this->input->post();
             $this->load->model('registermodel');
             $user = array(
+                'username'=>$postData['username'],
                 'firstName'=>$postData['firstName'],
                 'lastName'=>$postData['lastName'],
                 'email'=>$postData['email'],
@@ -46,6 +47,7 @@ class Register extends CI_Controller {
                 'secondLanguage'=>$postData['secondLanguage'],
                 'nationality'=>$postData['nationality'],
                 'birthday'=>$postData['birthday'],
+                'age'=>$postData['age'],
                 'balance'=>DEFAULT_BALANCE,
                 'userType'=>TRAINEE,
                 'rank'=>DEFAULT_RANK,
