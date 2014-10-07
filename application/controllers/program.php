@@ -14,9 +14,16 @@ class Login extends Acl_Ajax_Controller {
 
     }
     public function createProgram(){
-        //$postData = $this->input->post();
+        $this->load->library('form_validation');
+        $this->load->library("Tele_Form_validation");
+        $postData = $this->input->post();
+
+        if(empty($postData)){
+            show_404();
+        }
         $this->form_validation->set_language("chinese");
         $this->form_validation->set_error_delimiters('','');
+
 
     }
 

@@ -122,7 +122,7 @@ class Register extends CI_Controller {
            printJson(array(
                'status'=>false
            ));
-        }
+        
     }
 }
 

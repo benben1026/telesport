@@ -97,7 +97,7 @@ CREATE TABLE `coupon`(
 
 DROP TABLE IF EXISTS `transation`;
 DROP TABLE IF EXISTS `transaction`;
-CREATE TABLE `transaction`(
+CREATE TABLE `transaction
 	`transactionId` BIGINT NOT NULL AUTO_INCREMENT,
 	`typeId` TINYINT NOT NULL,
 	`programId` BIGINT,
@@ -122,7 +122,7 @@ CREATE TABLE `program`(
 	`goal` TEXT,
 	`numOfUser` INT NOT NULL,
 	`maxNumOfUser` INT NOT NULL,
-	`duration` INT NOT NULL,
+	`duration` INT NOT NUL
 	`templates` TEXT NOT NULL,
 	`pricePlanId` BIGINT NOT NULL,
 	`isPublished` TINYINT NOT NULL,
