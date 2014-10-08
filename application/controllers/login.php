@@ -87,7 +87,7 @@ class Login extends CI_Controller {
             printJson($res);
         }
         
-        public function getUserInfo(){
+        public function getUserName(){
             $id  = isLogin();
             if($id){
                 $this->load->model("usermodel");
@@ -95,6 +95,23 @@ class Login extends CI_Controller {
                 printJson(array(
                     "status"=>true,
                     "name"=>$user['username'],
+                    ));
+            }else{
+                printJson(array(
+                    "status"=>false,
+                    ));
+            }
+        }
+         public function getUserInfo(){
+            $id  = isLogin();
+            if($id){
+                $this->load->model("usermodel");
+                $user = $this->usermodel->getUserById($id);
+                unset($user['password']);
+                unset($user['token']);
+                printJson(array(
+                    "status"=>true,
+                    "userInfo"=>$user,
                     ));
             }else{
                 printJson(array(
