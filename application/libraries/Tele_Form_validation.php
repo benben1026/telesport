@@ -46,10 +46,10 @@ class Tele_Form_validation extends CI_Form_validation
         return preg_match("/^[01]{1}$/",$gender)>0?true:false;
     }
     function valid_birthday($birthday){
-        return preg_match("/^(19[0-9]{2}|20[0-9]{2})-(0[0-9]|1[12])-([01][0-9]|2[0-4])$/",$birthday)>0?true:false;
+        return preg_match("/^(19[0-9]{2}|20[0-9]{2})-(0[0-9]|1[0-2])-([01][0-9]|2[0-4])$/",$birthday)>0?true:false;
     }
     function valid_date($date){
-        return preg_match("/^(19[0-9]{2}|20[0-9]{2})-(0[0-9]|1[12])-([01][0-9]|2[0-4])$/",$date)>0?true:false;
+        return preg_match("/^(19[0-9]{2}|20[0-9]{2})-(0[0-9]|1[0-2])-([01][0-9]|2[0-4])$/",$date)>0?true:false;
     }
     function valid_time($time){
         return preg_match("/^\d{2}(:\d{2}){1,2}$/",$time)>0?true:false;

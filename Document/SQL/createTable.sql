@@ -119,15 +119,17 @@ CREATE TABLE `program`(
 	`name` VARCHAR(255) NOT NULL,
 	`introduction` TEXT NOT NULL,
 	`prerequisite` TEXT,
+	`userId` BIGINT NOT NULL,
 	`goal` TEXT,
 	`maxNumOfUser` INT NOT NULL,
 	`duration` INT NOT NULL,
-	`templates` TEXT NOT NULL DEFAULT '[]',
+	`templates` TEXT DEFAULT "",
 	`pricePlanId` BIGINT DEFAULT NULL,
 	`isPublished` TINYINT NOT NULL DEFAULT 0,
 	`publishDate` DATETIME,
 	`lastModified` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	PRIMARY KEY (`programId`)
+	PRIMARY KEY (`programId`),
+	FOREIGN KEY (`userId`) REFERENCES `user`(`userId`) ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `template`;

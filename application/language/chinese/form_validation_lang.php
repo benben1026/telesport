@@ -76,6 +76,9 @@ $lang['illness']            =   "疾病";
 $lang["illnessDescription"] =   "疾病描述";
 $lang['operationDescription']=  "手术描述";
 $lang['medicineDescription']    =   "药物描述";
+$lang['name']               ="名称";
+$lang['introduction']       ="介绍";
+$lang['maxNumOfUser']       ="最大人数";
 /*Label for register end*/
 /* End of file form_validation_lang.php */
 /* Location: ./system/language/english/form_validation_lang.php */

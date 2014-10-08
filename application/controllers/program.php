@@ -28,10 +28,10 @@ class Program extends Acl_Ajax_Controller {
         $this->loadResource();
         if($this->form_validation->run('program')){
             $postData = $this->input->post();
-            $postData['userId'] = $this->user;
+            $postData['userId'] = $this->user['id'];
             $this->load->model('programmodel');
             $programId = $this->programmodel->addProgram($postData);
-            if($proramId){
+            if($programId){
                 printJson(array(
                     'status'=>"true",
                     'id'=>$programId
@@ -56,7 +56,11 @@ class Program extends Acl_Ajax_Controller {
         if($this->form_validation->run('pricePlan')){
            $postData = $this->input->post();
            $this->load->model('programmodel');
-           $pricePlanId = $this->programmodel->addPricePlan('postData');
+           $pricePlanId = $this->programmodel->addPricePlan(array(
+                "fromDate"=>$postData['fromDate'],
+                'toDate'=>$postData['toDate'],
+                'price'=>$postData['price']
+                ),$postData['programId']);
            if($pricePlanId){
                 printJson(array(
                     'status'=>"true",
@@ -81,7 +85,14 @@ class Program extends Acl_Ajax_Controller {
         if($this->form_validation->run('updateProgram')){
             $postData = $this->input->post();
             $this->load->model('programmodel');
-            if($this->programmodel->updateProgram($postData)){
+            $valid_update_key = array('programId','name','templates','introduction','prerequisite','goal','maxNumOfUser','duration','isPublished');
+            $program = array();
+            foreach($postData as $key=>$value){
+                if(in_array($key,$valid_update_key)){
+                    $program[$key] = $value;
+                }
+            }
+            if($this->programmodel->updateProgram($program)){
                 printJson(array(
                     'status'=>"true",
                     'id'=>$postData['programId']
@@ -126,5 +137,4 @@ class Program extends Acl_Ajax_Controller {
                 ));
         }
     }
-
 }

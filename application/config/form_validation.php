@@ -229,10 +229,27 @@ $config = array(
             'rules'=>'trim|numeric|greater_than[0]|less_than[168]',
         ),
         array(
-            'field'=>"template",
+            'field'=>"templates",
             'label'=>"lang:template",
             'rules'=>"trim|xss_clean"
         ),
+    ),
+    'pricePlan'=>array(
+        array(
+            'field'=>"programId",
+            'label'=>"lang:progranId",
+            'rules'=>"trim|numeric"
+            ),
+        array(
+            'field'=>"fromDate",
+            'label'=>"lang:fromDate",
+            'rules'=>"trim|xss_clean|valid_date"
+            ),
+        array(
+            'field'=>"toDate",
+            'label'=>"lang:toDate",
+            'rules'=>"trim|xss_clean|valid_date"
+            ),
     ),
     "updateProgram"=>array(
         array(
@@ -241,7 +258,7 @@ $config = array(
             'rules'=>"trim|numeric|required"
         ),
         array(
-            'field'=>"template",
+            'field'=>"templates",
             'label'=>"lang:template",
             'rules'=>"trim|xss_clean"
         ),

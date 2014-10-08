@@ -86,6 +86,15 @@ class Login extends CI_Controller {
         function output($res){
             printJson($res);
         }
+        
+        public function getUserInfo(){
+            $id  = isLogin();
+            $this->load->model("usermodel");
+            $user = $this->usermodel->getUserById($id);
+            printJson(array(
+                "name"=>$user['username'],
+                ));
+        }
 }
 
 /* End of file welcome.php */
