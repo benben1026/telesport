@@ -5,31 +5,49 @@ class Template extends CI_Controller {
         $postData = $this->input->post();
         $this->load->model("templatemodel");
         if($postData['type'] == 1){
-            if(isset($postData['programId'])){
-                $this->getTemplate($postData['userId'], $postData['programId']);
+            if(isset($postData['userId'], $postData['programId'])){
+                $this->getTemplateList($postData['userId'], $postData['programId']);
+            }else if(isset($postData['userId'])){
+                $this->getTemplateList($postData['userId'], 0);
             }else{
-                $this->getTemplate($postData['userId'], 0);
+                $output = array(
+                    'RESULT'=>FALSE,
+                    'ERROR'=>'INVALID_PARAMETER'
+                );
+                $this->output($output);
             }
         }else if($postData['type'] == 2){
-            $this->getDetailedTemplate($postData['templateId']);
+            if(isset($postData['templateId'])){
+                $this->getDetailedTemplate($postData['templateId']);
+            }else{
+                $output = array(
+                    'RESULT'=>FALSE,
+                    'ERROR'=>'INVALID_PARAMETER'
+                );
+                $this->output($output);
+            }
         }else if($postData['type'] == 3){
             //create
-            if(!isset($postData['programId'])){
+            if(isset($postData['programId'], $postData['userId'], $postData['name'], $postData['remark'], $postData['component'])){
+                $this->createTemplate($postData['programId'], $postData['userId'], $postData['name'], $postData['remark'], $postData['component']);
+            }else{
                 $output = array(
-                    'RESULT'=>FALSE
+                    'RESULT'=>FALSE,
+                    'ERROR'=>'INVALID_PARAMETER'
                 );
                 $this->output($output);
             }
-            $this->createTemplate($postData['programId'], $postData['userId'], $postData['name'], $postData['remark'], $postData['component']);
         }else if($postData['type'] == 4){
             //modify
-            if(!isset($postData['templateId'])){
+            if(isset($postData['templateId'])){
+                $this->modifyTemplate($postData['templateId'], $postData['userId'], $postData['name'], $postData['remark'], $postData['component']);
+            }else{
                 $output = array(
-                    'RESULT'=>FALSE
+                    'RESULT'=>FALSE,
+                    'ERROR'=>'INVALID_PARAMETER'
                 );
                 $this->output($output);
             }
-            $this->modifyTemplate($postData['templateId'], $postData['userId'], $postData['name'], $postData['remark'], $postData['component']);
         }else if($postData['type'] == 5){
             //delete
             if(isset($postData['templateId']) && isset($postData['userId'])){
@@ -41,41 +59,26 @@ class Template extends CI_Controller {
                 $this->output($output);
             }
         }else{
-            
+            $output = array(
+                'RESULT'=>FALSE,
+                'ERROR'=>'INVALID_PARAMETER'
+            );
+            $this->output($output);
         }
     }
     
-    public function getTemplate($userId, $programId){
-        $result = $this->templatemodel->getTemplate($userId, $programId);
-        $this->output($result);
+    public function getTemplateList($userId, $programId){
+        $this->output($this->templatemodel->getTemplate($userId, $programId));
         return;
     }
     
     public function getDetailedTemplate($templateId){
-        
+        $this->output($this->templatemodel->getDetailedTemplate($templateId));
+        return;
     }
     
     public function createTemplate($programId, $userId, $name, $remark, $json_component){
-        if(empty($programId) || empty($userId)){
-            $output = array(
-                'RESULT'=>TRUE
-            );
-            $this->output($output);
-            return;
-        }
-        $order = $this->templatemodel->createTemplate($programId, $userId, $name, $remark, $json_component);
-        if($order != false){
-            $output = array(
-                'RESULT'=>TRUE,
-                'ID'=>$order
-            );
-            $this->output($output);
-        }else{
-            $output = array(
-                'RESULT'=>FALSE
-            );
-            $this->output($output);
-        }
+        $this->output($this->templatemodel->createTemplate($programId, $userId, $name, $remark, $json_component));
     }
     
     public function modifyTemplate($templateId, $userId, $name, $remark, $json_component){

@@ -51,36 +51,77 @@ class TemplateModel extends CI_Model {
     }
     
     function getDetailedTemplate($templateId){
-        $sql = "SELECT * FROM tempalte WHERE templateId=?";
+        $output = array();
+        $sql = "SELECT * FROM template WHERE templateId=?";
         $query = $this->db->query($sql, array($templateId));
         $data = $query->result_array();
-        if(!empty($data) && count($data) == 1){
-            $sql = "SELECT component.componentId, generalItem.typeId, generalItem.content FROM component INNER JOIN generalItem ON component.componentId=generalItem.componentId WHERE templateId=?";
-            $query = $this->db->query($sql, array($templateId));
-            $generalItem = $query->result_array();
-            $sql = "SELECT component.componentId, trainingItem.name, trainingItem.numOfSet, trainingItem.numPerSet, trainingItem.finishTime, trainingItem.remark"
-                    ."FROM component INNER JOIN trainingItem ON component.componentId=trainingItem.componentId WHERE templateId=?";
-            $query = $this->db->query($sql, array($templateId));
-            $trainingItem = $query->result_array(); 
-            
+        if(empty($data) || count($data) != 1){
+            $output['RESULT'] = FALSE;
+            $output['ERROR'] = 'INVALID_ID';
+            return $output;
         }
+        $sql = "SELECT component.componentId, generalItem.typeId, generalItem.content FROM component INNER JOIN generalItem ON component.componentId=generalItem.componentId WHERE templateId=?";
+        $query = $this->db->query($sql, array($templateId));
+        $generalItem = $query->result_array();
+        $sql = "SELECT component.componentId, trainingItem.name, trainingItem.numOfSet, trainingItem.numPerSet, trainingItem.finishTime, trainingItem.remark"
+                ." FROM component INNER JOIN trainingItem ON component.componentId=trainingItem.componentId WHERE templateId=?";
+        $query = $this->db->query($sql, array($templateId));
+        $trainingItem = $query->result_array(); 
+        $order = json_decode($data[0]['componentOrder'], true);
+        $component = array();
+        for($i = 0; $i < count($order); $i++){
+            for($j = 0; $j < count($generalItem); $j++){
+                if($order[$i] == $generalItem[$j]['componentId']){
+                    $component[$i] = $generalItem[$j];
+                    break;
+                }
+            }
+            for($j = 0; $j < count($trainingItem); $j++){
+                if($order[$i] == $trainingItem[$j]['componentId']){
+                    $component[$i] = $trainingItem[$j];
+                    break;
+                }
+            }
+        }
+        $output['RESULT'] = TRUE;
+        $output['name'] = $data[0]['name'];
+        $output['remark'] = $data[0]['remark'];
+        $output['lastModified'] = $data[0]['lastModified'];
+        $output['programId'] = $data[0]['programId'];
+        $output['component'] = $component;
+        return $output;
     }
     
     function createTemplate($programId, $userId, $name, $remark, $json_component){
+        $output = array();
+        if(!is_numeric($programId) || !is_numeric($userId)){
+            $output['RESULT'] = FALSE;
+            $output['ERROR'] = 'INVALID_ID';
+            return $output;
+        }
+        $component = json_decode($json_component, TRUE);
+        if(count($component) > 10){
+            $output['RESULT'] = FALSE;
+            $output['ERROR'] = 'TOO_MANY_COMPONENTS';
+            return $output;
+        }
         $sql = "INSERT INTO template(name, remark, programId, numOfCom, componentOrder, userId) VALUES(?, ?, ?, '0', '', ?)";
         $res = $this->db->query($sql, array($name, $remark, $programId, $userId));
         if(!$res){
-            return false;
+            $output['RESULT'] = FALSE;
+            $output['ERROR'] = 'SERVER_ERROR';
+            return $output;
         }
         $sql = "SHOW TABLE status WHERE Name = 'template'";
         $query = $this->db->query($sql);
         $result = $query->result_array();
         if(empty($result)){
-            return false;
+            $output['RESULT'] = FALSE;
+            $output['ERROR'] = 'SERVER_ERROR';
+            return $output;
         }else{
             $templateId = $result[0]['Auto_increment'] - 1;
         }
-        $component = json_decode($json_component, TRUE);
         $order = array();
         for($i = 0; $i < count($component); $i++){
             if($component[$i]['componentType'] == 'generalItem'){
@@ -88,7 +129,8 @@ class TemplateModel extends CI_Model {
             }else if($component[$i]['componentType'] == 'trainingItem'){
                 $componentId = $this->createTrainingItem($templateId, $component[$i]['name'], $component[$i]['numOfSet'], $component[$i]['numPerSet'], $component[$i]['finishTime'], $component[$i]['remark']);
             }else{
-                $error = "ERROR";
+                $output['WARNING'] = 'INVALID_TYPE:' . $component[$i]['componentType'];
+                $componentId = -1;
             }
             if($componentId != -1){
                 $order[$i] = $componentId;
@@ -96,7 +138,9 @@ class TemplateModel extends CI_Model {
         }
         $sql = "UPDATE template SET componentOrder=?, numOfCom=? WHERE templateId = ?";
         $query = $this->db->query($sql, array(json_encode($order), $i, $templateId));
-        return $order;
+        $output['RESULT'] = TRUE;
+        $output['ID'] = $order;
+        return $output;
     }
     
     function createComponent($componentType, $templateId){
@@ -143,16 +187,26 @@ class TemplateModel extends CI_Model {
     }
     
     function modifyTemplate($templateId, $userId, $name, $remark, $json_component){
-        if(!isset($templateId)){
-            return false;
+        $output = array();
+        if(!is_numeric($templateId) || !is_numeric($userId)){
+            $output['RESULT'] = FALSE;
+            $output['ERROR'] = 'INVALID_ID';
+            return $output;
+        }
+        $component = json_decode($json_component, TRUE);
+        if(count($component) > 10){
+            $output['RESULT'] = FALSE;
+            $output['ERROR'] = 'TOO_MANY_COMPONENTS';
+            return $output;
         }
         $sql = "UPDATE template SET `name`=?, remark=? WHERE `templateId`=?";
         $res = $this->db->query($sql, array($name, $remark, $templateId));
         if(!$res){
-            return false;
+            $output['RESULT'] = FALSE;
+            $output['ERROR'] = 'SERVER_ERROR';
+            return $output;
         }
         
-        $component = json_decode($json_component, TRUE);
         $order = array();
         for($i = 0; $i < count($component); $i++){
             if($component[$i]['componentId'] == -1){
@@ -179,7 +233,9 @@ class TemplateModel extends CI_Model {
                 }
             }
         }
-        return $order;
+        $output['RESULT'] = TRUE;
+        $output['ID'] = $order;
+        return $output;
     }
     
     function modifyGeneralItem($componentId, $content){
