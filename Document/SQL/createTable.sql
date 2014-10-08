@@ -97,7 +97,7 @@ CREATE TABLE `coupon`(
 
 DROP TABLE IF EXISTS `transation`;
 DROP TABLE IF EXISTS `transaction`;
-CREATE TABLE `transaction
+CREATE TABLE `transaction`(
 	`transactionId` BIGINT NOT NULL AUTO_INCREMENT,
 	`typeId` TINYINT NOT NULL,
 	`programId` BIGINT,
@@ -120,12 +120,11 @@ CREATE TABLE `program`(
 	`introduction` TEXT NOT NULL,
 	`prerequest` TEXT,
 	`goal` TEXT,
-	`numOfUser` INT NOT NULL,
 	`maxNumOfUser` INT NOT NULL,
-	`duration` INT NOT NUL
-	`templates` TEXT NOT NULL,
-	`pricePlanId` BIGINT NOT NULL,
-	`isPublished` TINYINT NOT NULL,
+	`duration` INT NOT NULL,
+	`templates` TEXT NOT NULL DEFAULT '[]',
+	`pricePlanId` BIGINT DEFAULT NULL,
+	`isPublished` TINYINT NOT NULL DEFAULT 0,
 	`publishDate` DATETIME,
 	`lastModified` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (`programId`)
@@ -140,7 +139,9 @@ CREATE TABLE `template`(
 	`numOfCom` TINYINT NOT NULL,
 	`programId` BIGINT NOT NULL,
 	`componentOrder` TEXT NOT NULL,
-	PRIMARY KEY (`templateId`)
+	`userId` BIGINT NOT NULL,
+	PRIMARY KEY (`templateId`),
+	FOREIGN KEY(`userId`) REFERENCES `user`(`userId`) ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `component`;

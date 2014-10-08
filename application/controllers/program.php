@@ -9,22 +9,121 @@
  * Time: 12:52 PM
  */
 
-class Login extends Acl_Ajax_Controller {
+class Program extends Acl_Ajax_Controller {
     public function index(){
 
     }
-    public function createProgram(){
+    function loadResource(){
         $this->load->library('form_validation');
         $this->load->library("Tele_Form_validation");
-        $postData = $this->input->post();
-
-        if(empty($postData)){
-            show_404();
-        }
         $this->form_validation->set_language("chinese");
         $this->form_validation->set_error_delimiters('','');
+        $postData = $this->input->post();
+        if(empty($postData)){
+            show_404();
+            exit;
+        }
+    }
+    public function createProgram(){
+        $this->loadResource();
+        if($this->form_validation->run('program')){
+            $postData = $this->input->post();
+            $this->load->model('programmodel');
+            $programId = $this->programmodel->addProgram($postData);
+            if($proramId){
+                printJson(array(
+                    'status'=>"true",
+                    'id'=>$programId
+                    ));
+            }else{
+                printJson(array(
+                    'status'=>false,
+                    'errorCode'=>$this->db->_error_number(),
+                ));
+            }
+        }else{
+            $errors = form_error();
+            printJson(array(
+                'status'=>false,
+                'errors'=>$errors,
+            ));
+        }
 
-
+    }
+    public function updatePricePlan(){
+        $this->loadResource();
+        if($this->form_validation->run('pricePlan')){
+           $postData = $this->input->post();
+           $this->load->model('programmodel');
+           $pricePlanId = $this->programmodel->addPricePlan('postData');
+           if($pricePlanId){
+                printJson(array(
+                    'status'=>"true",
+                    'id'=>$pricePlanId
+                    ));
+           }else{
+                printJson(array(
+                    'status'=>false,
+                    'errorCode'=>$this->db->_error_number(),
+                ));
+           }
+        }else{
+            $errors = form_error();
+            printJson(array(
+                'status'=>false,
+                'errors'=>$errors,
+            ));
+        }
+    }
+    public function updateProgram(){
+        $this->loadResource();
+        if($this->form_validation->run('updateProgram')){
+            $postData = $this->input->post();
+            $this->load->model('programmodel');
+            if($this->programmodel->updateProgram($postData)){
+                printJson(array(
+                    'status'=>"true",
+                    'id'=>$postData['programId']
+                    ));
+            }else{
+                printJson(array(
+                    'status'=>false,
+                    'errorCode'=>$this->db->_error_number(),
+                ));
+            }
+        }else{
+            $errors = form_error();
+            printJson(array(
+                'status'=>'false',
+                'errors'=>$errors,
+                ));
+        }
+    }
+    public function deleteProgram(){
+        $this->loadResource();
+        if($this->form_validation->run('deleteProgram')){
+            $postData = $this->input->post();
+            $this->load->model("programmodel");
+            if($this->programmodel->deleteProgram($postData['programId'])){
+                printJson(array(
+                    'status'=>"true",
+                    'id'=>$postData['programId']
+                ));
+            }else{
+                printJson(array(
+                    'status'=>false,
+                    'errorCode'=>$this->db->_error_number(),
+                ));
+            }
+            
+        
+        }else{
+            $errors = form_error();
+            printJson(array(
+                'status'=>'false',
+                'errors'=>$errors,
+                ));
+        }
     }
 
 }

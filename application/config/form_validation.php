@@ -218,15 +218,41 @@ $config = array(
             "label"=>"lang:goal",
             'rules'=>"trim|xss_clean",
         ),
-       /* array(
-            'field'=>"numberOfUser",
-            'label'=>"lang:numberOfUser",
-            'rules'=>"trim|required|numeric|greater_than[0]|less_than[999]"
-        ),*/
         array(
             'field'=>"maxNumOfUser",
             'label'=>"lang:maxNumOfUser",
             'rules'=>"trim|required|numeric|greater_than[0]|less_than[999]"
         ),
+        array(
+            'field'=>"duration",
+            'label'=>"lang:duration",
+            'rules'=>'trim|numeric|greater_than[0]|less_than[168]',
+        ),
+        array(
+            'field'=>"template",
+            'label'=>"lang:template",
+            'rules'=>"trim|xss_clean"
+        ),
+    ),
+    "updateProgram"=>array(
+        array(
+            'field'=>"programId",
+            'label'=>"lang:programId",
+            'rules'=>"trim|numeric|required"
+        ),
+        array(
+            'field'=>"template",
+            'label'=>"lang:template",
+            'rules'=>"trim|xss_clean"
+        ),
+    ),
+    "deleteProgram"=>array(
+        array(
+            'field'=>"programId",
+            'label'=>"lang:programId",
+            'rules'=>"trim|required|numeric"
+        ),    
+        
+        
     ),
 );
