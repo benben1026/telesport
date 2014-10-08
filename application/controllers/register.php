@@ -18,12 +18,9 @@ class Register extends CI_Controller {
 	 * @see http://codeigniter.com/user_guide/general/urls.html
 	 */
     public function index(){
-       // print_r( $this->session->all_userdata());
+      
     }
-	public function ajaxRegister()
-
-	{
-
+	public function ajaxRegister(){
         $this->load->library('form_validation');
         $this->load->library("Tele_Form_validation");
         $postData = $this->input->post();
@@ -124,7 +121,7 @@ class Register extends CI_Controller {
            printJson(array(
                'status'=>false
            ));
-        
+        }
     }
 }
 

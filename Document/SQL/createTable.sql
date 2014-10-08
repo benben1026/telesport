@@ -118,7 +118,7 @@ CREATE TABLE `program`(
 	`programId` BIGINT NOT NULL AUTO_INCREMENT,
 	`name` VARCHAR(255) NOT NULL,
 	`introduction` TEXT NOT NULL,
-	`prerequest` TEXT,
+	`prerequisite` TEXT,
 	`goal` TEXT,
 	`maxNumOfUser` INT NOT NULL,
 	`duration` INT NOT NULL,

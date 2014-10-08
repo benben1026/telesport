@@ -5,7 +5,7 @@ class Acl_Controller extends CI_Controller {
     function __construct()
     {
         parent::__construct();
-        $user = checkLogin();
+        $user = isLogin();
 
         $acl = $this->config->item('acl');
         if(!isset($acl[get_class($this)]) || !$acl[get_class($this)]){
@@ -14,7 +14,7 @@ class Acl_Controller extends CI_Controller {
     }
 }
 class Acl_Ajax_Controller extends CI_Controller {
-    protected $user;
+    protected $user = array();
     function __construct()
     {
         parent::__construct();
@@ -24,14 +24,19 @@ class Acl_Ajax_Controller extends CI_Controller {
             $this->user['type']= $this->session->userdata('userType');
             $acl = $this->config->item('acl');
             $this->load->model('aclmodel');
-
-            if(!isset($acl[ $this->user['type']][get_class($this)]) || !$acl[ $this->user['type']][get_class($this)]){
-                show_404();
-            }else{
-                echo "SUCCESS";
+          
+            if(!isset($acl[ $this->user['type']][get_class($this)]) || !$acl[$this->user['type']][get_class($this)]){
+                printJson(array(
+                    'status'=>false,
+                    'error'=>"You don't have privilige to access this"
+                ));
             }
         }else{
-            show_404();
+            printJson(array(
+                'status'=>false,
+                'error'=>"Please login"
+            ));
+            exit;
         }
     }
 }

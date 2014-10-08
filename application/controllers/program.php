@@ -11,7 +11,7 @@
 
 class Program extends Acl_Ajax_Controller {
     public function index(){
-
+       
     }
     function loadResource(){
         $this->load->library('form_validation');
@@ -28,6 +28,7 @@ class Program extends Acl_Ajax_Controller {
         $this->loadResource();
         if($this->form_validation->run('program')){
             $postData = $this->input->post();
+            $postData['userId'] = $this->user;
             $this->load->model('programmodel');
             $programId = $this->programmodel->addProgram($postData);
             if($proramId){

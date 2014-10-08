@@ -20,6 +20,9 @@ class Login extends CI_Controller {
 	public function index(){
             $this->load->model("loginmodel");
             $postData = $this->input->post();
+            if(!isset($postData['rememberMe'])){
+                $postData['rememberMe'] = false;
+            }
             //echo("Hello World");
             //echo("parameter=".$postData['cookie']);
             
