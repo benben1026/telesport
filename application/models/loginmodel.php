@@ -84,5 +84,10 @@ class LoginModel extends CI_Model {
         );
         $this->session->set_userdata($newData);
     }
+    function logout(){
+        delete_cookie("USER_LOGIN");
+        delete_cookie("USER_ID");
+        $this->session->sess_destroy();
+    }
 
 }

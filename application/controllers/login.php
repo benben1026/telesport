@@ -119,6 +119,10 @@ class Login extends CI_Controller {
                     ));
             }
         }
+        public function logout(){
+            $this->load->model("loginmodel");
+            $this->loginmodel->logout();
+        }
 }
 
 /* End of file welcome.php */

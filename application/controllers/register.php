@@ -123,6 +123,22 @@ class Register extends CI_Controller {
            ));
         }
     }
+    public function resetPasswordRequest($email){
+        $this->load->model("usermodel");
+        $token  = $this->usermodel->setToken(urldecode($email));
+        if($token){
+            $this->usermodel->sendEmail("shibocuhk@c9.io","shibocuhk@gmail.com","Test","This is a text");
+            printJson(array(
+                'status'=>true,
+                'msg'=>"OK"
+            ));
+        }else{
+            printJson(array(
+                'status'=>false,
+                'msg'=>"Invalid Email"
+            ));
+        }
+    }
 }
 
 /* End of file welcome.php */
