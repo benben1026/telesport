@@ -272,4 +272,21 @@ $config = array(
         
         
     ),
+    'resetPassword' => array(
+         array(
+            'field'=>'password',
+            "label" =>'lang:password',
+            'rules'=> 'trim|isset|required|matches[passConf]|min_length[6]|max_length[32]'
+        ),
+        array(
+            'field'=>'passConf',
+            'label'=> 'lang:passwordConfirmation',
+            'rules'=>'trim|isset|required'
+        ),
+        array(
+            'field'=>'email',
+            'label'=> 'lang:Email',
+            'rules'=>'trim|isset|required|valid_email|is_unique[user.email]|xss_clean'
+        ),
+    ),
 );

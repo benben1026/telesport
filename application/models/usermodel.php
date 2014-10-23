@@ -14,10 +14,22 @@ class UserModel extends CI_Model {
         parent::__construct();
     }
 
-    public function getUserById($id){
-        $sql = "SELECT * FROM user WHERE userId = ?";
+    public function getUserInfoById($id){
+        $sql = "SELECT height,weight,exercise,aim,sportsTimePerDay,ifSmoke,ifDrink,
+        illness,illnessDescription,ifMedicine,medicineDescription,ifOperation,
+        operationDescription,bodyStatus,firstName,lastName,nationality,firstLanguage,
+        secondLanguage,phone,occupation,address1,address2,address3 
+         FROM user INNER JOIN trainee ON 
+         user.userId = trainee.userId  WHERE user.userId = ?";
         $query = $this->db->query($sql,array($id));
         return $query->row_array();
+    }
+    function updateTraineeInfo($user,$trainee){
+        $this->db->where("userId",$user['id']);
+        $this->db->update("user",$user);
+         $this->db->where("userId",$user['id']);
+        $this->db->update("trainee",$trainee);
+        
     }
     function setToken($email){
         $this->load->helper("stringext");
@@ -48,5 +60,11 @@ class UserModel extends CI_Model {
         $this->email->subject($subject);
         $this->email->message($content);	
         $this->email->send();
+    }
+    function resetPassword($email,$token,$password){
+        $this->db->where("email",$email);
+        $this->db->where("token",$token);
+        $this->db->update("user",md5(md5($password)));
+        return $this->db->affected_rows();
     }
 }

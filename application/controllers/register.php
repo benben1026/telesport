@@ -139,6 +139,22 @@ class Register extends CI_Controller {
             ));
         }
     }
+    public function resetPasswordView(){
+        $this->load->view("resetpassword");
+        
+    }
+    public function resetPassword(){
+        $this->load->library('form_validation');
+        $this->load->library("Tele_Form_validation");
+        $this->form_validation->set_language("chinese");
+        $this->form_validation->set_error_delimiters('','');
+
+        if($this->form_validation->run('resetPassword')){
+            $this->load->model('usermodel');
+            $this->usermodel->resetPassword();
+            
+        }
+    }
 }
 
 /* End of file welcome.php */
