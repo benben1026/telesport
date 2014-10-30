@@ -15,7 +15,7 @@ class UserModel extends CI_Model {
     }
 
     public function getUserInfoById($id){
-        $sql = "SELECT height,weight,aim,sportsTimePerDay,ifSmoke,ifDrink,
+        $sql = "SELECT username,height,weight,aim,sportsTimePerDay,ifSmoke,ifDrink,
         illness,illnessDescription,ifMedicine,medicineDescription,ifOperation,
         operationDescription,bodyStatus,firstName,lastName,nationality,firstLanguage,
         secondLanguage,phone,occupation,address1,address2,address3 

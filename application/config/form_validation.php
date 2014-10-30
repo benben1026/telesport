@@ -289,6 +289,11 @@ $config = array(
             'rules'=>'trim|isset|required'
         ),
         array(
+            'field'=>'token',
+            'label'=> 'lang:passwordConfirmation',
+            'rules'=>'trim|isset|required'
+        ),
+        array(
             'field'=>'email',
             'label'=> 'lang:Email',
             'rules'=>'trim|isset|required|valid_email|is_unique[user.email]|xss_clean'

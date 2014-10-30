@@ -125,9 +125,11 @@ class Register extends CI_Controller {
     }
     public function resetPasswordRequest($email){
         $this->load->model("usermodel");
+        $this->load->helper('url');
         $token  = $this->usermodel->setToken(urldecode($email));
         if($token){
-            $this->usermodel->sendEmail("shibocuhk@c9.io","shibocuhk@gmail.com","Test","This is a text");
+            $data['url'] =  site_url()."/register/resetPasswordView/".$token;
+            $this->usermodel->sendEmail("admin@telesports.com","shibocuhk@gmail.com",'申请重新设置密码',$this->load->view('mail/resetpass', $data, true));
             printJson(array(
                 'status'=>true,
                 'msg'=>"OK"
@@ -141,6 +143,10 @@ class Register extends CI_Controller {
     }
     public function resetPasswordView(){
         $this->load->view("resetpassword");
+        
+    }
+    public function resetPasswordRequestView(){
+        $this->load->view("resetpasswordRequest");
         
     }
     public function resetPassword(){
