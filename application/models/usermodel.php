@@ -15,8 +15,8 @@ class UserModel extends CI_Model {
     }
 
     public function getUserInfoById($id){
-        $sql = "SELECT username,height,weight,aim,sportsTimePerDay,ifSmoke,ifDrink,
-        illness,illnessDescription,ifMedicine,medicineDescription,ifOperation,
+        $sql = "SELECT username,userType,height,weight,aim,sportsTimePerDay,ifSmoke,ifDrink,
+        illness,illnessDescription,medicineDescription,
         operationDescription,bodyStatus,firstName,lastName,nationality,firstLanguage,
         secondLanguage,phone,occupation,address1,address2,address3 
          FROM user INNER JOIN trainee ON 

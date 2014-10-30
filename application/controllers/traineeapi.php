@@ -28,7 +28,7 @@ class Traineeapi extends Acl_Ajax_Controller {
         if($this->user['id']){
             $this->load->model("usermodel");
             $user = $this->usermodel->getUserInfoById($this->user['id']);
-        
+          
             unset($user['password']);
             unset($user['token']);
             printJson(array(
