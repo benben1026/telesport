@@ -49,8 +49,4 @@ class ProgramModel extends CI_Model {
         $this->db->from("program");
         return $this->db->get();
     }
-    function searchProgram(){
-        
-    }
-    
 }

@@ -22,11 +22,13 @@ class Acl_Controller extends CI_Controller {
 }
 class Acl_Ajax_Controller extends CI_Controller {
     protected $user = array();
+    
     function __construct()
     {
         parent::__construct();
+        
         $this->user['id'] = isLogin();
-
+    
         if($this->user['id']){
             $this->user['type']= $this->session->userdata('userType');
             $acl = $this->config->item('acl');
@@ -43,7 +45,8 @@ class Acl_Ajax_Controller extends CI_Controller {
                 'status'=>false,
                 'error'=>"Please login"
             ));
-            exit;
+         
+            exit();
         }
     }
 }

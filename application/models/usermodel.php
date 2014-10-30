@@ -15,7 +15,7 @@ class UserModel extends CI_Model {
     }
 
     public function getUserInfoById($id){
-        $sql = "SELECT height,weight,exercise,aim,sportsTimePerDay,ifSmoke,ifDrink,
+        $sql = "SELECT height,weight,aim,sportsTimePerDay,ifSmoke,ifDrink,
         illness,illnessDescription,ifMedicine,medicineDescription,ifOperation,
         operationDescription,bodyStatus,firstName,lastName,nationality,firstLanguage,
         secondLanguage,phone,occupation,address1,address2,address3 
@@ -47,7 +47,6 @@ class UserModel extends CI_Model {
         }
     }
     function sendEmail($fromEmail,$toEmail,$subject,$content){
-        echo "here";
         $this->load->library('email');
         $config['protocol'] = 'sendmail';
         $config['mailpath'] = '/usr/sbin/sendmail';

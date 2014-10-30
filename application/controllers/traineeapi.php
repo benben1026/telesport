@@ -9,7 +9,7 @@
  * Time: 12:52 PM
  */
 
-class Trainerapi extends Acl_Ajax_Controller {
+class Traineeapi extends Acl_Ajax_Controller {
     public function index(){
        
     }
@@ -25,9 +25,10 @@ class Trainerapi extends Acl_Ajax_Controller {
         }
     }
     function getUserInfo(){
-        if($this->user[id]){
+        if($this->user['id']){
             $this->load->model("usermodel");
-            $user = $this->usermodel->getUserInfoById($this->user[id]);
+            $user = $this->usermodel->getUserInfoById($this->user['id']);
+        
             unset($user['password']);
             unset($user['token']);
             printJson(array(
@@ -73,7 +74,7 @@ class Trainerapi extends Acl_Ajax_Controller {
                 'aim'=>$postData['aim'],
             );
             $this->load->model("usermodel");
-            $this->usermodel->updateTraineeInfo($user,$trainee)
+            $this->usermodel->updateTraineeInfo($user,$traine);
         }
     }
     

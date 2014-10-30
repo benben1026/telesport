@@ -91,7 +91,7 @@ class Login extends CI_Controller {
             $id  = isLogin();
             if($id){
                 $this->load->model("usermodel");
-                $user = $this->usermodel->getUserById($id);
+                $user = $this->usermodel->getUserInfoById($id);
                 printJson(array(
                     "status"=>true,
                     "name"=>$user['username'],

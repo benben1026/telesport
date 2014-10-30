@@ -241,6 +241,11 @@ $config = array(
             'rules'=>"trim|numeric"
             ),
         array(
+            'field'=>"price",
+            'label'=>"lang:price",
+            'rules'=>"trim|numeric|required"
+        ),
+        array(
             'field'=>"fromDate",
             'label'=>"lang:fromDate",
             'rules'=>"trim|xss_clean|valid_date"

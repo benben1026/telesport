@@ -24,7 +24,7 @@ class Trainerapi extends Acl_Ajax_Controller {
             exit;
         }
     }
-    private function getUserInfoById($id){
+    public function getUserInfoById($id){
         if($id){
             $this->load->model("usermodel");
             $user = $this->usermodel->getUserInfoById($id);

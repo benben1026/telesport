@@ -25,11 +25,16 @@ class Program extends Acl_Ajax_Controller {
         }
     }
     public function createProgram(){
+        
         $this->loadResource();
+       
         if($this->form_validation->run('program')){
             $postData = $this->input->post();
+          
             $postData['userId'] = $this->user['id'];
+
             $this->load->model('programmodel');
+        
             $programId = $this->programmodel->addProgram($postData);
             if($programId){
                 printJson(array(
@@ -135,6 +140,7 @@ class Program extends Acl_Ajax_Controller {
                 'status'=>'false',
                 'errors'=>$errors,
                 ));
+            exit();
         }
     }
 }
