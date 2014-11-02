@@ -313,12 +313,12 @@ $config = array(
         array(
             'field'=>"age",
             "label"=>"lang:Age",
-            'rules'=>"trim|required|numeric|greater_than[0]|less_than[100]"
+            'rules'=>"trim|numeric|greater_than[0]|less_than[100]"
         ),
         array(
             'field'=>'gender',
             'label'=>'lang:Gender',
-            'rules'=>'trim|isset|required|alpha_numeric|valid_gender|xss_clean'
+            'rules'=>'trim|isset|alpha_numeric|valid_gender|xss_clean'
         ),
         array(
             'field'=>'nationality',
@@ -465,5 +465,88 @@ $config = array(
             'label'=>"lang:toolDescription",
             'rules'=>"trim|isset|xss_clean"
         )
+    ),
+    
+     "trainerRegister"=>array(
+        array(
+            'field'=>'firstName',
+            'label'=>'lang:firstName',
+            'rules'=>'trim|isset|min_length[2]|max_length[12]|xss_clean'
+        ),
+        array(
+            'field'=>'lastName',
+            'label'=>'lang:lastName',
+            'rules'=> 'trim|isset|min_length[2]|max_length[12]|xss_clean'
+        ),
+        array(
+            'field'=>'password',
+            "label" =>'lang:password',
+            'rules'=> 'trim|isset|required|matches[passConf]|min_length[6]|max_length[32]'
+        ),
+        array(
+            'field'=>'passConf',
+            'label'=> 'lang:passwordConfirmation',
+            'rules'=>'trim|isset|required'
+        ),
+        array(
+            'field'=>'email',
+            'label'=> 'lang:Email',
+            'rules'=>'trim|isset|required|valid_email|is_unique[user.email]|xss_clean'
+        ),
+        array(
+            'field'=>'username',
+            'label'=> 'lang:Username',
+            'rules'=>'trim|required|alpha_dash|is_unique[user.username]|xss_clean'
+        ),
+        array(
+            'field'=>"age",
+            "label"=>"lang:Age",
+            'rules'=>"trim|required|numeric|greater_than[0]|less_than[100]"
+        ),
+        array(
+            'field'=>'gender',
+            'label'=>'lang:Gender',
+            'rules'=>'trim|isset|required|alpha_numeric|valid_gender|xss_clean'
+        ),
+        array(
+            'field'=>'firstLanguage',
+            'label'=>'lang:firstLanguage',
+            'rules'=>'trim|isset|alpha|valid_language|xss_clean'
+        ),
+        array(
+            'field'=>'secondLanguage',
+            'label'=>'lang:secondLanguage',
+            'rules'=>'trim|isset|alpha|valid_language|xss_clean'
+        ),
+        array(
+            'field'=>'nationality',
+            'label'=>'lang:nationality',
+            'rules'=>'trim|isset|alpha|valid_nationality|xss_clean'
+        ),
+        array(
+            'field'=>'birthday',
+            'label'=>'lang:birthday',
+            'rules'=>'trim|isset|xss_clean|valid_birthday'
+        ),
+        array(
+            'field'=>"occupation",
+            'label'=>"lang:occupation",
+            'rules'=>'trim|isset|alpha_dash|xss_clean'
+        ),
+        array(
+            'field'=>"phone",
+            'label'=>"lang:phone",
+            'rules'=>'trim|isset|alpha_dash|xss_clean|valid_phone'
+        ),
+        array(
+            'field'=>"height",
+            'label'=>"lang:height",
+            'rules'=>"trim|isset|numeric|greater_than[130]|less_than[250]",
+        ),
+        array(
+            'field'=>"weight",
+            'label'=>"lang:weight",
+            'rules'=>"trim|isset|numeric|greater_than[30]|less_than[250]",
+        ),
     ),
 );

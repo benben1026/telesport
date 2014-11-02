@@ -22,6 +22,16 @@ class RegisterModel extends CI_Model {
        }
        return false;
     }
+    function trainer($user,$trainer){
+       if($this->db->insert("user",$user)){
+           $id = $this->db->insert_id();
+           $trainer['userId'] = $id;
+           if($this->db->insert("trainer",$trainer)){
+               return true;
+           }
+       }
+       return false;
+    }
     function checkDuplicate($email){
         $sql = "SELECT * FROM `user` WHERE `email` = ?";
         $query =  $this->db->query($sql,array($email));

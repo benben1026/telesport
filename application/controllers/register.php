@@ -110,6 +110,86 @@ class Register extends CI_Controller {
         }
 
 	}
+	public function trainerRegister(){
+        $this->load->library('form_validation');
+        $this->load->library("Tele_Form_validation");
+        $postData = $this->input->post();
+
+        if(empty($postData)){
+            show_404();
+        }
+        $this->form_validation->set_language("chinese");
+        $this->form_validation->set_error_delimiters('','');
+
+        if($this->form_validation->run('trainerRegister')){
+            $postData = $this->input->post();
+            $this->load->model('registermodel');
+            $user = array(
+                'username'=>$postData['username'],
+                'firstName'=>$postData['firstName'],
+                'lastName'=>$postData['lastName'],
+                'email'=>$postData['email'],
+                'password'=>md5(md5($postData['password'])),
+                'firstLanguage'=>$postData['firstLanguage'],
+                'secondLanguage'=>$postData['secondLanguage'],
+                'nationality'=>$postData['nationality'],
+                'birthday'=>$postData['birthday'],
+                'age'=>$postData['age'],
+                'balance'=>DEFAULT_BALANCE,
+                'userType'=>TRAINER,
+                'rank'=>DEFAULT_RANK,
+                'gender'=>$postData['gender'],
+                'phone'=>$postData['phone'],
+                'occupation'=>$postData['occupation'],
+                'address1'=>$postData['address']
+            );
+            $files = $this->do_upload(array("certificate",'passport'));
+            if(!($files['certificate']['status'] &&$files['passport']['status'])){
+                printJson(array(
+                    'status'=>false,
+                    'error'=>$files['error'],
+                    'by'=>"file upload"
+                    ));
+                return;
+            }
+            $trainer = array(
+               'passport_number'=>$postData['passport_number'],
+               'passport'=>$files['passport']['file_info']['full_path'],
+               'certificate'=>$files['certificate']['file_info']['full_path']
+            );
+            if($this->registermodel->trainer($user,$trainer)){
+                printJson(array(
+                   'status'=>true,
+                ));
+               $this->load->model("loginmodel");
+               $this->loginmodel->setLogin($this->db->insert_id(),TRAINER);
+               return;
+            }else{
+                printJson(array(
+                    'status'=>false,
+                    'errorCode'=>$this->db->_error_number(),
+                ));
+            }
+
+
+        }
+        else{
+            $errors = form_error();
+           /* foreach($postData as $key=>$value){
+               $error = form_error($key);
+               if(!empty($error)){
+                    $errors[$key]= $error;
+                }
+            }
+            print_r(validation_errors());
+           */
+            printJson(array(
+                'status'=>false,
+                'errors'=>$errors,
+            ));
+        }
+
+	}
     public function checkEmailDuplicate(){
         $this->load->model('registermodel');
         $email = $this->input->get('email');
@@ -161,6 +241,37 @@ class Register extends CI_Controller {
             
         }
     }
+    private function do_upload($fileNames = array())
+	{
+		$config['upload_path'] = './upload/';
+		$config['allowed_types'] = 'gif|jpg|png';
+		$config['max_size']	= '100';
+		$config['max_width']  = '1024';
+		$config['max_height']  = '768';
+		$config['encrypt_name'] = true;
+		$config['remove_spaces'] = true;
+
+		$this->load->library('upload', $config);
+        $result = array();
+        foreach($fileNames as $file){
+    		if ( ! $this->upload->do_upload($file))
+    		{
+    			$result[$file] = array(
+    			    'status'=>false,
+    			    );
+    			$result['error'] = $this->upload->display_errors();
+    		}
+    		else
+    		{
+    			$data = array('upload_data' => $this->upload->data());
+    			$result[$file] = array(
+    			    'status'=>true,
+    			    'file_info'=>$this->upload->data()
+    			);
+    		}
+        }
+        return $result;
+	}
 }
 
 /* End of file welcome.php */

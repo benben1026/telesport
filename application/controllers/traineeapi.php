@@ -63,9 +63,9 @@ class Traineeapi extends Acl_Ajax_Controller {
                 'ifDrink'=>$postData['ifDrink']==0? false: true,
                 'illness' =>$postData['illness'],
                 'illnessDescription'=>$postData['illnessDescription'],
-                'ifMedicine'=>$postData['ifMedicine']==0?false:true,
+              
                 'medicineDescription'=>$postData['medicineDescription'],
-                'ifOperation'=>$postData['ifOperation']==0?false:true,
+                
                 'operationDescription'=>$postData['operationDescription'],
                 'bodyStatus'=>$postData['bodyStatus'],
                 'aim'=>$postData['aim'],
