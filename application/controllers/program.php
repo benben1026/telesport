@@ -38,7 +38,7 @@ class Program extends Acl_Ajax_Controller {
             $programId = $this->programmodel->addProgram($postData);
             if($programId){
                 printJson(array(
-                    'status'=>"true",
+                    'status'=>true,
                     'id'=>$programId
                     ));
             }else{
@@ -68,7 +68,7 @@ class Program extends Acl_Ajax_Controller {
                 ),$postData['programId']);
            if($pricePlanId){
                 printJson(array(
-                    'status'=>"true",
+                    'status'=>true,
                     'id'=>$pricePlanId
                     ));
            }else{
@@ -99,7 +99,7 @@ class Program extends Acl_Ajax_Controller {
             }
             if($this->programmodel->updateProgram($program)){
                 printJson(array(
-                    'status'=>"true",
+                    'status'=>true,
                     'id'=>$postData['programId']
                     ));
             }else{
@@ -111,7 +111,7 @@ class Program extends Acl_Ajax_Controller {
         }else{
             $errors = form_error();
             printJson(array(
-                'status'=>'false',
+                'status'=>false,
                 'errors'=>$errors,
                 ));
         }
@@ -123,7 +123,7 @@ class Program extends Acl_Ajax_Controller {
             $this->load->model("programmodel");
             if($this->programmodel->deleteProgram($postData['programId'])){
                 printJson(array(
-                    'status'=>"true",
+                    'status'=>true,
                     'id'=>$postData['programId']
                 ));
             }else{
@@ -137,10 +137,18 @@ class Program extends Acl_Ajax_Controller {
         }else{
             $errors = form_error();
             printJson(array(
-                'status'=>'false',
+                'status'=>false,
                 'errors'=>$errors,
                 ));
             exit();
         }
+    }
+    public function getProgramInfo($id){
+         $this->load->model("programmodel");
+         $program = $this->programmodel->getProgramDetails($id);
+         printJson(array(
+             'status'=>true,
+             'program'=>$program
+             ));
     }
 }

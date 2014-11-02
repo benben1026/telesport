@@ -44,9 +44,8 @@ class ProgramModel extends CI_Model {
         return $this->db->get();
     }
     function getProgramDetails($programId){
-        $this->db->select("*");
-        $this->db->where('programId',$programId);
-        $this->db->from("program");
-        return $this->db->get();
+        $sql = "SELECT * ,(SELECT count(*) FROM enroll where programId = ?) as total FROM `program` WHERE programId=?";
+        $query = $this->db->query($sql,array($programId,$programId));
+        return $query->row_array();
     }
 }

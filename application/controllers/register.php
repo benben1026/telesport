@@ -128,6 +128,7 @@ class Register extends CI_Controller {
                 'username'=>$postData['username'],
                 'firstName'=>$postData['firstName'],
                 'lastName'=>$postData['lastName'],
+                'selfIntro'=>$postData['selfIntro'],
                 'email'=>$postData['email'],
                 'password'=>md5(md5($postData['password'])),
                 'firstLanguage'=>$postData['firstLanguage'],
