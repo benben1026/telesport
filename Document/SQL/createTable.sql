@@ -36,6 +36,7 @@ CREATE TABLE `trainer`(
 	`certificate` TEXT ,
 	`passport_number` VARCHAR(255),
 	`passport` varchar(255),
+	`certType` varchar(255),
 	PRIMARY KEY (`trainerId`),
 	FOREIGN KEY(`userId`) REFERENCES `user`(`userId`) ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
