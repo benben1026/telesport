@@ -28,9 +28,6 @@ class Traineeapi extends Acl_Ajax_Controller {
         if($this->user['id']){
             $this->load->model("usermodel");
             $user = $this->usermodel->getUserInfoById($this->user['id']);
-          
-            unset($user['password']);
-            unset($user['token']);
             printJson(array(
                 "status"=>true,
                 "userInfo"=>$user,
@@ -43,7 +40,7 @@ class Traineeapi extends Acl_Ajax_Controller {
     }
     function editUserInfo(){
         $this->loadResource();
-        if($this->form_validation->run()){
+        if($this->form_validation->run('editUserInfo')){
              $postData = $this->input->post();
              $user = array(
                 'firstName'=>$postData['firstName'],
@@ -74,7 +71,23 @@ class Traineeapi extends Acl_Ajax_Controller {
                 'aim'=>$postData['aim'],
             );
             $this->load->model("usermodel");
-            $this->usermodel->updateTraineeInfo($user,$traine);
+            
+            if($this->usermodel->updateTraineeInfo($user,$trainee) || $this->db->_error_number()==0){
+                  printJson(array(
+                   'status'=>true,
+                ));
+            }else{
+                 printJson(array(
+                    'status'=>false,
+                    'errorCode'=>$this->db->_error_number(),
+                ));
+            }
+        }else{
+            $errors = form_error();
+            printJson(array(
+                'status'=>false,
+                'errors'=>$errors,
+            ));
         }
     }
     

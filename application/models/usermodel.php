@@ -15,21 +15,24 @@ class UserModel extends CI_Model {
     }
 
     public function getUserInfoById($id){
-        $sql = "SELECT username,userType,height,weight,aim,sportsTimePerDay,ifSmoke,ifDrink,
+        $sql = "SELECT username,userType,age,height,weight,aim,sportsTimePerDay,ifSmoke,ifDrink,
         illness,illnessDescription,medicineDescription,
         operationDescription,bodyStatus,firstName,lastName,nationality,firstLanguage,
         secondLanguage,phone,occupation,address1,address2,address3 
          FROM user INNER JOIN trainee ON 
          user.userId = trainee.userId  WHERE user.userId = ?";
-        $query = $this->db->query($sql,array($id));
+        $query = $this->db->query($sql,array((int)$id));
         return $query->row_array();
     }
     function updateTraineeInfo($user,$trainee){
-        $this->db->where("userId",$user['id']);
+        $id = $user['id'];
+        unset($user['id']);
+      
+        $this->db->where("userId",(int)$id);
         $this->db->update("user",$user);
-         $this->db->where("userId",$user['id']);
+        $this->db->where("userId",(int)$id);
         $this->db->update("trainee",$trainee);
-        
+        return $this->db->affected_rows();
     }
     function setToken($email){
         $this->load->helper("stringext");
