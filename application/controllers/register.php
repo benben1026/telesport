@@ -156,7 +156,8 @@ class Register extends CI_Controller {
             $trainer = array(
                'passport_number'=>$postData['passport_number'],
                'passport'=>$files['passport']['file_info']['full_path'],
-               'certificate'=>$files['certificate']['file_info']['full_path']
+               'certificate'=>$files['certificate']['file_info']['full_path'],
+               'certType'=>$postData['certType'],
             );
             if($this->registermodel->trainer($user,$trainer)){
                 printJson(array(
