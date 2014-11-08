@@ -50,7 +50,7 @@ class ProgramModel extends CI_Model {
     }
     public function getProgramList($criteria,$value,$sort,$order){
         $sql = "SELECT * FROM `program` WHERE `status`=1";
-        $sql = $this->addCriteria($sql,array($criteria,$value))
+        $sql = $this->addCriteria($sql,array($criteria,$value));
     
         
     }
