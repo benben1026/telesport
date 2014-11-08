@@ -128,7 +128,6 @@ class Register extends CI_Controller {
                 'username'=>$postData['username'],
                 'firstName'=>$postData['firstName'],
                 'lastName'=>$postData['lastName'],
-                'selfIntro'=>$postData['selfIntro'],
                 'email'=>$postData['email'],
                 'password'=>md5(md5($postData['password'])),
                 'firstLanguage'=>$postData['firstLanguage'],
@@ -149,7 +148,7 @@ class Register extends CI_Controller {
                 printJson(array(
                     'status'=>false,
                     'error'=>$files['error'],
-                    'by'=>"file upload"
+                    'by'=>"file upload",
                     ));
                 return;
             }
@@ -158,6 +157,7 @@ class Register extends CI_Controller {
                'passport'=>$files['passport']['file_info']['full_path'],
                'certificate'=>$files['certificate']['file_info']['full_path'],
                'certType'=>$postData['certType'],
+            'selfIntro'=>$postData['selfIntro'],
             );
             if($this->registermodel->trainer($user,$trainer)){
                 printJson(array(
@@ -247,9 +247,9 @@ class Register extends CI_Controller {
 	{
 		$config['upload_path'] = './upload/';
 		$config['allowed_types'] = 'gif|jpg|png';
-		$config['max_size']	= '100';
-		$config['max_width']  = '1024';
-		$config['max_height']  = '768';
+		$config['max_size']	= '5000';
+		$config['max_width']  = '0';
+		$config['max_height']  = '0';
 		$config['encrypt_name'] = true;
 		$config['remove_spaces'] = true;
 

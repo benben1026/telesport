@@ -291,7 +291,7 @@ class CI_Form_validation {
 		{
 			return FALSE;
 		}
-
+	
 		// Does the _field_data array containing the validation rules exist?
 		// If not, we look to see if they were assigned via a config file
 		if (count($this->_field_data) == 0)
