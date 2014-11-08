@@ -9,7 +9,7 @@
  * Time: 12:52 PM
  */
 
-class Traineeapi extends Acl_Ajax_Controller {
+class Commonapi extends Acl_Ajax_Controller {
     public function index(){
        
     }

@@ -48,4 +48,17 @@ class ProgramModel extends CI_Model {
         $query = $this->db->query($sql,array($programId,$programId));
         return $query->row_array();
     }
+    public function getProgramList($criteria,$value,$sort,$order){
+        $sql = "SELECT * FROM `program` WHERE `status`=1";
+        $sql = $this->addCriteria($sql,array($criteria,$value))
+    
+        
+    }
+    private function addCriteria($sql , $criteria){
+        foreach($criteria as $key=>$value )
+            $sql += " AND $key LIKE " + "%$value% ";
+        return $sql;
+    }
+    
+    
 }
