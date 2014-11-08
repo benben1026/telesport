@@ -19,9 +19,10 @@ class UserModel extends CI_Model {
         illness,illnessDescription,medicineDescription,
         operationDescription,bodyStatus,firstName,lastName,nationality,firstLanguage,
         secondLanguage,phone,occupation,address1,address2,address3 
-         FROM user INNER JOIN trainee ON 
+         FROM user LEFT JOIN trainee ON 
          user.userId = trainee.userId  WHERE user.userId = ?";
         $query = $this->db->query($sql,array((int)$id));
+        
         return $query->row_array();
     }
     function updateTraineeInfo($user,$trainee){

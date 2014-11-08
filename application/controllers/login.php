@@ -108,6 +108,22 @@ class Login extends CI_Controller {
                     ));
             }
         }
+        public function getUserType(){
+            $id  = isLogin();
+            if($id){
+                $this->load->model("usermodel");
+                $user = $this->usermodel->getUserInfoById($id);
+                printJson(array(
+                    "status"=>true,
+                    "name"=>$user['username'],
+                    'type'=>$user['userType']
+                    ));
+            }else{
+                printJson(array(
+                    "status"=>false,
+                    ));
+            }
+        }
         public function logout(){
             $this->load->model("loginmodel");
             $this->loginmodel->logout();

@@ -78,7 +78,7 @@ class LoginModel extends CI_Model {
     }
     
     function autoLogin($id, $cookie){
-        $sql = "SELECT `email`, `password`, `token`,`userType` FROM `user` WHERE `userId`=?";
+        $sql = "SELECT `email`, `password`, `token`,`userType`,username FROM `user` WHERE `userId`=?";
         $query = $this->db->query($sql, array($id));
         $row = $query->result_array();
         if(!empty($row)){
