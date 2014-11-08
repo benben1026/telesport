@@ -44,14 +44,18 @@ class ProgramModel extends CI_Model {
         return $this->db->get();
     }
     function getProgramDetails($programId){
-        $sql = "SELECT * ,(SELECT count(*) FROM enroll where programId = ?) as total FROM `program` WHERE programId=?";
+        $sql = "SELECT * ,(SELECT count(*) FROM enroll where programId = ? and enroll.statusId=0) as total FROM `program` WHERE programId=?";
         $query = $this->db->query($sql,array($programId,$programId));
         return $query->row_array();
     }
-    public function getProgramList($criteria,$value,$sort,$order){
-        $sql = "SELECT * FROM `program` WHERE `status`=1";
-        $sql = $this->addCriteria($sql,array($criteria,$value));
-        $sql = $sql + " ORDER BY $sort " + $order ? $order : "desc";
+    public function getProgramList($offset){
+        $sql = "SELECT * ,count(enroll.enrollId) as total,
+	(SELECT count(*) FROM `enroll` WHERE enroll.programId=program.programId and enroll.statusId=0) as unfinished,
+	(SELECT count(*) FROM `enroll` WHERE enroll.programId=program.programId and enroll.statusId=1) as finished 
+	FROM `program` LEFT JOIN `enroll` ON program.programId = enroll.programId GROUP BY program.programId ORDER BY total DESC LIMIT 0,$offset";
+	    $query = $this->db->query($sql);
+	    return $query->result_array();
+        
     }
     private function addCriteria($sql , $criteria){
         foreach($criteria as $key=>$value )

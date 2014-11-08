@@ -9,7 +9,7 @@
  * Time: 12:52 PM
  */
 
-class Commonapi extends Acl_Ajax_Controller {
+class Commonapi extends CI_Controller {
     public function index(){
        
     }
@@ -32,9 +32,16 @@ class Commonapi extends Acl_Ajax_Controller {
              'program'=>$program
              ));
     }
-    public function getProgramList($criteria='name',$value,$sort,$order){
+    public function getProgramList($offset){
         $this->load->model('programmodel');
-        $result = $this->programmodel->getProgramList($criteria,$value,$sort,$order);
+        if(!is_numeric($offset)){
+            printJson(array(
+                'status'=>false,
+                'msg'=>"Invalid offset"
+                ));
+            return ;
+        }
+        $result = $this->programmodel->getProgramList($offset);
         printJson(array(
             'status'=>true,
             'list'=>$result
