@@ -50,12 +50,15 @@ class Login extends CI_Controller {
         
         public function checkLogin($email, $password, $rememberMe){
             $res = $this->loginmodel->checkLogin($email, $password);
-            if( $res == 1 ){
+            if( $res['status'] ){
                 if($rememberMe == 1){
                     if($this->loginmodel->rememberme($email) == 1){
                         $output = array(
                             'LOGIN'=>TRUE,
-                            'REMEMBER'=>TRUE
+                            'REMEMBER'=>TRUE,
+                            'userName'=>$res['userName'],
+                            'userType'=>$res['userType'],
+                            'userId'=>$res['userId']
                         );
                         $this->output($output);
                         return;
@@ -63,10 +66,13 @@ class Login extends CI_Controller {
                 }
                 $output = array(
                             'LOGIN'=>TRUE,
-                            'REMEMBER'=>FALSE
+                            'REMEMBER'=>FALSE,
+                            'userName'=>$res['userName'],
+                            'userType'=>$res['userType'],
+                            'userId'=>$res['userId']
                         );
                 $this->output($output);
-            }else if($res == -2){
+            }else if($res['code'] == -2){
                 $output = array(
                             'LOGIN'=>FALSE,
                             'ERROR'=>'NOT_VARIFIED',

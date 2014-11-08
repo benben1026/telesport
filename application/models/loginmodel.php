@@ -15,16 +15,31 @@ class LoginModel extends CI_Model {
     }
 
     function checkLogin($email, $password){
-        $sql = "SELECT userId, password, isVerified, userType FROM user WHERE email=?";
+        $sql = "SELECT userId, password, isVerified, userType,username FROM user WHERE email=?";
         $query = $this->db->query($sql, array($email));
         $row = $query->result_array();
         if(!empty($row) && $row[0]['isVerified'] == 0){
-            return -2;
+            return array(
+                'status'=>false,
+                'code'=>-2,
+                'msg'=>"Not verified"
+                );
         }else if(!empty($row) && $row[0]['password'] == md5(md5($password))){
             $this->setLogin($row[0]['userId'],$row[0]['userType']);
-            return 1;
+            return array(
+                'status'=>true,
+                'code'=>1,
+                'userName'=>$row[0]['username'],
+                'userType'=>$row[0]['userType'],
+                'userId'=>$row[0]['userId'],
+                'msg'=>""
+            );
         }else{
-            return -1;
+            return array(
+                'status'=>false,
+                'code'=>-1,
+                'msg'=>"User does not exists"
+            );
         }
     }
     

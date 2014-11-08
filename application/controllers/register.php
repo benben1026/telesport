@@ -157,7 +157,7 @@ class Register extends CI_Controller {
                'passport'=>$files['passport']['file_info']['full_path'],
                'certificate'=>$files['certificate']['file_info']['full_path'],
                'certType'=>$postData['certType'],
-            'selfIntro'=>$postData['selfIntro'],
+                'selfIntro'=>$postData['selfIntro'],
             );
             if($this->registermodel->trainer($user,$trainer)){
                 printJson(array(
@@ -211,7 +211,7 @@ class Register extends CI_Controller {
         $token  = $this->usermodel->setToken(urldecode($email));
         if($token){
             $data['url'] =  site_url()."/register/resetPasswordView/".$token;
-            $this->usermodel->sendEmail("admin@telesports.com","shibocuhk@gmail.com",'申请重新设置密码',$this->load->view('mail/resetpass', $data, true));
+            $this->usermodel->sendEmail("admin@telesports.com",$email,'申请重新设置密码',$this->load->view('mail/resetpass', $data, true));
             printJson(array(
                 'status'=>true,
                 'msg'=>"OK"
@@ -239,7 +239,8 @@ class Register extends CI_Controller {
 
         if($this->form_validation->run('resetPassword')){
             $this->load->model('usermodel');
-            $this->usermodel->resetPassword();
+            $data = $this->input->post();
+            $this->usermodel->resetPassword($data['password'],$data['passConf'],$data['token']);
             
         }
     }
