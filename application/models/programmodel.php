@@ -49,7 +49,7 @@ class ProgramModel extends CI_Model {
         return $query->row_array();
     }
     public function getProgramList($offset){
-        $sql = "SELECT program.* ,count(enroll.enrollId) as total,
+        $sql = "SELECT program.* ,(SELECT username from user where user.userId = program.userId) as username,count(enroll.enrollId) as total,
 	(SELECT count(*) FROM `enroll` WHERE enroll.programId=program.programId and enroll.statusId=0) as unfinished,
 	(SELECT count(*) FROM `enroll` WHERE enroll.programId=program.programId and enroll.statusId=1) as finished 
 	FROM `program` LEFT JOIN `enroll` ON program.programId = enroll.programId GROUP BY program.programId ORDER BY total DESC LIMIT 0,$offset";

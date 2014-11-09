@@ -55,7 +55,7 @@ class UserModel extends CI_Model {
         $config['protocol'] = 'sendmail';
         $config['mailpath'] = '/usr/sbin/sendmail';
         $config['charset'] = 'utf-8';
-        $config['wordwrap'] = TRUE;
+        $config['wordwrap'] = true;
         $config['mailtype'] = 'html';
         $this->email->initialize($config);
         $this->email->from($fromEmail, 'Bruce');
