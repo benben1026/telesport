@@ -205,9 +205,10 @@ class Register extends CI_Controller {
            ));
         }
     }
-    public function resetPasswordRequest($email){
+    public function resetPasswordRequest(){
         $this->load->model("usermodel");
         $this->load->helper('url');
+        $email = $this->input->get('email');
         $token  = $this->usermodel->setToken(urldecode($email));
         if($token){
             $data['url'] =  site_url()."/register/resetPasswordView/".$token;

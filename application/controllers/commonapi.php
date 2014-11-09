@@ -47,4 +47,13 @@ class Commonapi extends CI_Controller {
             'list'=>$result
             ));
     }
+    public function getTrainerInfo($id){
+        #$id = $this->user['id'];
+        $this->load->model('usermodel');
+        $this->load->helper('url');
+        $index = array('username','gender','firstName','lastName','occupation','nationality','firstLanguage',
+        'secondLanguage','selfIntro');
+        $result =  $this->usermodel->getTrainerInfo($index,$id);
+        printJson($result);
+    }
 }

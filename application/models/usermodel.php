@@ -70,4 +70,12 @@ class UserModel extends CI_Model {
         $this->db->update("user",md5(md5($password)));
         return $this->db->affected_rows();
     }
+    function getTrainerInfo($data,$id){
+        $select = join($data,',');
+        $sql = "SELECT $select
+         FROM user LEFT JOIN trainer ON 
+         user.userId = trainer.userId  WHERE user.userId = ? and userType =".TRAINER;
+        $query = $this->db->query($sql,array((int)$id));
+         return $query->row_array();
+    }
 }
