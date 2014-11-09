@@ -27,10 +27,17 @@ class Commonapi extends CI_Controller {
     public function getProgramInfo($id){
          $this->load->model("programmodel");
          $program = $this->programmodel->getProgramDetails($id);
-         printJson(array(
-             'status'=>true,
-             'program'=>$program
-             ));
+         if(!empty($program)){
+            printJson(array(
+                    'status'=>true,
+                    'program'=>$program
+                ));
+         }else{
+              printJson(array(
+                    'status'=>false,
+                    'program'=>array()
+                ));
+         }
     }
     public function getProgramList($offset){
         $this->load->model('programmodel');
