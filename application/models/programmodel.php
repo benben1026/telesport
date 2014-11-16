@@ -67,7 +67,7 @@ class ProgramModel extends CI_Model {
         return $query->result_array();
     }
     
-    public function getCoachUnpubishedProgramList($id){
+    public function getCoachUnpublishedProgramList($id){
         $sql = "SELECT * FROM program WHERE userId=? AND isPublished=0 ORDER BY lastModified";
         $query = $this->db->query($sql, array($id));
         return $query->result_array();
