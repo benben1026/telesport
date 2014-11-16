@@ -114,5 +114,8 @@ class Template extends CI_Controller {
     function output($res){
         printJson($res);
     }
+    function uploadFile(){
+        
+    }
 }
 
