@@ -116,6 +116,9 @@ class Template extends CI_Controller {
     }
     function uploadFile(){
         $data = $this->input->post();
+        for($i =0 ;$i<$data['totalNum'];$i++){
+            $this->do_upload("file".$i);
+        }
         printJson(array(
             'totalNumber'=>$data['totalNum']
             ));
