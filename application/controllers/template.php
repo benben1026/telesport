@@ -115,7 +115,41 @@ class Template extends CI_Controller {
         printJson($res);
     }
     function uploadFile(){
-        
+        $data = $this->input->post();
+        printJson(array(
+            'totalNumber'=>$data['totalNum']
+            ));
     }
+    private function do_upload($fileNames = array())
+	{
+		$config['upload_path'] = './upload/';
+		$config['allowed_types'] = 'gif|jpg|png';
+		$config['max_size']	= '5000';
+		$config['max_width']  = '0';
+		$config['max_height']  = '0';
+		$config['encrypt_name'] = true;
+		$config['remove_spaces'] = true;
+
+		$this->load->library('upload', $config);
+        $result = array();
+        foreach($fileNames as $file){
+    		if ( ! $this->upload->do_upload($file))
+    		{
+    			$result[$file] = array(
+    			    'status'=>false,
+    			    );
+    			$result['error'] = $this->upload->display_errors();
+    		}
+    		else
+    		{
+    			$data = array('upload_data' => $this->upload->data());
+    			$result[$file] = array(
+    			    'status'=>true,
+    			    'file_info'=>$this->upload->data()
+    			);
+    		}
+        }
+        return $result;
+	}
 }
 
