@@ -58,7 +58,8 @@ class Trainerapi extends Acl_Ajax_Controller {
         }
     }
 
-    public function getProgramList($id){
+    public function getProgramList(){
+        $id = $this->user['id'];
         if(!is_numeric($id)){
             printJson(array(
                 'status'=>false,
