@@ -57,8 +57,9 @@ class Trainerapi extends Acl_Ajax_Controller {
             printJson(array('status'=>false,'result'=>"No such coach"));
         }
     }
+
     public function getProgramList($id){
-         if(!is_numeric($id)){
+        if(!is_numeric($id)){
             printJson(array(
                 'status'=>false,
                 'msg'=>"Invalid id"
