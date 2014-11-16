@@ -116,8 +116,7 @@ class Login extends CI_Controller {
                 printJson(array(
                     "status"=>true,
                     "name"=>$user['username'],
-                    'type'=>$user['userType'],
-                    'id'=>$id
+                    'type'=>$user['userType']
                     ));
             }else{
                 printJson(array(
@@ -128,16 +127,6 @@ class Login extends CI_Controller {
         public function logout(){
             $this->load->model("loginmodel");
             $this->loginmodel->logout();
-        }
-        public function changePassword(){
-            $this->load->model("usermodel");
-            $postData = $this->input->post();
-            $email = $postData['email'];
-            $prepwd = $postData['prepwd'];
-            $newpwd = $postData['newpwd'];
-            $pwdconf = $postData['pwdconf'];
-            $res = $this->usermodel->changePassword($email, $prepwd, $newpwd, $pwdconf);
-            printJson($res);
         }
 }
 

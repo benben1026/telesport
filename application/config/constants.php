@@ -39,3 +39,14 @@ define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */
+
+/*User Type*/
+
+define('TRAINER',1);
+define('TRAINEE',2);
+define('ADMIN',3);
+
+
+/** Default Value */
+define('DEFAULT_BALANCE',0);
+define('DEFAULT_RANK',0);
