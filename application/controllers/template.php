@@ -82,19 +82,20 @@ class Template extends CI_Controller {
     }
     
     public function modifyTemplate($templateId, $userId, $name, $remark, $json_component){
-        $order = $this->templatemodel->modifyTemplate($templateId, $userId, $name, $remark, $json_component);
-        if($order != false){
-            $output = array(
-                'RESULT'=>TRUE,
-                'ID'=>$order
-            );
-            $this->output($output);
-        }else{
-            $output = array(
-                'RESULT'=>FALSE
-            );
-            $this->output($output);
-        }
+        $this->output($this->templatemodel->modifyTemplate($templateId, $userId, $name, $remark, $json_component));
+        // $order = $this->templatemodel->modifyTemplate($templateId, $userId, $name, $remark, $json_component);
+        // if($order != false){
+        //     $output = array(
+        //         'RESULT'=>TRUE,
+        //         'ID'=>$order
+        //     );
+        //     $this->output($output);
+        // }else{
+        //     $output = array(
+        //         'RESULT'=>FALSE
+        //     );
+        //     $this->output($output);
+        // }
     }
     
     function delete($templateId, $userId){
@@ -114,56 +115,5 @@ class Template extends CI_Controller {
     function output($res){
         printJson($res);
     }
-    function uploadFile(){
-        $data = $this->input->post();
-        for($i =0 ;$i<$data['totalNum'];$i++){
-           $files[] = "file".$i;
-        }
-        $result = $this->do_upload($files);
-        foreach($result as $name=>$info){
-            if(!$info['status']){
-                printJson(array(
-                    'status'=>false,
-                    'error'=>$info['error']
-                ));
-                return;
-            }
-        }
-        printJson(array(
-            'status'=>true,
-            'files'=>$files
-        ));
-    }
-    private function do_upload($fileNames = array())
-	{
-		$config['upload_path'] = './upload/';
-		$config['allowed_types'] = 'gif|jpg|png';
-		$config['max_size']	= '5000';
-		$config['max_width']  = '0';
-		$config['max_height']  = '0';
-		$config['encrypt_name'] = true;
-		$config['remove_spaces'] = true;
-
-		$this->load->library('upload', $config);
-        $result = array();
-        foreach($fileNames as $file){
-    		if ( ! $this->upload->do_upload($file))
-    		{
-    			$result[$file] = array(
-    			    'status'=>false,
-    			     'error'=>$this->upload->display_errors()
-    			    );
-    		}
-    		else
-    		{
-    			$data = array('upload_data' => $this->upload->data());
-    			$result[$file] = array(
-    			    'status'=>true,
-    			    'file_info'=>$this->upload->data()
-    			);
-    		}
-        }
-        return $result;
-	}
 }
 
