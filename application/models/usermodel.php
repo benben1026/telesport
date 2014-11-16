@@ -78,6 +78,7 @@ class UserModel extends CI_Model {
         $query = $this->db->query($sql,array((int)$id));
          return $query->row_array();
     }
+<<<<<<< HEAD
 
     public function getTraineeInfo($id){
         $sql = "SELECT username,gender,userType,age,height,weight,aim,sportsTimePerDay,ifSmoke,ifDrink,
@@ -110,4 +111,6 @@ class UserModel extends CI_Model {
         return -1;
 
     } 
+=======
+>>>>>>> e36010547fdd7d9de9e9602b04d034292d6f3589
 }

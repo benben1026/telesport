@@ -32,6 +32,7 @@ class RegisterModel extends CI_Model {
        }
        return false;
     }
+<<<<<<< HEAD
     function checkEmailDuplicate($email){
         $sql = "SELECT * FROM `user` WHERE `email` = ?";
         $query =  $this->db->query($sql,array($email));
@@ -46,9 +47,20 @@ class RegisterModel extends CI_Model {
         $sql = "SELECT * FROM `user` WHERE `username` = ?";
         $query =  $this->db->query($sql,array($username));
         if($query && $query->num_rows()>0){
+=======
+    function checkDuplicate($email){
+        $sql = "SELECT * FROM `user` WHERE `email` = ?";
+        $query =  $this->db->query($sql,array($email));
+        if($query && $query->num_rows()>0){
+
+>>>>>>> e36010547fdd7d9de9e9602b04d034292d6f3589
             return true;
         }else{
             return false;
         }
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> e36010547fdd7d9de9e9602b04d034292d6f3589
 }

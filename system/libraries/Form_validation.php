@@ -35,7 +35,7 @@ class CI_Form_validation {
 	protected $_error_suffix		= '</p>';
 	protected $error_string			= '';
 	protected $_safe_form_data		= FALSE;
-
+    protected $language_string      = 'english';
 	/**
 	 * Constructor
 	 */
@@ -57,6 +57,9 @@ class CI_Form_validation {
 
 		log_message('debug', "Form Validation Class Initialized");
 	}
+    public function set_language($lang){
+        $this->language_string = $lang;
+    }
 
 	// --------------------------------------------------------------------
 
@@ -207,11 +210,14 @@ class CI_Form_validation {
 	 */
 	public function error($field = '', $prefix = '', $suffix = '')
 	{
+
+        if(empty($field)){;
+            return $this->_error_array;
+        }
 		if ( ! isset($this->_field_data[$field]['error']) OR $this->_field_data[$field]['error'] == '')
 		{
 			return '';
 		}
-
 		if ($prefix == '')
 		{
 			$prefix = $this->_error_prefix;
@@ -285,7 +291,7 @@ class CI_Form_validation {
 		{
 			return FALSE;
 		}
-
+	
 		// Does the _field_data array containing the validation rules exist?
 		// If not, we look to see if they were assigned via a config file
 		if (count($this->_field_data) == 0)
@@ -317,7 +323,7 @@ class CI_Form_validation {
 		}
 
 		// Load the language file containing error messages
-		$this->CI->lang->load('form_validation');
+		$this->CI->lang->load('form_validation',$this->language_string);
 
 		// Cycle through the rules for each field, match the
 		// corresponding $_POST item and test for errors
@@ -335,7 +341,10 @@ class CI_Form_validation {
 				if (isset($_POST[$field]) AND $_POST[$field] != "")
 				{
 					$this->_field_data[$field]['postdata'] = $_POST[$field];
-				}
+				}else{
+                  //  $_POST[$field]=null;
+                }
+
 			}
 
 			$this->_execute($row, explode('|', $row['rules']), $this->_field_data[$field]['postdata']);

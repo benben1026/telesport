@@ -44,17 +44,29 @@ $config = array(
         array(
             'field'=>'firstLanguage',
             'label'=>'lang:firstLanguage',
+<<<<<<< HEAD
             'rules'=>'trim|isset|valid_language|xss_clean'
+=======
+            'rules'=>'trim|isset|alpha|valid_language|xss_clean'
+>>>>>>> e36010547fdd7d9de9e9602b04d034292d6f3589
         ),
         array(
             'field'=>'secondLanguage',
             'label'=>'lang:secondLanguage',
+<<<<<<< HEAD
             'rules'=>'trim|isset|valid_language|xss_clean'
+=======
+            'rules'=>'trim|isset|alpha|valid_language|xss_clean'
+>>>>>>> e36010547fdd7d9de9e9602b04d034292d6f3589
         ),
         array(
             'field'=>'nationality',
             'label'=>'lang:nationality',
+<<<<<<< HEAD
             'rules'=>'trim|isset|valid_nationality|xss_clean'
+=======
+            'rules'=>'trim|isset|alpha|valid_nationality|xss_clean'
+>>>>>>> e36010547fdd7d9de9e9602b04d034292d6f3589
         ),
         array(
             'field'=>'birthday',
@@ -64,12 +76,20 @@ $config = array(
         array(
             'field'=>"occupation",
             'label'=>"lang:occupation",
+<<<<<<< HEAD
             'rules'=>'trim|isset|xss_clean'
+=======
+            'rules'=>'trim|isset|alpha_dash|xss_clean'
+>>>>>>> e36010547fdd7d9de9e9602b04d034292d6f3589
         ),
         array(
             'field'=>"phone",
             'label'=>"lang:phone",
+<<<<<<< HEAD
             'rules'=>'trim|isset|alpha_dash|xss_clean'
+=======
+            'rules'=>'trim|isset|alpha_dash|xss_clean|valid_phone'
+>>>>>>> e36010547fdd7d9de9e9602b04d034292d6f3589
         ),
         array(
             'field'=>"height",

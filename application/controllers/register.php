@@ -195,7 +195,11 @@ class Register extends CI_Controller {
     public function checkEmailDuplicate(){
         $this->load->model('registermodel');
         $email = $this->input->get('email');
+<<<<<<< HEAD
         if($this->registermodel->checkEmailDuplicate($email)){
+=======
+        if($this->registermodel->checkDuplicate($email)){
+>>>>>>> e36010547fdd7d9de9e9602b04d034292d6f3589
             printJson(array(
                'status'=>true
             ));
@@ -205,6 +209,7 @@ class Register extends CI_Controller {
            ));
         }
     }
+<<<<<<< HEAD
 
     public function checkUsernameDuplicate(){
         $this->load->model('registermodel');
@@ -220,13 +225,19 @@ class Register extends CI_Controller {
         }
     }
 
+=======
+>>>>>>> e36010547fdd7d9de9e9602b04d034292d6f3589
     public function resetPasswordRequest(){
         $this->load->model("usermodel");
         $this->load->helper('url');
         $email = $this->input->get('email');
         $token  = $this->usermodel->setToken(urldecode($email));
         if($token){
+<<<<<<< HEAD
             $data['url'] = "http://www.promexeus.com/version0.2/zh/user/resetpassword.php?token=".$token;
+=======
+            $data['url'] =  site_url()."/register/resetPasswordView/".$token;
+>>>>>>> e36010547fdd7d9de9e9602b04d034292d6f3589
             $this->usermodel->sendEmail("admin@telesports.com",$email,'申请重新设置密码',$this->load->view('mail/resetpass', $data, true));
             printJson(array(
                 'status'=>true,

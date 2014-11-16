@@ -44,19 +44,29 @@ class ProgramModel extends CI_Model {
         return $this->db->get();
     }
     function getProgramDetails($programId){
+<<<<<<< HEAD
         $sql = "SELECT * ,(SELECT count(*) FROM enroll where programId = ? and (enroll.statusId=3 OR enroll.statusId=4 OR enroll.statusId=5 OR enroll.statusId=6)) as total FROM `program` WHERE programId=?";
+=======
+        $sql = "SELECT * ,(SELECT count(*) FROM enroll where programId = ? and enroll.statusId=0) as total FROM `program` WHERE programId=?";
+>>>>>>> e36010547fdd7d9de9e9602b04d034292d6f3589
         $query = $this->db->query($sql,array($programId,$programId));
         return $query->row_array();
     }
     public function getProgramList($offset){
         $sql = "SELECT program.* ,(SELECT username from user where user.userId = program.userId) as username,count(enroll.enrollId) as total,
+<<<<<<< HEAD
 	(SELECT count(*) FROM `enroll` WHERE enroll.programId=program.programId and (enroll.statusId=3 OR enroll.statusId=4 OR enroll.statusId=5 OR enroll.statusId=6)) as unfinished,
 	(SELECT count(*) FROM `enroll` WHERE enroll.programId=program.programId and enroll.statusId=7) as finished 
+=======
+	(SELECT count(*) FROM `enroll` WHERE enroll.programId=program.programId and enroll.statusId=0) as unfinished,
+	(SELECT count(*) FROM `enroll` WHERE enroll.programId=program.programId and enroll.statusId=1) as finished 
+>>>>>>> e36010547fdd7d9de9e9602b04d034292d6f3589
 	FROM `program` LEFT JOIN `enroll` ON program.programId = enroll.programId GROUP BY program.programId ORDER BY total DESC LIMIT 0,$offset";
 	    $query = $this->db->query($sql);
 	    return $query->result_array();
         
     }
+<<<<<<< HEAD
 
     public function getCoachPubishedProgramList($id){
         $sql = "SELECT * FROM program WHERE userId=? AND isPublished=1 ORDER BY lastModified DESC";
@@ -70,6 +80,8 @@ class ProgramModel extends CI_Model {
         return $query->result_array();
     }
 
+=======
+>>>>>>> e36010547fdd7d9de9e9602b04d034292d6f3589
     private function addCriteria($sql , $criteria){
         foreach($criteria as $key=>$value )
             $sql += " AND $key LIKE " + "%$value% ";

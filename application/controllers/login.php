@@ -116,8 +116,12 @@ class Login extends CI_Controller {
                 printJson(array(
                     "status"=>true,
                     "name"=>$user['username'],
+<<<<<<< HEAD
                     'type'=>$user['userType'],
                     'id'=>$id
+=======
+                    'type'=>$user['userType']
+>>>>>>> e36010547fdd7d9de9e9602b04d034292d6f3589
                     ));
             }else{
                 printJson(array(
@@ -129,6 +133,7 @@ class Login extends CI_Controller {
             $this->load->model("loginmodel");
             $this->loginmodel->logout();
         }
+<<<<<<< HEAD
         public function changePassword(){
             $this->load->model("usermodel");
             $postData = $this->input->post();
@@ -139,6 +144,8 @@ class Login extends CI_Controller {
             $res = $this->usermodel->changePassword($email, $prepwd, $newpwd, $pwdconf);
             printJson($res);
         }
+=======
+>>>>>>> e36010547fdd7d9de9e9602b04d034292d6f3589
 }
 
 /* End of file welcome.php */
