@@ -71,8 +71,8 @@ class Trainerapi extends Acl_Ajax_Controller {
         $unpublished = $this->programmodel->getCoachUnpublishedProgramList($id);
         printJson(array(
             'status'=>true,
-            'published'=>published,
-            'unpublished'=>unpublished
+            'published'=>$published,
+            'unpublished'=>$unpublished
         ));
     }
 
@@ -119,7 +119,11 @@ class Trainerapi extends Acl_Ajax_Controller {
     function getUserOfProgram($id){
         if(is_numeric($id)){
             $this->load->model("programmodel");
-            $this->programmodel->getUserOfProgram();
+            $result = $this->programmodel->getUserOfProgram();
+            printJson(array(
+                'status'=>true,
+                'result'=>$result,
+                ));
         }
     }
 }
