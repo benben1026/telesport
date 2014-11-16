@@ -117,7 +117,7 @@ class Template extends CI_Controller {
     function uploadFile(){
         $data = $this->input->post();
         for($i =0 ;$i<$data['totalNum'];$i++){
-           $files[] = "file".$id;
+           $files[] = "file".$i;
         }
         $result = $this->do_upload($files);
         foreach($result as $name=>$info){
