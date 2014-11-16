@@ -58,12 +58,15 @@ class ProgramModel extends CI_Model {
 	    return $query->result_array();
         
     }
-    public function getCoachPubishedProgramList($id){
-        $sql = "SELECT * FROM program WHERE userId=? AND isPublished=1 ORDER BY lastModified DESC";
-        $query = $this->db->query($sql, array($id));
+    public function getCoachPublishedProgramList($id){
+        $sql = "SELECT program.*, 	
+        (SELECT count(*) FROM `enroll` WHERE enroll.programId=program.programId and (enroll.statusId=3 OR enroll.statusId=4 OR enroll.statusId=5 OR enroll.statusId=6)) as unfinished, 
+        (SELECT count(*) FROM `enroll` WHERE enroll.programId=program.programId and (enroll.statusId=1)) as applicant 
+        FROM program WHERE userId=? AND isPublished=1 ORDER BY lastModified DESC";
+        $query = $this->db->query($sql, array(intval($id)));
         return $query->result_array();
     }
-
+    
     public function getCoachUnpubishedProgramList($id){
         $sql = "SELECT * FROM program WHERE userId=? AND isPublished=0 ORDER BY lastModified";
         $query = $this->db->query($sql, array($id));
@@ -75,6 +78,10 @@ class ProgramModel extends CI_Model {
             $sql += " AND $key LIKE " + "%$value% ";
         return $sql;
     }
-    
+    public function getTraineeOfProgram($id){
+        $sql = "SELECT * from enroll where programId=? order by lastModified DESC";
+        $query = $this->db->query($sql,array($id));
+        return $query->result_array();
+    }
     
 }
