@@ -117,11 +117,22 @@ class Template extends CI_Controller {
     function uploadFile(){
         $data = $this->input->post();
         for($i =0 ;$i<$data['totalNum'];$i++){
-            $this->do_upload("file".$i);
+           $files[] = "file".$id;
+        }
+        $result = $this->do_upload($files);
+        foreach($result as $name=>$info){
+            if(!$info['status']){
+                printJson(array(
+                    'status'=>false,
+                    'error'=>$info['error']
+                ));
+                return;
+            }
         }
         printJson(array(
-            'totalNumber'=>$data['totalNum']
-            ));
+            'status'=>true,
+            'files'=>$files
+        ));
     }
     private function do_upload($fileNames = array())
 	{
@@ -140,8 +151,8 @@ class Template extends CI_Controller {
     		{
     			$result[$file] = array(
     			    'status'=>false,
+    			     'error'=>$this->upload->display_errors()
     			    );
-    			$result['error'] = $this->upload->display_errors();
     		}
     		else
     		{
