@@ -15,7 +15,7 @@ if ( ! function_exists('isLogin')){
         $idCookie = $ci->input->cookie('USER_ID');
         if(!empty($loginCookie) && !empty($idCookie)){
             $sql = "SELECT `email`, `password`, `token`,`userType` FROM `user` WHERE `userId`=?";
-            $query = $this->db->query($sql, array($idCookie));
+            $query = $ci->db->query($sql, array($idCookie));
             $row = $query->result_array();
             if(!empty($row)){
                 $trueCookie = hash('ripemd256', $row[0]['email'] . $row[0]['password'] . $row[0]['token']);
