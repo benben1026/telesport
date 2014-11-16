@@ -90,5 +90,4 @@ class Traineeapi extends Acl_Ajax_Controller {
             ));
         }
     }
-    
 }

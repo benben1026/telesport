@@ -54,6 +54,22 @@ class Commonapi extends CI_Controller {
             'list'=>$result
             ));
     }
+    public function getCoachPublishedProgramList($id){
+        $this->load->model('programmodel');
+        if(!is_numeric($id)){
+            printJson(array(
+                'status'=>false,
+                'msg'=>"Invalid id"
+                ));
+            return ;
+        }
+        $result = $this->programmodel->getCoachPubishedProgramList($id);
+        printJson(array(
+            'status'=>true,
+            'list'=>$result
+            ));
+    }
+
     public function getTrainerInfo($id){
         #$id = $this->user['id'];
         $this->load->model('usermodel');

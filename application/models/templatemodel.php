@@ -1,5 +1,4 @@
 <?php
-
 /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -57,10 +56,11 @@ class TemplateModel extends CI_Model {
         $data = $query->result_array();
         if(empty($data) || count($data) != 1){
             $output['RESULT'] = FALSE;
-            $output['ERROR'] = 'INVALID_ID';
+            $output['ERROR'] = "INVALID_ID";
             return $output;
         }
-        $sql = "SELECT component.componentId, generalItem.typeId, generalItem.content FROM component INNER JOIN generalItem ON component.componentId=generalItem.componentId WHERE templateId=?";
+        //$sql = "SELECT component.componentId, generalItem.typeId, generalItem.content FROM component INNER JOIN generalItem ON component.componentId=generalItem.componentId WHERE templateId=?";
+        $sql = "SELECT component.componentId, generalItem.typeId, generalItem.content, generalItemType.typeName AS itemType FROM generalItemType, component INNER JOIN generalItem ON component.componentId=generalItem.componentId WHERE templateId=? AND generalItemType.typeId=generalItem.typeId";
         $query = $this->db->query($sql, array($templateId));
         $generalItem = $query->result_array();
         $sql = "SELECT component.componentId, trainingItem.name, trainingItem.numOfSet, trainingItem.numPerSet, trainingItem.finishTime, trainingItem.remark"
@@ -73,6 +73,7 @@ class TemplateModel extends CI_Model {
             for($j = 0; $j < count($generalItem); $j++){
                 if($order[$i] == $generalItem[$j]['componentId']){
                     $component[$i] = $generalItem[$j];
+                    //$output['itemType'] = $generalItem[0]['typeName'];
                     break;
                 }
             }
@@ -88,7 +89,9 @@ class TemplateModel extends CI_Model {
         $output['remark'] = $data[0]['remark'];
         $output['lastModified'] = $data[0]['lastModified'];
         $output['programId'] = $data[0]['programId'];
+        $output['templateId'] = $templateId;
         $output['component'] = $component;
+
         return $output;
     }
     
@@ -112,6 +115,7 @@ class TemplateModel extends CI_Model {
             $output['ERROR'] = 'SERVER_ERROR';
             return $output;
         }
+
         $sql = "SHOW TABLE status WHERE Name = 'template'";
         $query = $this->db->query($sql);
         $result = $query->result_array();
@@ -139,6 +143,7 @@ class TemplateModel extends CI_Model {
         $sql = "UPDATE template SET componentOrder=?, numOfCom=? WHERE templateId = ?";
         $query = $this->db->query($sql, array(json_encode($order), $i, $templateId));
         $output['RESULT'] = TRUE;
+        $output['templateId'] = $templateId;
         $output['ID'] = $order;
         return $output;
     }
@@ -199,8 +204,10 @@ class TemplateModel extends CI_Model {
             $output['ERROR'] = 'TOO_MANY_COMPONENTS';
             return $output;
         }
-        $sql = "UPDATE template SET `name`=?, remark=? WHERE `templateId`=?";
-        $res = $this->db->query($sql, array($name, $remark, $templateId));
+        // $sql = "UPDATE template SET `name`=?, remark=? WHERE `templateId`=?";
+        // $res = $this->db->query($sql, array($name, $remark, $templateId));
+        $sql = "UPDATE template SET `name`=? WHERE `templateId`=?";
+        $res = $this->db->query($sql, array($name, $templateId));
         if(!$res){
             $output['RESULT'] = FALSE;
             $output['ERROR'] = 'SERVER_ERROR';
@@ -209,7 +216,7 @@ class TemplateModel extends CI_Model {
         
         $order = array();
         for($i = 0; $i < count($component); $i++){
-            if($component[$i]['componentId'] == -1){
+            if($component[$i]['componentId'] == 0){
                 if($component[$i]['componentType'] == 'generalItem'){
                     $componentId = $this->createGeneralItem($templateId, $component[$i]['type'], $component[$i]['content']);
                 }else if($component[$i]['componentType'] == 'trainingItem'){
@@ -218,9 +225,9 @@ class TemplateModel extends CI_Model {
                     $componentId = -1;
                 }
                 if($componentId != -1){
-                    $order[$i] = $componentId;
+                    $order[$i] = "" . $componentId;
                 }
-            }else{
+            }else if($component[$i]['componentId'] > 0){
                 if($component[$i]['componentType'] == 'generalItem'){
                     $res = $this->modifyGeneralItem($component[$i]['componentId'], $component[$i]['content']);
                 }else if($component[$i]['componentType'] == 'trainingItem'){
@@ -229,10 +236,16 @@ class TemplateModel extends CI_Model {
                     $res = false;
                 }
                 if($res){
-                    $order[$i] = $component[$i]['componentId'];
+                    $order[$i] = "" . $component[$i]['componentId'];
                 }
+            }else{
+                $id = $component[$i]['componentId'] * (-1);
+                $sql = "DELETE FROM component WHERE componentId=?";
+                $query = $this->db->query($sql, array($id));
             }
         }
+        $sql = "UPDATE template SET componentOrder=?, numOfCom=? WHERE templateId = ?";
+        $query = $this->db->query($sql, array(json_encode($order), $i, $templateId));
         $output['RESULT'] = TRUE;
         $output['ID'] = $order;
         return $output;

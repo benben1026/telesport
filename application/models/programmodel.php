@@ -44,24 +44,44 @@ class ProgramModel extends CI_Model {
         return $this->db->get();
     }
     function getProgramDetails($programId){
-        $sql = "SELECT * ,(SELECT count(*) FROM enroll where programId = ? and enroll.statusId=0) as total FROM `program` WHERE programId=?";
+        $sql = "SELECT * ,(SELECT count(*) FROM enroll where programId = ? and (enroll.statusId=3 OR enroll.statusId=4 OR enroll.statusId=5 OR enroll.statusId=6)) as total FROM `program` WHERE programId=?";
+
         $query = $this->db->query($sql,array($programId,$programId));
         return $query->row_array();
     }
     public function getProgramList($offset){
         $sql = "SELECT program.* ,(SELECT username from user where user.userId = program.userId) as username,count(enroll.enrollId) as total,
-	(SELECT count(*) FROM `enroll` WHERE enroll.programId=program.programId and enroll.statusId=0) as unfinished,
-	(SELECT count(*) FROM `enroll` WHERE enroll.programId=program.programId and enroll.statusId=1) as finished 
+	(SELECT count(*) FROM `enroll` WHERE enroll.programId=program.programId and (enroll.statusId=3 OR enroll.statusId=4 OR enroll.statusId=5 OR enroll.statusId=6)) as unfinished,
+	(SELECT count(*) FROM `enroll` WHERE enroll.programId=program.programId and enroll.statusId=7) as finished 
 	FROM `program` LEFT JOIN `enroll` ON program.programId = enroll.programId GROUP BY program.programId ORDER BY total DESC LIMIT 0,$offset";
 	    $query = $this->db->query($sql);
 	    return $query->result_array();
         
     }
+    public function getCoachPublishedProgramList($id){
+        $sql = "SELECT program.*, 	
+        (SELECT count(*) FROM `enroll` WHERE enroll.programId=program.programId and (enroll.statusId=3 OR enroll.statusId=4 OR enroll.statusId=5 OR enroll.statusId=6)) as unfinished, 
+        (SELECT count(*) FROM `enroll` WHERE enroll.programId=program.programId and (enroll.statusId=1)) as applicant 
+        FROM program WHERE userId=? AND isPublished=1 ORDER BY lastModified DESC";
+        $query = $this->db->query($sql, array(intval($id)));
+        return $query->result_array();
+    }
+    
+    public function getCoachUnpublishedProgramList($id){
+        $sql = "SELECT * FROM program WHERE userId=? AND isPublished=0 ORDER BY lastModified";
+        $query = $this->db->query($sql, array($id));
+        return $query->result_array();
+    }
+
     private function addCriteria($sql , $criteria){
         foreach($criteria as $key=>$value )
             $sql += " AND $key LIKE " + "%$value% ";
         return $sql;
     }
-    
+    public function getTraineeOfProgram($id){
+        $sql = "SELECT * from enroll where programId=? order by lastModified DESC";
+        $query = $this->db->query($sql,array($id));
+        return $query->result_array();
+    }
     
 }

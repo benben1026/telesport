@@ -78,4 +78,35 @@ class UserModel extends CI_Model {
         $query = $this->db->query($sql,array((int)$id));
          return $query->row_array();
     }
+    public function getTraineeInfo($id){
+        $sql = "SELECT username,gender,userType,age,height,weight,aim,sportsTimePerDay,ifSmoke,ifDrink,
+        illness,illnessDescription,medicineDescription,
+        operationDescription,bodyStatus,firstName,lastName,nationality,firstLanguage,
+        secondLanguage,phone,occupation,address1,address2,address3 
+         FROM user LEFT JOIN trainee ON 
+         user.userId = trainee.userId  WHERE user.userId = ?";
+        $query = $this->db->query($sql,array((int)$id));
+        
+        return $query->row_array();
+    }
+
+    function changePassword($email, $prepwd, $newpwd, $pwdconf){
+        $sql = "SELECT `username`, `password`,`userType` FROM `user` WHERE `email`=?";
+        $query = $this->db->query($sql, array($email));
+        $row = $query->result_array();
+        if(!empty($row)){
+            if($row[0]['password']==md5(md5($prepwd)))
+            {
+                $update=array("password"=>md5(md5($newpwd)));
+                $this->db->where("email",$email);
+                $this->db->update("user", $update);
+                return $this->db->affected_rows();
+            }
+            else{
+                return -2;
+            }
+        }
+        return -1;
+
+    }
 }
