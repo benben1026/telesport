@@ -114,4 +114,11 @@ class Trainerapi extends Acl_Ajax_Controller {
             ));
         }
     }
+    
+    function getUserOfProgram($id){
+        if(is_numeric($id)){
+            $this->load->model("programmodel");
+            $this->programmodel->getUserOfProgram();
+        }
+    }
 }
