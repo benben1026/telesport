@@ -54,8 +54,6 @@ class Commonapi extends CI_Controller {
             'list'=>$result
             ));
     }
-<<<<<<< HEAD
-
     public function getCoachPublishedProgramList($id){
         $this->load->model('programmodel');
         if(!is_numeric($id)){
@@ -72,8 +70,6 @@ class Commonapi extends CI_Controller {
             ));
     }
 
-=======
->>>>>>> e36010547fdd7d9de9e9602b04d034292d6f3589
     public function getTrainerInfo($id){
         #$id = $this->user['id'];
         $this->load->model('usermodel');
@@ -83,9 +79,4 @@ class Commonapi extends CI_Controller {
         $result =  $this->usermodel->getTrainerInfo($index,$id);
         printJson($result);
     }
-<<<<<<< HEAD
-
-
-=======
->>>>>>> e36010547fdd7d9de9e9602b04d034292d6f3589
 }

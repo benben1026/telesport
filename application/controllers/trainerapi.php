@@ -57,8 +57,6 @@ class Trainerapi extends Acl_Ajax_Controller {
             printJson(array('status'=>false,'result'=>"No such coach"));
         }
     }
-<<<<<<< HEAD
-
     public function getProgramList($id){
          if(!is_numeric($id)){
             printJson(array(
@@ -116,6 +114,4 @@ class Trainerapi extends Acl_Ajax_Controller {
             ));
         }
     }
-=======
->>>>>>> e36010547fdd7d9de9e9602b04d034292d6f3589
 }

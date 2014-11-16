@@ -90,20 +90,4 @@ class Traineeapi extends Acl_Ajax_Controller {
             ));
         }
     }
-<<<<<<< HEAD
-
-    public function getProgramList($id){
-        //echo "test";
-        //$array = array('1','2');
-        $array = array();
-        $array[0] = 2;
-        $array[1] = 7;
-        printJson(array(
-                "status"=>true,
-                "programList"=>$array,
-        ));
-    }
-=======
->>>>>>> e36010547fdd7d9de9e9602b04d034292d6f3589
-    
 }
