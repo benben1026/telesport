@@ -40,7 +40,7 @@ class Template extends CI_Controller {
         }else if($postData['type'] == 4){
             //modify
             if(isset($postData['templateId'])){
-                $this->modifyTemplate($postData['templateId'], $postData['userId'], $postData['name'], $postData['remark'], $postData['component']);
+                $this->modifyTemplate($postData['templateId'], $postData['userId'], $postData['name'], $postData['component']);
             }else{
                 $output = array(
                     'RESULT'=>FALSE,
@@ -117,6 +117,7 @@ class Template extends CI_Controller {
     }
     function uploadFile(){
         $data = $this->input->post();
+        
         for($i =0 ;$i<$data['totalNum'];$i++){
            $files[] = "file".$i;
         }

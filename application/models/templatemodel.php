@@ -191,7 +191,7 @@ class TemplateModel extends CI_Model {
         return $res ? $componentId : false;
     }
     
-    function modifyTemplate($templateId, $userId, $name, $remark, $json_component){
+    function modifyTemplate($templateId, $userId, $name,$json_component){
         $output = array();
         if(!is_numeric($templateId) || !is_numeric($userId)){
             $output['RESULT'] = FALSE;

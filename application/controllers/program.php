@@ -32,7 +32,11 @@ class Program extends Acl_Ajax_Controller {
             $postData = $this->input->post();
           
             $postData['userId'] = $this->user['id'];
-
+            $template = array();
+            for($i=0;$i<intval($postData['duration']);$i++){
+                $template[]=-1;
+            }
+            $postData['templates']=json_encode($templates);
             $this->load->model('programmodel');
         
             $programId = $this->programmodel->addProgram($postData);
@@ -150,5 +154,13 @@ class Program extends Acl_Ajax_Controller {
              'status'=>true,
              'program'=>$program
              ));
+    }
+    public function getTemplates($id){
+        $this->load->model("programmodel");
+        $program = $this->programmodel->getProgramDetails($id);
+        printJson(array(
+            'status'=>true,
+            'templates'=>$program['templates']
+            ));
     }
 }
