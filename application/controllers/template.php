@@ -143,7 +143,7 @@ class Template extends Acl_Ajax_Controller{
         $totalNumber = $data['totalNum'];
         
         foreach($components as $component ){
-            if($component['componentType'] == 'generalItem' && in_array($component['type'],array("IMAGE","VIDEO"))){
+            if($component['componentId']==0 && $component['componentType'] == 'generalItem' && in_array($component['type'],array("IMAGE","VIDEO"))){
                 $name = $component['content'];
                 $result = $this->do_upload(array($name));
                 if(!$result[$name]['status']){
