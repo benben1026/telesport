@@ -191,14 +191,14 @@ class TemplateModel extends CI_Model {
         return $res ? $componentId : false;
     }
     
-    function modifyTemplate($templateId, $userId, $name,$json_component){
+    function modifyTemplate($templateId, $userId, $name,$component){
         $output = array();
         if(!is_numeric($templateId) || !is_numeric($userId)){
             $output['RESULT'] = FALSE;
             $output['ERROR'] = 'INVALID_ID';
             return $output;
         }
-        $component = json_decode($json_component, TRUE);
+        //$component = json_decode($json_component, TRUE);
         if(count($component) > 10){
             $output['RESULT'] = FALSE;
             $output['ERROR'] = 'TOO_MANY_COMPONENTS';

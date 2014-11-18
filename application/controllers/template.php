@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Template extends CI_Controller {
+class Template extends Acl_Ajax_Controller{
     public function index(){
         $postData = $this->input->post();
         $this->load->model("templatemodel");
@@ -81,8 +81,8 @@ class Template extends CI_Controller {
         $this->output($this->templatemodel->createTemplate($programId, $userId, $name, $remark, $json_component));
     }
     
-    public function modifyTemplate($templateId, $userId, $name, $remark, $json_component){
-        $this->output($this->templatemodel->modifyTemplate($templateId, $userId, $name, $remark, $json_component));
+    /*public function modifyTemplate($templateId, $userId, $name,  $json_component){
+        $this->output($this->templatemodel->modifyTemplate($templateId, $userId, $name, $json_component));
         // $order = $this->templatemodel->modifyTemplate($templateId, $userId, $name, $remark, $json_component);
         // if($order != false){
         //     $output = array(
@@ -96,7 +96,7 @@ class Template extends CI_Controller {
         //     );
         //     $this->output($output);
         // }
-    }
+    }*/
     
     function delete($templateId, $userId){
         if($this->templatemodel->delete($templateId, $userId)){
@@ -115,26 +115,53 @@ class Template extends CI_Controller {
     function output($res){
         printJson($res);
     }
-    function uploadFile(){
-        $data = $this->input->post();
-        
-        for($i =0 ;$i<$data['totalNum'];$i++){
-           $files[] = "file".$i;
+    public function modifyTemplate(){
+        $this->load->library('form_validation');
+        $this->load->library("Tele_Form_validation");
+        if(!$this->form_validation->run('modifyTemplate')){
+            $errors = form_error();
+            printJson(array(
+                'status'=>false,
+                'errors'=>$errors,
+            ));
+            return;
         }
-        $result = $this->do_upload($files);
-        foreach($result as $name=>$info){
-            if(!$info['status']){
-                printJson(array(
-                    'status'=>false,
-                    'error'=>$info['error']
-                ));
-                return;
+        $this->load->model('templatemodel');
+        $data = $this->input->post();
+        $templateId = $data['templateId'];
+        $templateName = $data['name'];
+        $components = json_decode($data['component'],true);
+        $totalNumber = $data['totalNum'];
+        
+        foreach($components as $component ){
+            if($component['componentType'] == 'generalItem' && in_array($component['type'],array("IMAGE","VIDEO"))){
+                $name = $component['content'];
+                $result = $this->do_upload(array($name));
+                if(!$result['status']){
+                    printJson($result);
+                    return;
+                }
+                $component['content'] = $result['file_info']['file_name'];
             }
         }
+        $addTemplateResult = $this->templatemodel->modifyTemplate($templateId, $this->user['id'], $templateName, $components);
+        if(!$addTemplateResult['RESULT']){
+            printJson($addTemplateResult);
+            return;
+        }
+        $program = array(
+                'templates'=> $data['templates'],
+                'programId'=> $data['programId']
+            );
+        $this->load->model('programmodel');
+        if(!$this->programmodel->updateProgram($program)){
+            printJson(array('status'=>'false','error'=>'fail to update program'));
+            return;
+        }
+        
         printJson(array(
             'status'=>true,
-            'files'=>$files
-        ));
+            ));
     }
     private function do_upload($fileNames = array())
 	{

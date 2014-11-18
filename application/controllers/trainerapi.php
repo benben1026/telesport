@@ -120,7 +120,7 @@ class Trainerapi extends Acl_Ajax_Controller {
     function getUserOfProgram($id){
         if(is_numeric($id)){
             $this->load->model("programmodel");
-            $result = $this->programmodel->getUserOfProgram();
+            $result = $this->programmodel->getTraineeOfProgram();
             printJson(array(
                 'status'=>true,
                 'result'=>$result,

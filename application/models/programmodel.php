@@ -30,7 +30,8 @@ class ProgramModel extends CI_Model {
     }
     function updateProgram($program){
         $this->db->where("programId",$program['programId']);
-        return  $this->db->update("program",$program);
+        $this->db->update("program",$program);
+        return $this->db->affected_rows();
         
     }
     function deleteProgram($programId){
