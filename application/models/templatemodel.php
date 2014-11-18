@@ -194,23 +194,29 @@ class TemplateModel extends CI_Model {
     function modifyTemplate($templateId, $userId, $name,$component){
         $output = array();
         if(!is_numeric($templateId) || !is_numeric($userId)){
-            $output['RESULT'] = FALSE;
-            $output['ERROR'] = 'INVALID_ID';
+            $output['status'] = FALSE;
+            $output['msg'] = 'INVALID_ID';
             return $output;
         }
         //$component = json_decode($json_component, TRUE);
         if(count($component) > 10){
-            $output['RESULT'] = FALSE;
-            $output['ERROR'] = 'TOO_MANY_COMPONENTS';
+            $output['status'] = FALSE;
+            $output['msg'] = 'TOO_MANY_COMPONENTS';
             return $output;
         }
         // $sql = "UPDATE template SET `name`=?, remark=? WHERE `templateId`=?";
         // $res = $this->db->query($sql, array($name, $remark, $templateId));
         $sql = "UPDATE template SET `name`=? WHERE `templateId`=?";
         $res = $this->db->query($sql, array($name, $templateId));
+        if($this->db->affected_rows()==0 && $this->db->_error_number()==0){
+            return array(
+                'status'=>false,
+                'msg'=>"No such template"
+                );
+        }
         if(!$res){
-            $output['RESULT'] = FALSE;
-            $output['ERROR'] = 'SERVER_ERROR';
+            $output['status'] = FALSE;
+            $output['msg'] = 'SERVER_ERROR';
             return $output;
         }
         
@@ -246,7 +252,7 @@ class TemplateModel extends CI_Model {
         }
         $sql = "UPDATE template SET componentOrder=?, numOfCom=? WHERE templateId = ?";
         $query = $this->db->query($sql, array(json_encode($order), $i, $templateId));
-        $output['RESULT'] = TRUE;
+        $output['status'] = TRUE;
         $output['ID'] = $order;
         return $output;
     }

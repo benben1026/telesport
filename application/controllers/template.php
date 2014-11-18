@@ -122,7 +122,7 @@ class Template extends Acl_Ajax_Controller{
             $errors = form_error();
             printJson(array(
                 'status'=>false,
-                'errors'=>$errors,
+                'msg'=>$errors,
             ));
             return;
         }
@@ -131,17 +131,26 @@ class Template extends Acl_Ajax_Controller{
         $templateId = $data['templateId'];
         $templateName = $data['name'];
         $components = json_decode($data['component'],true);
+        if(empty($components)){
+            printJson(
+                array(
+                    'status'=>false,
+                    'msg'=>"wrong json format"
+                    )
+                );
+            return;
+        }
         $totalNumber = $data['totalNum'];
         
         foreach($components as $component ){
             if($component['componentType'] == 'generalItem' && in_array($component['type'],array("IMAGE","VIDEO"))){
                 $name = $component['content'];
                 $result = $this->do_upload(array($name));
-                if(!$result['status']){
+                if(!$result[$name]['status']){
                     printJson($result);
                     return;
                 }
-                $component['content'] = $result['file_info']['file_name'];
+                $component['content'] = $result[$name]['file_info']['file_name'];
             }
         }
         $addTemplateResult = $this->templatemodel->modifyTemplate($templateId, $this->user['id'], $templateName, $components);
@@ -155,7 +164,7 @@ class Template extends Acl_Ajax_Controller{
             );
         $this->load->model('programmodel');
         if(!$this->programmodel->updateProgram($program)){
-            printJson(array('status'=>'false','error'=>'fail to update program'));
+            printJson(array('status'=>'false','msg'=>'No such Program'));
             return;
         }
         
