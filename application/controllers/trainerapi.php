@@ -93,7 +93,7 @@ class Trainerapi extends Acl_Ajax_Controller {
                 'address1'=>$postData['address'],
                 'passport_number'=>$postData['passport_number'],
                 'certType'=>$postData['certType'],
-                'expertise'=>$postData['experise'],
+                'expertise'=>$postData['expertise'],
                  'selfIntro'=>$postData['selfIntro'],
             );
             $this->load->model("usermodel");
