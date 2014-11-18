@@ -80,7 +80,7 @@ class ProgramModel extends CI_Model {
         return $sql;
     }
     public function getTraineeOfProgram($id){
-        $sql = "SELECT * from enroll where programId=? order by lastModified DESC";
+        $sql = "SELECT * from enroll where programId=? order by time DESC";
         $query = $this->db->query($sql,array($id));
         return $query->result_array();
     }
