@@ -43,16 +43,8 @@ class Traineeapi extends Acl_Ajax_Controller {
         if($this->form_validation->run('editUserInfo')){
              $postData = $this->input->post();
              $user = array(
-                'firstName'=>$postData['firstName'],
-                'lastName'=>$postData['lastName'],
-                'firstLanguage'=>$postData['firstLanguage'],
-                'secondLanguage'=>$postData['secondLanguage'],
-                'nationality'=>$postData['nationality'],
-                'birthday'=>$postData['birthday'],
                 'age'=>$postData['age'],
                 'gender'=>$postData['gender'],
-                'phone'=>$postData['phone'],
-                'occupation'=>$postData['occupation'],
             );
             $user['id'] = $this->user['id'];
             $trainee = array(
@@ -67,7 +59,6 @@ class Traineeapi extends Acl_Ajax_Controller {
                 'medicineDescription'=>$postData['medicineDescription'],
                 
                 'operationDescription'=>$postData['operationDescription'],
-                'bodyStatus'=>$postData['bodyStatus'],
                 'aim'=>$postData['aim'],
             );
             $this->load->model("usermodel");

@@ -154,7 +154,7 @@ class Template extends Acl_Ajax_Controller{
             }
         }
         $addTemplateResult = $this->templatemodel->modifyTemplate($templateId, $this->user['id'], $templateName, $components);
-        if(!$addTemplateResult['RESULT']){
+        if(!$addTemplateResult['status']){
             printJson($addTemplateResult);
             return;
         }

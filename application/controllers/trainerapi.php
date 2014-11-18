@@ -98,7 +98,7 @@ class Trainerapi extends Acl_Ajax_Controller {
             );
             $this->load->model("usermodel");
             
-            if($this->usermodel->updateTraineeInfo($user,$trainee) || $this->db->_error_number()==0){
+            if($this->usermodel->updateTrainerInfo($user,$trainer) || $this->db->_error_number()==0){
                   printJson(array(
                    'status'=>true,
                 ));

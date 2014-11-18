@@ -35,6 +35,16 @@ class UserModel extends CI_Model {
         $this->db->update("trainee",$trainee);
         return $this->db->affected_rows();
     }
+    function updateTrainerInfo($user,$trainer){
+        $id = $user['id'];
+        unset($user['id']);
+      
+        $this->db->where("userId",(int)$id);
+        $this->db->update("user",$user);
+        $this->db->where("userId",(int)$id);
+        $this->db->update("trainer",$trainer);
+        return $this->db->affected_rows();
+    }
     function setToken($email){
         $this->load->helper("stringext");
         $token = generateToken();
