@@ -158,6 +158,7 @@ class Register extends CI_Controller {
                'certificate'=>$files['certificate']['file_info']['full_path'],
                'certType'=>$postData['certType'],
                 'selfIntro'=>$postData['selfIntro'],
+                  'expertise'=>$postData['experise'],
             );
             if($this->registermodel->trainer($user,$trainer)){
                 printJson(array(
