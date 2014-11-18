@@ -80,7 +80,7 @@ class ProgramModel extends CI_Model {
         return $sql;
     }
     public function getTraineeOfProgram($id){
-        $sql = "SELECT enroll.*,username,firstName,lastName,gender from enroll join user on user.userId = trainee.userId where programId=? order by time ASC";
+        $sql = "SELECT enroll.*,username,firstName,lastName,gender from enroll join user on user.userId = enroll.traineeId where programId=? order by time ASC";
         $query = $this->db->query($sql,array($id));
         return $query->result_array();
     }
