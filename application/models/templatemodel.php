@@ -208,12 +208,7 @@ class TemplateModel extends CI_Model {
         // $res = $this->db->query($sql, array($name, $remark, $templateId));
         $sql = "UPDATE template SET `name`=? WHERE `templateId`=?";
         $res = $this->db->query($sql, array($name, $templateId));
-        if($this->db->affected_rows()==0 && $this->db->_error_number()==0){
-            return array(
-                'status'=>false,
-                'msg'=>"No such template"
-                );
-        }
+
         if(!$res){
             $output['status'] = FALSE;
             $output['msg'] = 'SERVER_ERROR';
