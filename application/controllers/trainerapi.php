@@ -82,8 +82,6 @@ class Trainerapi extends Acl_Ajax_Controller {
         if($this->form_validation->run('editUserInfo')){
              $postData = $this->input->post();
              $user = array(
-                'firstName'=>$postData['firstName'],
-                'lastName'=>$postData['lastName'],
                 'firstLanguage'=>$postData['firstLanguage'],
                 'secondLanguage'=>$postData['secondLanguage'],
                 'nationality'=>$postData['nationality'],
@@ -96,6 +94,7 @@ class Trainerapi extends Acl_Ajax_Controller {
                 'passport_number'=>$postData['passport_number'],
                 'certType'=>$postData['certType'],
                 'expertise'=>$postData['experise'],
+                 'selfIntro'=>$postData['selfIntro'],
             );
             $this->load->model("usermodel");
             
