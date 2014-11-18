@@ -511,17 +511,17 @@ $config = array(
         array(
             'field'=>'firstLanguage',
             'label'=>'lang:firstLanguage',
-            'rules'=>'trim|isset|alpha|valid_language|xss_clean'
+            'rules'=>'trim|isset|valid_language|xss_clean'
         ),
         array(
             'field'=>'secondLanguage',
             'label'=>'lang:secondLanguage',
-            'rules'=>'trim|isset|alpha|valid_language|xss_clean'
+            'rules'=>'trim|isset|valid_language|xss_clean'
         ),
         array(
             'field'=>'nationality',
             'label'=>'lang:nationality',
-            'rules'=>'trim|isset|alpha|valid_nationality|xss_clean'
+            'rules'=>'trim|isset|valid_nationality|xss_clean'
         ),
         array(
             'field'=>'birthday',
@@ -531,12 +531,12 @@ $config = array(
         array(
             'field'=>"occupation",
             'label'=>"lang:occupation",
-            'rules'=>'trim|isset|alpha_dash|xss_clean'
+            'rules'=>'trim|isset|xss_clean'
         ),
         array(
             'field'=>"phone",
             'label'=>"lang:phone",
-            'rules'=>'trim|isset|alpha_dash|xss_clean|valid_phone'
+            'rules'=>'trim|isset|alpha_dash|xss_clean'
         ),
         array(
             'field'=>"height",
