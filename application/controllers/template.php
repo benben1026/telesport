@@ -142,7 +142,7 @@ class Template extends Acl_Ajax_Controller{
         }
         $totalNumber = $data['totalNum'];
         
-        foreach($components as $component ){
+        foreach($components as $index=>$component ){
             if($component['componentId']==0 && $component['componentType'] == 'generalItem' && in_array($component['type'],array("IMAGE","VIDEO"))){
                 $name = $component['content'];
                 $result = $this->do_upload(array($name));
@@ -150,7 +150,7 @@ class Template extends Acl_Ajax_Controller{
                     printJson($result);
                     return;
                 }
-                $component['content'] = $result[$name]['file_info']['file_name'];
+                $components[$index]['content'] = $result[$name]['file_info']['file_name'];
             }
         }
         $addTemplateResult = $this->templatemodel->modifyTemplate($templateId, $this->user['id'], $templateName, $components);
