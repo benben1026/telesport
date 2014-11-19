@@ -226,7 +226,7 @@ class Register extends CI_Controller {
         $email = $this->input->get('email');
         $token  = $this->usermodel->setToken(urldecode($email));
         if($token){
-            $data['url'] = "http://www.promexeus.com/version0.2/zh/user/resetpassword.php?token=".$token;
+            $data['url'] = "http://www.promexeus.com/version0.2/zh/user/resetPassword.php?token=".$token;
             $this->usermodel->sendEmail("admin@telesports.com",$email,'申请重新设置密码',$this->load->view('mail/resetpass', $data, true));
             printJson(array(
                 'status'=>true,
@@ -256,8 +256,26 @@ class Register extends CI_Controller {
         if($this->form_validation->run('resetPassword')){
             $this->load->model('usermodel');
             $data = $this->input->post();
-            $this->usermodel->resetPassword($data['password'],$data['passConf'],$data['token']);
-            
+            $res = $this->usermodel->resetPassword($data['email'],$data['password'],$data['token']);
+            if($res){
+                printJson(array(
+                    'status'=>true,
+                ));
+            }
+            else{
+                if($res==-1){
+                    printJson(array(
+                        'status'=>false,
+                        'err'=>'wrong email address'
+                    ));
+                }
+                else{
+                    printJson(array(
+                        'status'=>false,
+                        'err'=>'can not use previous password'
+                    ));
+                }
+            }
         }
     }
     private function do_upload($fileNames = array())
