@@ -133,7 +133,6 @@ class Register extends CI_Controller {
                 'firstLanguage'=>$postData['firstLanguage'],
                 'secondLanguage'=>$postData['secondLanguage'],
                 'nationality'=>$postData['nationality'],
-                'birthday'=>$postData['birthday'],
                 'age'=>$postData['age'],
                 'balance'=>DEFAULT_BALANCE,
                 'userType'=>TRAINER,
@@ -158,7 +157,7 @@ class Register extends CI_Controller {
                'certificate'=>$files['certificate']['file_info']['full_path'],
                'certType'=>$postData['certType'],
                 'selfIntro'=>$postData['selfIntro'],
-                  'expertise'=>$postData['experise'],
+                  'expertise'=>$postData['expertise'],
             );
             if($this->registermodel->trainer($user,$trainer)){
                 printJson(array(
