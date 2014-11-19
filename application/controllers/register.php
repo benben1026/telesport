@@ -257,7 +257,7 @@ class Register extends CI_Controller {
             $this->load->model('usermodel');
             $data = $this->input->post();
             $res = $this->usermodel->resetPassword($data['email'],$data['password'],$data['token']);
-            if($res){
+            if($res>0){
                 printJson(array(
                     'status'=>true,
                 ));

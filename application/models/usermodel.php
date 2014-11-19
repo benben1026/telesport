@@ -77,7 +77,11 @@ class UserModel extends CI_Model {
     function resetPassword($email,$password,$token){
         $this->db->where("email",$email);
         $this->db->where("token",$token);
-        $query = $this->db->update("user",md5(md5($password)));
+        $user = array(
+            'password'=>md5(md5($password)),
+            'token'=>generateToken()
+            );
+        $query = $this->db->update("user",$user);
         if(!$query){
             return -1;
         }
