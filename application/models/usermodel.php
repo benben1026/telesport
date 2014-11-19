@@ -75,6 +75,7 @@ class UserModel extends CI_Model {
         $this->email->send();
     }
     function resetPassword($email,$password,$token){
+        $this->load->helper("stringext");
         $this->db->where("email",$email);
         $this->db->where("token",$token);
         $user = array(
