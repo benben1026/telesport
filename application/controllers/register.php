@@ -280,7 +280,7 @@ class Register extends CI_Controller {
             $errors = form_error();
             printJson(array(
                 'status'=>false,
-                'errors'=>$errors,
+                'err'=>$errors,
             ));
         }
     }
