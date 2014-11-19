@@ -79,11 +79,13 @@ class Register extends CI_Controller {
                 //'expectation'=>$postData['expectation']
             );
             if($this->registermodel->register($user,$trainee)){
+               
+                $this->load->model("loginmodel");
+                $this->loginmodel->setLogin($this->db->insert_id(),TRAINEE);
                 printJson(array(
                    'status'=>true,
                 ));
-               $this->load->model("loginmodel");
-               $this->loginmodel->setLogin($this->db->insert_id(),TRAINEE);
+               
             }else{
                 printJson(array(
                     'status'=>false,
@@ -161,11 +163,12 @@ class Register extends CI_Controller {
                   'expertise'=>$postData['experise'],
             );
             if($this->registermodel->trainer($user,$trainer)){
+                $this->load->model("loginmodel");
+                $this->loginmodel->setLogin($this->db->insert_id(),TRAINER);
                 printJson(array(
                    'status'=>true,
                 ));
-               $this->load->model("loginmodel");
-               $this->loginmodel->setLogin($this->db->insert_id(),TRAINER);
+              
                return;
             }else{
                 printJson(array(
