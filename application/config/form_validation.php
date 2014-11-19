@@ -524,11 +524,6 @@ $config = array(
             'rules'=>'trim|isset|valid_nationality|xss_clean'
         ),
         array(
-            'field'=>'birthday',
-            'label'=>'lang:birthday',
-            'rules'=>'trim|isset|xss_clean|valid_birthday'
-        ),
-        array(
             'field'=>"occupation",
             'label'=>"lang:occupation",
             'rules'=>'trim|isset|xss_clean'
