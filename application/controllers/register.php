@@ -272,7 +272,7 @@ class Register extends CI_Controller {
                 else{
                     printJson(array(
                         'status'=>false,
-                        'err'=>'can not use previous password'
+                        'err'=>'wrong token or email'
                     ));
                 }
             }
