@@ -276,6 +276,12 @@ class Register extends CI_Controller {
                     ));
                 }
             }
+        }else{
+            $errors = form_error();
+            printJson(array(
+                'status'=>false,
+                'errors'=>$errors,
+            ));
         }
     }
     private function do_upload($fileNames = array())

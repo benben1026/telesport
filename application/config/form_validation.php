@@ -296,7 +296,7 @@ $config = array(
         array(
             'field'=>'email',
             'label'=> 'lang:Email',
-            'rules'=>'trim|isset|required|valid_email|is_unique[user.email]|xss_clean'
+            'rules'=>'trim|isset|required|valid_email|xss_clean'
         ),
     ),
     "editUserInfo"=>array(
