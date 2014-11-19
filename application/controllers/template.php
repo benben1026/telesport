@@ -164,8 +164,7 @@ class Template extends Acl_Ajax_Controller{
             );
         $this->load->model('programmodel');
         if(!$this->programmodel->updateProgram($program)){
-            printJson(array('status'=>'false','msg'=>'No such Program'));
-            return;
+          
         }
         
         printJson(array(
