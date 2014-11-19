@@ -74,11 +74,16 @@ class UserModel extends CI_Model {
         $this->email->message($content);	
         $this->email->send();
     }
-    function resetPassword($email,$token,$password){
+    function resetPassword($email,$password,$token){
         $this->db->where("email",$email);
         $this->db->where("token",$token);
-        $this->db->update("user",md5(md5($password)));
-        return $this->db->affected_rows();
+        $query = $this->db->update("user",md5(md5($password)));
+        if(!$query){
+            return -1;
+        }
+        else{
+            return $this->db->affected_rows();
+        }
     }
     function getTrainerInfo($data,$id){
         $select = join($data,',');

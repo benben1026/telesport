@@ -11,18 +11,19 @@
 class Question extends CI_Controller {
 
     public function index(){
+    	echo "test";
     }
 
     public function postQuestion(){
-    	$this->load->library('form_validation');
+    	echo "hello";
+        $postData = $this->input->post(); 	  	
+
         if(empty($postData)){
             show_404();
         }
-        $this->form_validation->set_language("chinese");
-        $this->form_validation->set_error_delimiters('','');
 
     	$this->load->model("questionmodel");
-        $postData = $this->input->post(); 	
+
  		$question = array(
             'userId'=>$postData['userId'],
             'content'=>$postData['content'],
