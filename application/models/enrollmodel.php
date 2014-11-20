@@ -344,7 +344,7 @@ class EnrollModel extends CI_Model {
         
         function getProgramList($traineeId){
             $output = array();
-            $sql = "SELECT * FROM enroll WHERE traineeId=? ORDER BY statusId, time";
+            $sql = "SELECT enroll.*, program.name FROM enroll LEFT JOIN program ON program.programId=enroll.programId WHERE enroll.traineeId=? ORDER BY enroll.statusId, enroll.time";
             $query = $this->db->query($sql, array($traineeId));
             $row = $query->result_array();
             $output['status'] = true;
