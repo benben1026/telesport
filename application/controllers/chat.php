@@ -7,17 +7,18 @@ class Chat extends CI_Controller {
         $read = array();
         $send = array();
         $get = array();
+        $fromUser = $this->user['id'];
         if(isset($postData['readMsg'])){
             $read = $this->chatmodel->setReadMsg($postData['readMsg']);
         }
-        if(isset($postData['sendMsg'], $postData['fromUser'], $postData['toUser'], $postData['enrollId'])){
+        if(isset($postData['sendMsg'], $fromUser, $postData['toUser'], $postData['enrollId'])){
             $temp = json_decode($postData['sendMsg'], TRUE);
             if(!empty($temp)){
-                $send = $this->chatmodel->sendMsg($postData['fromUser'], $postData['toUser'], $temp['content'], $temp['type'], $postData['enrollId']);
+                $send = $this->chatmodel->sendMsg($fromUser, $postData['toUser'], $temp['content'], $temp['type'], $postData['enrollId']);
             }
         }
-        if(isset($postData['fromUser'], $postData['toUser'], $postData['enrollId'])){
-            $get = $this->chatmodel->getMsg($postData['fromUser'], $postData['toUser'], $postData['enrollId']);
+        if(isset($fromUser, $postData['toUser'], $postData['enrollId'])){
+            $get = $this->chatmodel->getMsg($fromUser, $postData['toUser'], $postData['enrollId']);
         }
         $output = array();
         $output['SETREADMSG'] = $read;
