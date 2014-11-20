@@ -349,6 +349,7 @@ class EnrollModel extends CI_Model {
             $row = $query->result_array();
             $output['status'] = true;
             $output['data'] = $row;
+            return $output;
         }
 /*
 	function exitProgram($programId, $userId){
