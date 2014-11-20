@@ -81,4 +81,64 @@ class Traineeapi extends Acl_Ajax_Controller {
             ));
         }
     }
+    
+    function apply($programId){
+        if(!is_numeric($programId)){
+            printJson(array(
+                'status'=>false,
+                'error'=>'INVALID_ID',
+            ));
+        }
+        $id = $this->user['id'];
+        $this->load->model('enrollmodel');
+        printJson($this->enrollmodel->apply($programId, $id));
+    }
+    
+    function payment($enrollId){
+        if(!is_numeric($enrollId)){
+            printJson(array(
+                'status'=>false,
+                'error'=>'INVALID_ID',
+            ));
+        }
+        $id = $this->user['id'];
+        $this->load->model('enrollmodel');
+        printJson($this->enrollmodel->payment($enrollId, $id));
+    }
+    
+    function startProgram($enrollId){
+        if(!is_numeric($enrollId)){
+            printJson(array(
+                'status'=>false,
+                'error'=>'INVALID_ID',
+            ));
+        }
+        $id = $this->user['id'];
+        $this->load->model('enrollmodel');
+        printJson($this->enrollmodel->startProgram($enrollId, $id));
+    }
+    
+    function finishProgram($enrollId){
+        if(!is_numeric($enrollId)){
+            printJson(array(
+                'status'=>false,
+                'error'=>'INVALID_ID',
+            ));
+        }
+        $id = $this->user['id'];
+        $this->load->model('enrollmodel');
+        printJson($this->enrollmodel->finishProgram($enrollId, $id));
+    }
+    
+    function exitProgram($enrollId){
+        if(!is_numeric($enrollId)){
+            printJson(array(
+                'status'=>false,
+                'error'=>'INVALID_ID',
+            ));
+        }
+        $id = $this->user['id'];
+        $this->load->model('enrollmodel');
+        printJson($this->enrollmodel->exitProgram($enrollId, $id));
+    }
 }

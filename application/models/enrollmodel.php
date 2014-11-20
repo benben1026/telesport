@@ -177,7 +177,7 @@ class EnrollModel extends CI_Model {
             return $output;
         }
         
-        function exitProgram(){
+        function exitProgram($enrollId, $traineeId){
             $output = array();
             $sql = "SELECT * FROM enroll WHERE enrollId=? AND traineeId=?";
             $query = $this->db->query($sql, array($enrollId, $traineeId));
