@@ -129,7 +129,7 @@ class Trainerapi extends Acl_Ajax_Controller {
     }
     
     function approve($enrollId, $programId){
-        if(!is_numeric($enrollId) || is_numeric($programId)){
+        if(!is_numeric($enrollId) || !is_numeric($programId)){
             printJson(array(
                 'status'=>false,
                 'error'=>'INVALID_ID',
@@ -142,7 +142,7 @@ class Trainerapi extends Acl_Ajax_Controller {
     }
     
     function reject($enrollId, $programId, $reason){
-        if(!is_numeric($enrollId) || is_numeric($programId)){
+        if(!is_numeric($enrollId) || !is_numeric($programId)){
             printJson(array(
                 'status'=>false,
                 'error'=>'INVALID_ID',
