@@ -82,6 +82,12 @@ class Traineeapi extends Acl_Ajax_Controller {
         }
     }
     
+    function getProgramList(){
+        $id = $this->user['id'];
+        $this->load->model('enrollmodel');
+        printJson($this->enrollmodel->getProgramList($id));
+    }
+    
     function apply($programId){
         if(!is_numeric($programId)){
             printJson(array(

@@ -341,6 +341,15 @@ class EnrollModel extends CI_Model {
 		}
 		return $output;
 	}
+        
+        function getProgramList($traineeId){
+            $output = array();
+            $sql = "SELECT * FROM enroll WHERE traineeId=? ORDER BY statusId, time";
+            $query = $this->db->query($sql, array($traineeId));
+            $row = $query->result_array();
+            $output['status'] = true;
+            $output['data'] = $row;
+        }
 /*
 	function exitProgram($programId, $userId){
 		$output = array();
