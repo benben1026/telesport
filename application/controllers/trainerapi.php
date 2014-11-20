@@ -127,4 +127,30 @@ class Trainerapi extends Acl_Ajax_Controller {
                 ));
         }
     }
+    
+    function approve($enrollId, $programId){
+        if(!is_numeric($enrollId) || is_numeric($programId)){
+            printJson(array(
+                'status'=>false,
+                'error'=>'INVALID_ID',
+            ));
+            return;
+        }
+        $id = $this->user['id'];
+        $this->load->model("enrollmodel");
+        printJson($this->enrollmodel->coachApprove($enrollId, $id, $programId));
+    }
+    
+    function reject($enrollId, $programId, $reason){
+        if(!is_numeric($enrollId) || is_numeric($programId)){
+            printJson(array(
+                'status'=>false,
+                'error'=>'INVALID_ID',
+            ));
+            return;
+        }
+        $id = $this->user['id'];
+        $this->load->model("enrollmodel");
+        printJson($this->enrollmodel->coachReject($enrollId, $id, $programId, $reason));
+    }
 }
