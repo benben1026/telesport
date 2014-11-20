@@ -141,7 +141,7 @@ class Trainerapi extends Acl_Ajax_Controller {
         printJson($this->enrollmodel->coachApprove($enrollId, $id, $programId));
     }
     
-    function reject($enrollId, $programId, $reason){
+    function reject($enrollId, $programId){
         if(!is_numeric($enrollId) || !is_numeric($programId)){
             printJson(array(
                 'status'=>false,
@@ -149,6 +149,8 @@ class Trainerapi extends Acl_Ajax_Controller {
             ));
             return;
         }
+        $postData = $this->input->post();
+        $reason = $postData['reason'];
         $id = $this->user['id'];
         $this->load->model("enrollmodel");
         printJson($this->enrollmodel->coachReject($enrollId, $id, $programId, $reason));
