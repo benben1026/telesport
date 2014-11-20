@@ -49,6 +49,169 @@ class EnrollModel extends CI_Model {
 	    return $randomString;
 	}
 
+        function apply($programId, $userId){
+            $output = array();
+            $sql = "SELECT * FROM enroll WHERE programId=? AND traineeId=?";
+            $query = $this->db->query($sql, array($programId, $userId));
+            $row = $query->result_array();
+            if(count($row) == 0){
+                $sql = "INSERT INTO enroll(statusId, paymentCode, programId, traineeId) VALUES(?, '', ?, ?)";
+		$query = $this->db->query($sql, array(1, $programId, $userId));
+		if($query){
+                    $output['status'] = true;
+                    return $output;
+		}
+            }else{
+                $sql = "UPDATE enroll SET statusId=1 WHERE programId=? AND traineeId=";
+                $query = $this->db->query($sqk, array($programId, $userId));
+                if($query){
+                    $output['status'] = true;
+                    return $output;
+		}
+            }
+            $output['status'] = false;
+            $output['error'] = 'SERVER_ERROR';
+            return $output;
+        }
+        
+        function coachApprove($enrollId, $coachId, $programId){
+            $output = array();
+            $sql = "SELECT * FROM program WHERE userId=? AND programId=?";
+            $query = $this->db->query($sql, array($coachId, $programId));
+            $row = $query->result_array();
+            if(count($row) != 1){
+                $output['status'] = false;
+                $output['error'] = 'ACCESS_DENIED';
+                return $output;
+            }
+            if($this->hasQuota($programId)){
+                $paymentCode = $this->createPaymentCode();
+                $sql = "UPDATE enroll SET statusId=3, paymentCode=? WHERE enrollId=?";
+                $query = $this->db->query($sql, array($paymentCode, $enrollId));
+            }else{
+                $sql = "UPDATE enroll SET statusId=2 WHERE enrollId=?";
+                $query = $this->db->query($sql, array($enrollId));
+            }
+            if($query){
+                $output['status'] = true;
+            }else{
+                $output['status'] = false;
+                $output['error'] = 'SERVER_ERROR';
+            }
+            return $output;
+        }
+        
+        function coachReject($enrollId, $coachId, $programId, $reason){
+            $output = array();
+            $sql = "SELECT * FROM program WHERE userId=? AND programId=?";
+            $query = $this->db->query($sql, array($coachId, $programId));
+            $row = $query->result_array();
+            if(count($row) != 1){
+                $output['status'] = false;
+                $output['error'] = 'ACCESS_DENIED';
+                return $output;
+            }
+            $sql = "UPDATE enroll SET statusId=8, comment=? WHERE enrollId=?";
+            $query = $this->db->query($sql, array($reason, $enrollId));
+            if($query){
+                $output['status'] = true;
+            }else{
+                $output['status'] = false;
+                $output['error'] = 'SERVER_ERROR';
+            }
+            return $output;
+        }
+        
+        function payment($enrollId, $traineeId){
+            $output = array();
+            $sql = "SELECT * FROM enroll WHERE enrollId=? AND traineeId=?";
+            $query = $this->db->query($sql, array($enrollId, $traineeId));
+            $row = $query->result_array();
+            if(count($row) == 1 && $row[0]['statusId'] == 3){
+                $sql = "UPDATE enroll SET statusId=4 WHERE enrollId=?";
+                $query = $this->db->query($sql, array($enrollId));
+                if($query){
+                    $output['status'] = true;
+                    return $output;
+                }
+            }
+            $output['status'] = false;
+            $output['error'] = "SERVER_ERROR";
+            return $output;
+        }
+        
+        function startProgram($enrollId, $traineeId){
+            $output = array();
+            $sql = "SELECT * FROM enroll WHERE enrollId=? AND traineeId=?";
+            $query = $this->db->query($sql, array($enrollId, $traineeId));
+            $row = $query->result_array();
+            if(count($row) == 1 && $row[0]['statusId'] == 5){
+                $sql = "UPDATE enroll SET statusId=6, startDate=? WHERE enrollId=?";
+                $query = $this->db->query($sql, array(date("Y-m-d H:i:s"), $enrollId));
+                if($query){
+                    $output['status'] = true;
+                    return $output;
+                }
+            }
+            $output['status'] = false;
+            $output['error'] = "SERVER_ERROR";
+            return $output;
+        }
+        
+        function finishProgram($enrollId, $traineeId){
+            $output = array();
+            $sql = "SELECT * FROM enroll WHERE enrollId=? AND traineeId=?";
+            $query = $this->db->query($sql, array($enrollId, $traineeId));
+            $row = $query->result_array();
+            if(count($row) == 1 && $row[0]['statusId'] == 6){
+                $sql = "UPDATE enroll SET statusId=7 WHERE enrollId=?";
+                $query = $this->db->query($sql, array($enrollId));
+                if($query){
+                    $this->checkWaitingList($row[0]['programId']);
+                    $output['status'] = true;
+                    return $output;
+                }
+            }
+            $output['status'] = false;
+            $output['error'] = "SERVER_ERROR";
+            return $output;
+        }
+        
+        function exitProgram(){
+            $output = array();
+            $sql = "SELECT * FROM enroll WHERE enrollId=? AND traineeId=?";
+            $query = $this->db->query($sql, array($enrollId, $traineeId));
+            $row = $query->result_array();
+            if(count($row) == 1){
+                $sql = "UPDATE enroll SET statusId=9 WHERE enrollId=?";
+                $query = $this->db->query($sql, array($enrollId));
+                if($query){
+                    $this->checkWaitingList($row[0]['programId']);
+                    $output['status'] = true;
+                    return $output;
+                }
+            }
+            $output['status'] = false;
+            $output['error'] = "SERVER_ERROR";
+            return $output;
+        }
+        
+        function checkWaitingList($programId){
+            $sql = "SELECT * FROM enroll WHERE programId=? AND statusId=2 ORDER BY time";
+            $query = $this->db->query($sql, array($programId));
+            $row = $query->result_array();
+            if(count($row) == 0){
+                return false;
+            }
+            if($this->hasQuota($programId)){
+                $sql = "UPDATE enroll SET statusId=3 WHERE enrollId=?";
+                $query = $this->db->query($sql, array($row[0]['enrollId']));
+                return true;
+            }else{
+                return false;
+            }
+        }
+        
 	function process($programId, $userId){
 		/*
 		*	1->apply for enrolling
@@ -178,7 +341,7 @@ class EnrollModel extends CI_Model {
 		}
 		return $output;
 	}
-
+/*
 	function exitProgram($programId, $userId){
 		$output = array();
 		$sql = "UPDATE enroll SET statusId=9 WHERE programId=? AND traineeId=?";
@@ -186,4 +349,6 @@ class EnrollModel extends CI_Model {
 		$output['status'] = $query;
 		return $output;
 	}
+ 
+ */
 }
