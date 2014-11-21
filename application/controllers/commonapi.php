@@ -87,4 +87,29 @@ class Commonapi extends CI_Controller {
         $result =  $this->usermodel->getTraineeInfo($id);
         printJson($result);
     }    
+
+    public function postQuestion(){
+        $postData = $this->input->post();       
+
+        if(empty($postData)){
+            show_404();
+        }
+
+        $this->load->model("questionmodel");
+
+        $question = array(
+            'userId'=>$postData['userId'],
+            'content'=>$postData['content'],
+            );
+        if($this->questionmodel->postQuestion($question)){
+            printJson(array(
+               'status'=>true,
+            ));
+        }else{
+            printJson(array(
+                'status'=>false,
+                'errorCode'=>$this->db->_error_number(),
+            ));
+        }
+    }    
 }
