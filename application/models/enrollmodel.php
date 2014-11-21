@@ -320,7 +320,7 @@ class EnrollModel extends CI_Model {
 		if(count($row) == 1 && $row[0]['statusId'] > 0 && $row[0]['statusId'] < 10){
 			$output['status'] = true;
 			$output['info'] = $row[0]['statusId'];
-			if($row[0]['statusId'] >= 3 && $row[0]['statusId'] != 7){
+			if($row[0]['statusId'] >= 3){
 				$output['paymentCode'] = $row[0]['paymentCode'];
 			}
 			$output['enrollId'] = $row[0]['enrollId'];
