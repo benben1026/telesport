@@ -35,6 +35,16 @@ class UserModel extends CI_Model {
         $this->db->update("trainee",$trainee);
         return $this->db->affected_rows();
     }
+    function updateTrainerInfo($user,$trainer){
+        $id = $user['id'];
+        unset($user['id']);
+      
+        $this->db->where("userId",(int)$id);
+        $this->db->update("user",$user);
+        $this->db->where("userId",(int)$id);
+        $this->db->update("trainer",$trainer);
+        return $this->db->affected_rows();
+    }
     function setToken($email){
         $this->load->helper("stringext");
         $token = generateToken();
@@ -64,11 +74,21 @@ class UserModel extends CI_Model {
         $this->email->message($content);	
         $this->email->send();
     }
-    function resetPassword($email,$token,$password){
+    function resetPassword($email,$password,$token){
+        $this->load->helper("stringext");
         $this->db->where("email",$email);
         $this->db->where("token",$token);
-        $this->db->update("user",md5(md5($password)));
-        return $this->db->affected_rows();
+        $user = array(
+            'password'=>md5(md5($password)),
+            'token'=>generateToken()
+            );
+        $query = $this->db->update("user",$user);
+        if(!$query){
+            return -1;
+        }
+        else{
+            return $this->db->affected_rows();
+        }
     }
     function getTrainerInfo($data,$id){
         $select = join($data,',');

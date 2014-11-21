@@ -82,8 +82,6 @@ class Trainerapi extends Acl_Ajax_Controller {
         if($this->form_validation->run('editUserInfo')){
              $postData = $this->input->post();
              $user = array(
-                'firstName'=>$postData['firstName'],
-                'lastName'=>$postData['lastName'],
                 'firstLanguage'=>$postData['firstLanguage'],
                 'secondLanguage'=>$postData['secondLanguage'],
                 'nationality'=>$postData['nationality'],
@@ -94,11 +92,13 @@ class Trainerapi extends Acl_Ajax_Controller {
             $trainer = array(
                 'address1'=>$postData['address'],
                 'passport_number'=>$postData['passport_number'],
-                'certType'=>$postData['certType']
+                'certType'=>$postData['certType'],
+                'expertise'=>$postData['expertise'],
+                 'selfIntro'=>$postData['selfIntro'],
             );
             $this->load->model("usermodel");
             
-            if($this->usermodel->updateTraineeInfo($user,$trainee) || $this->db->_error_number()==0){
+            if($this->usermodel->updateTrainerInfo($user,$trainer) || $this->db->_error_number()==0){
                   printJson(array(
                    'status'=>true,
                 ));
@@ -120,11 +120,39 @@ class Trainerapi extends Acl_Ajax_Controller {
     function getUserOfProgram($id){
         if(is_numeric($id)){
             $this->load->model("programmodel");
-            $result = $this->programmodel->getUserOfProgram();
+            $result = $this->programmodel->getTraineeOfProgram($id);
             printJson(array(
                 'status'=>true,
                 'result'=>$result,
                 ));
         }
+    }
+    
+    function approve($enrollId, $programId){
+        if(!is_numeric($enrollId) || !is_numeric($programId)){
+            printJson(array(
+                'status'=>false,
+                'error'=>'INVALID_ID',
+            ));
+            return;
+        }
+        $id = $this->user['id'];
+        $this->load->model("enrollmodel");
+        printJson($this->enrollmodel->coachApprove($enrollId, $id, $programId));
+    }
+    
+    function reject($enrollId, $programId){
+        if(!is_numeric($enrollId) || !is_numeric($programId)){
+            printJson(array(
+                'status'=>false,
+                'error'=>'INVALID_ID',
+            ));
+            return;
+        }
+        $postData = $this->input->post();
+        $reason = $postData['reason'];
+        $id = $this->user['id'];
+        $this->load->model("enrollmodel");
+        printJson($this->enrollmodel->coachReject($enrollId, $id, $programId, $reason));
     }
 }

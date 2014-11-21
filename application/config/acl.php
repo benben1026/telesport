@@ -10,12 +10,14 @@ $ACL_LIST[TRAINEE] = array(
     "loginTest"=>true,
     "Trainerapi"=>true,
     "Traineeapi"=>true,
+    "Chat"=>true,
 );
 $ACL_LIST[TRAINER] = array(
     "Program"=>true,
     "Template"=>true,
     "Trainerapi"=>true,
     "Traineeapi"=>true,
+    "Chat"=>true,
 );
 $ACL_LIST[ADMIN] = array(
     "Program"=>true,
@@ -23,5 +25,6 @@ $ACL_LIST[ADMIN] = array(
     "LoginTest"=>true,
     "Traineeapi"=>true,
     "Trainerapi"=>true,
+    "Chat"=>true,
 );
 $config['acl'] = $ACL_LIST;

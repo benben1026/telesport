@@ -44,17 +44,17 @@ $config = array(
         array(
             'field'=>'firstLanguage',
             'label'=>'lang:firstLanguage',
-            'rules'=>'trim|isset|valid_language|xss_clean'
+            'rules'=>'trim|isset|xss_clean'
         ),
         array(
             'field'=>'secondLanguage',
             'label'=>'lang:secondLanguage',
-            'rules'=>'trim|isset|valid_language|xss_clean'
+            'rules'=>'trim|isset|xss_clean'
         ),
         array(
             'field'=>'nationality',
             'label'=>'lang:nationality',
-            'rules'=>'trim|isset|valid_nationality|xss_clean'
+            'rules'=>'trim|isset|xss_clean'
         ),
         array(
             'field'=>'birthday',
@@ -296,7 +296,7 @@ $config = array(
         array(
             'field'=>'email',
             'label'=> 'lang:Email',
-            'rules'=>'trim|isset|required|valid_email|is_unique[user.email]|xss_clean'
+            'rules'=>'trim|isset|required|valid_email|xss_clean'
         ),
     ),
     "editUserInfo"=>array(
@@ -323,7 +323,7 @@ $config = array(
         array(
             'field'=>'nationality',
             'label'=>'lang:nationality',
-            'rules'=>'trim|isset|alpha|valid_nationality|xss_clean'
+            'rules'=>'trim|isset|valid_nationality|xss_clean'
         ),
         array(
             'field'=>'birthday',
@@ -333,12 +333,12 @@ $config = array(
         array(
             'field'=>"occupation",
             'label'=>"lang:occupation",
-            'rules'=>'trim|isset|alpha_dash|xss_clean'
+            'rules'=>'trim|isset|xss_clean'
         ),
         array(
             'field'=>"phone",
             'label'=>"lang:phone",
-            'rules'=>'trim|isset|alpha_dash|xss_clean|valid_phone'
+            'rules'=>'trim|isset|alpha_dash|xss_clean'
         ),
         array(
             'field'=>"height",
@@ -511,32 +511,27 @@ $config = array(
         array(
             'field'=>'firstLanguage',
             'label'=>'lang:firstLanguage',
-            'rules'=>'trim|isset|alpha|valid_language|xss_clean'
+            'rules'=>'trim|isset|valid_language|xss_clean'
         ),
         array(
             'field'=>'secondLanguage',
             'label'=>'lang:secondLanguage',
-            'rules'=>'trim|isset|alpha|valid_language|xss_clean'
+            'rules'=>'trim|isset|valid_language|xss_clean'
         ),
         array(
             'field'=>'nationality',
             'label'=>'lang:nationality',
-            'rules'=>'trim|isset|alpha|valid_nationality|xss_clean'
-        ),
-        array(
-            'field'=>'birthday',
-            'label'=>'lang:birthday',
-            'rules'=>'trim|isset|xss_clean|valid_birthday'
+            'rules'=>'trim|isset|valid_nationality|xss_clean'
         ),
         array(
             'field'=>"occupation",
             'label'=>"lang:occupation",
-            'rules'=>'trim|isset|alpha_dash|xss_clean'
+            'rules'=>'trim|isset|xss_clean'
         ),
         array(
             'field'=>"phone",
             'label'=>"lang:phone",
-            'rules'=>'trim|isset|alpha_dash|xss_clean|valid_phone'
+            'rules'=>'trim|isset|alpha_dash|xss_clean'
         ),
         array(
             'field'=>"height",
@@ -548,5 +543,37 @@ $config = array(
             'label'=>"lang:weight",
             'rules'=>"trim|isset|numeric|greater_than[30]|less_than[250]",
         ),
+    ),
+    'modifyTemplate'=>array(
+        array(
+            'field'=>"templateId",
+            'label'=>"Template Id",
+            'rules'=>"trim|numeric|required",
+            ),
+        array(
+            'field'=>"totalNum",
+            'label'=>"Total Number of Files",
+            'rules'=>"trim|numeric|required",
+            ),
+        array(
+            'field'=>'name',
+            'label'=>"template name",
+            'rules'=>"trim|required"
+            ),
+        array(
+            'field'=>'programId',
+            'label'=>"program Id",
+            'rules'=>"trim|numeric|required"
+            ),
+        array(
+            'field'=>"component",
+            'label'=>"component",
+            'rules'=>"trim|required"
+            ),
+         array(
+            'field'=>"templates",
+            'label'=>"templates",
+            'rules'=>"trim|required"
+            ),
     ),
 );

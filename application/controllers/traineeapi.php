@@ -43,16 +43,8 @@ class Traineeapi extends Acl_Ajax_Controller {
         if($this->form_validation->run('editUserInfo')){
              $postData = $this->input->post();
              $user = array(
-                'firstName'=>$postData['firstName'],
-                'lastName'=>$postData['lastName'],
-                'firstLanguage'=>$postData['firstLanguage'],
-                'secondLanguage'=>$postData['secondLanguage'],
-                'nationality'=>$postData['nationality'],
-                'birthday'=>$postData['birthday'],
                 'age'=>$postData['age'],
                 'gender'=>$postData['gender'],
-                'phone'=>$postData['phone'],
-                'occupation'=>$postData['occupation'],
             );
             $user['id'] = $this->user['id'];
             $trainee = array(
@@ -67,7 +59,6 @@ class Traineeapi extends Acl_Ajax_Controller {
                 'medicineDescription'=>$postData['medicineDescription'],
                 
                 'operationDescription'=>$postData['operationDescription'],
-                'bodyStatus'=>$postData['bodyStatus'],
                 'aim'=>$postData['aim'],
             );
             $this->load->model("usermodel");
@@ -89,5 +80,71 @@ class Traineeapi extends Acl_Ajax_Controller {
                 'errors'=>$errors,
             ));
         }
+    }
+    
+    function getProgramList(){
+        $id = $this->user['id'];
+        $this->load->model('enrollmodel');
+        printJson($this->enrollmodel->getProgramList($id));
+    }
+    
+    function apply($programId){
+        if(!is_numeric($programId)){
+            printJson(array(
+                'status'=>false,
+                'error'=>'INVALID_ID',
+            ));
+        }
+        $id = $this->user['id'];
+        $this->load->model('enrollmodel');
+        printJson($this->enrollmodel->apply($programId, $id));
+    }
+    
+    function payment($enrollId){
+        if(!is_numeric($enrollId)){
+            printJson(array(
+                'status'=>false,
+                'error'=>'INVALID_ID',
+            ));
+        }
+        $id = $this->user['id'];
+        $this->load->model('enrollmodel');
+        printJson($this->enrollmodel->payment($enrollId, $id));
+    }
+    
+    function startProgram($enrollId){
+        if(!is_numeric($enrollId)){
+            printJson(array(
+                'status'=>false,
+                'error'=>'INVALID_ID',
+            ));
+        }
+        $id = $this->user['id'];
+        $this->load->model('enrollmodel');
+        printJson($this->enrollmodel->startProgram($enrollId, $id));
+    }
+    
+    function finishProgram($enrollId){
+        if(!is_numeric($enrollId)){
+            printJson(array(
+                'status'=>false,
+                'error'=>'INVALID_ID',
+            ));
+        }
+        $id = $this->user['id'];
+        $this->load->model('enrollmodel');
+        printJson($this->enrollmodel->finishProgram($enrollId, $id));
+    }
+    
+    function exitProgram($enrollId){
+        if(!is_numeric($enrollId)){
+            printJson(array(
+                'status'=>false,
+                'error'=>'INVALID_ID',
+            ));
+        }
+        $id = $this->user['id'];
+        $this->load->model('enrollmodel');
+        printJson($this->enrollmodel->exitProgram($enrollId, $id));
     }
 }

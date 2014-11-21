@@ -30,7 +30,8 @@ class ProgramModel extends CI_Model {
     }
     function updateProgram($program){
         $this->db->where("programId",$program['programId']);
-        return  $this->db->update("program",$program);
+        $this->db->update("program",$program);
+        return $this->db->affected_rows();
         
     }
     function deleteProgram($programId){
@@ -53,7 +54,7 @@ class ProgramModel extends CI_Model {
         $sql = "SELECT program.* ,(SELECT username from user where user.userId = program.userId) as username,count(enroll.enrollId) as total,
 	(SELECT count(*) FROM `enroll` WHERE enroll.programId=program.programId and (enroll.statusId=3 OR enroll.statusId=4 OR enroll.statusId=5 OR enroll.statusId=6)) as unfinished,
 	(SELECT count(*) FROM `enroll` WHERE enroll.programId=program.programId and enroll.statusId=7) as finished 
-	FROM `program` LEFT JOIN `enroll` ON program.programId = enroll.programId GROUP BY program.programId ORDER BY total DESC LIMIT 0,$offset";
+	FROM `program` LEFT JOIN `enroll` ON program.programId = enroll.programId WHERE program.isPublished=1 GROUP BY program.programId ORDER BY total DESC LIMIT 0,$offset";
 	    $query = $this->db->query($sql);
 	    return $query->result_array();
         
@@ -79,7 +80,7 @@ class ProgramModel extends CI_Model {
         return $sql;
     }
     public function getTraineeOfProgram($id){
-        $sql = "SELECT * from enroll where programId=? order by lastModified DESC";
+        $sql = "SELECT enroll.*,username,firstName,lastName,gender from enroll join user on user.userId = enroll.traineeId where programId=? order by time ASC";
         $query = $this->db->query($sql,array($id));
         return $query->result_array();
     }

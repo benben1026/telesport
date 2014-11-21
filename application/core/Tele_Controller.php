@@ -39,6 +39,7 @@ class Acl_Ajax_Controller extends CI_Controller {
                     'status'=>false,
                     'error'=>"You don't have privilige to access this"
                 ));
+                exit();
             }
         }else{
             printJson(array(

@@ -63,7 +63,7 @@ class Commonapi extends CI_Controller {
                 ));
             return ;
         }
-        $result = $this->programmodel->getCoachPubishedProgramList($id);
+        $result = $this->programmodel->getCoachPublishedProgramList($id);
         printJson(array(
             'status'=>true,
             'list'=>$result
@@ -79,4 +79,12 @@ class Commonapi extends CI_Controller {
         $result =  $this->usermodel->getTrainerInfo($index,$id);
         printJson($result);
     }
+
+    public function getTraineeInfo($id){
+        #$id = $this->user['id'];
+        $this->load->model('usermodel');
+        $this->load->helper('url');
+        $result =  $this->usermodel->getTraineeInfo($id);
+        printJson($result);
+    }    
 }
