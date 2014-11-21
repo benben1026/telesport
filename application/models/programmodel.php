@@ -54,7 +54,7 @@ class ProgramModel extends CI_Model {
         $sql = "SELECT program.* ,(SELECT username from user where user.userId = program.userId) as username,count(enroll.enrollId) as total,
 	(SELECT count(*) FROM `enroll` WHERE enroll.programId=program.programId and (enroll.statusId=3 OR enroll.statusId=4 OR enroll.statusId=5 OR enroll.statusId=6)) as unfinished,
 	(SELECT count(*) FROM `enroll` WHERE enroll.programId=program.programId and enroll.statusId=7) as finished 
-	FROM `program` LEFT JOIN `enroll` ON program.programId = enroll.programId GROUP BY program.programId ORDER BY total DESC LIMIT 0,$offset";
+	FROM `program` LEFT JOIN `enroll` ON program.programId = enroll.programId WHERE program.isPublished=1 GROUP BY program.programId ORDER BY total DESC LIMIT 0,$offset";
 	    $query = $this->db->query($sql);
 	    return $query->result_array();
         
