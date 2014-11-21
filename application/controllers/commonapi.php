@@ -63,7 +63,7 @@ class Commonapi extends CI_Controller {
                 ));
             return ;
         }
-        $result = $this->programmodel->getCoachPubishedProgramList($id);
+        $result = $this->programmodel->getCoachPublishedProgramList($id);
         printJson(array(
             'status'=>true,
             'list'=>$result
