@@ -74,12 +74,12 @@ $config = array(
         array(
             'field'=>"height",
             'label'=>"lang:height",
-            'rules'=>"trim|isset|numeric|greater_than[130]|less_than[250]",
+            'rules'=>"trim|isset|numeric",
         ),
         array(
             'field'=>"weight",
             'label'=>"lang:weight",
-            'rules'=>"trim|isset|numeric|greater_than[30]|less_than[250]",
+            'rules'=>"trim|isset|numeric",
         ),
         array(
             'field'=>"sleepStart",
@@ -343,12 +343,12 @@ $config = array(
         array(
             'field'=>"height",
             'label'=>"lang:height",
-            'rules'=>"trim|isset|numeric|greater_than[130]|less_than[250]",
+            'rules'=>"trim|isset|numeric",
         ),
         array(
             'field'=>"weight",
             'label'=>"lang:weight",
-            'rules'=>"trim|isset|numeric|greater_than[30]|less_than[250]",
+            'rules'=>"trim|isset|numeric",
         ),
         array(
             'field'=>"sleepStart",
@@ -536,12 +536,12 @@ $config = array(
         array(
             'field'=>"height",
             'label'=>"lang:height",
-            'rules'=>"trim|isset|numeric|greater_than[130]|less_than[250]",
+            'rules'=>"trim|isset|numeric",
         ),
         array(
             'field'=>"weight",
             'label'=>"lang:weight",
-            'rules'=>"trim|isset|numeric|greater_than[30]|less_than[250]",
+            'rules'=>"trim|isset|numeric",
         ),
     ),
     'modifyTemplate'=>array(

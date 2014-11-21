@@ -42,8 +42,8 @@ class Trainerapi extends Acl_Ajax_Controller {
         $id = $this->user['id'];
         $this->load->model('usermodel');
         $this->load->helper('url');
-        $index = array('username','gender','firstName','lastName','occupation','nationality','firstLanguage',
-        'secondLanguage','selfIntro','certType','certificate','phone','address1','passport','passport_number');
+        $index = array('username','gender','age','firstName','lastName','occupation','nationality','firstLanguage',
+        'secondLanguage','selfIntro','certType','certificate','phone','address1','passport','passport_number', 'expertise');
         $result =  $this->usermodel->getTrainerInfo($index,$id);
         if(!empty($result)){
             $segment = explode('/',$result['certificate']);
@@ -87,10 +87,11 @@ class Trainerapi extends Acl_Ajax_Controller {
                 'nationality'=>$postData['nationality'],
                 'phone'=>$postData['phone'],
                 'occupation'=>$postData['occupation'],
+                'address1'=>$postData['address'],
             );
             $user['id'] = $this->user['id'];
             $trainer = array(
-                'address1'=>$postData['address'],
+                
                 'passport_number'=>$postData['passport_number'],
                 'certType'=>$postData['certType'],
                 'expertise'=>$postData['expertise'],
