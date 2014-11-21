@@ -36,7 +36,7 @@ class Program extends Acl_Ajax_Controller {
             for($i=0;$i<intval($postData['duration']);$i++){
                 $template[]=-1;
             }
-            $postData['templates']=json_encode($templates);
+            $postData['templates']=json_encode($template);
             $this->load->model('programmodel');
         
             $programId = $this->programmodel->addProgram($postData);
