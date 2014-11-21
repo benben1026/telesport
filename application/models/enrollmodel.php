@@ -51,7 +51,7 @@ class EnrollModel extends CI_Model {
                     return $output;
 		}
             }else{
-                $sql = "UPDATE enroll SET statusId=1 WHERE programId=? AND traineeId=";
+                $sql = "UPDATE enroll SET statusId=1 WHERE programId=? AND traineeId=?";
                 $query = $this->db->query($sql, array($programId, $userId));
                 if($query){
                     $output['status'] = true;
