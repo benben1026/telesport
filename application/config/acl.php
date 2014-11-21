@@ -10,6 +10,7 @@ $ACL_LIST[TRAINEE] = array(
     "loginTest"=>true,
     "Trainerapi"=>true,
     "Traineeapi"=>true,
+    "Template"=>true,
     "Chat"=>true,
 );
 $ACL_LIST[TRAINER] = array(
