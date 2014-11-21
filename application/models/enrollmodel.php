@@ -15,9 +15,7 @@ class EnrollModel extends CI_Model {
 		if(count($row) == 1){
 			$maxNumOfUser = $row[0]['maxNumOfUser'];
 		}else{
-			$output['status'] = false;
-			$output['error'] = "SERVER_ERROR1";
-			return $output;
+			return false;
 		}
 		$sql = "SELECT COUNT(*) AS num FROM enroll WHERE programId=? AND (statusId=? OR statusId=? OR statusId=? OR statusId=?)";
 		$query = $this->db->query($sql, array($programId, 3,4,5,6));
@@ -26,18 +24,9 @@ class EnrollModel extends CI_Model {
 		if(count($row) == 1){
 			$num = $row[0]['num'];
 		}else{
-			$output['status'] = false;
-			$output['error'] = "SERVER_ERROR2";
-			return $output;
+			return false;
 		}
-		if($num < $maxNumOfUser){
-			$output['status'] = true;
-			$output['hasQuota'] = true;
-		}else{
-			$output['status'] = true;
-			$output['hasQuota'] = false;
-		}
-		return $output;
+		return ($num < $maxNumOfUser);
 	}
 
 	function createPaymentCode($length = 8){
