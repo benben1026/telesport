@@ -17,7 +17,7 @@ class RegisterModel extends CI_Model {
            $id = $this->db->insert_id();
            $trainee['userId'] = $id;
            if($this->db->insert("trainee",$trainee)){
-               return true;
+               return $id;
            }
        }
        return false;
@@ -27,7 +27,7 @@ class RegisterModel extends CI_Model {
            $id = $this->db->insert_id();
            $trainer['userId'] = $id;
            if($this->db->insert("trainer",$trainer)){
-               return true;
+               return $id;
            }
        }
        return false;
