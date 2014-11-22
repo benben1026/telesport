@@ -44,7 +44,7 @@ class Traineeapi extends Acl_Ajax_Controller {
              $postData = $this->input->post();
              $user = array(
                 'age'=>$postData['age'],
-                'gender'=>$postData['gender'],
+                //'gender'=>$postData['gender'],
             );
             $user['id'] = $this->user['id'];
             $trainee = array(
@@ -53,7 +53,7 @@ class Traineeapi extends Acl_Ajax_Controller {
                 'sportsTimePerDay'=>$postData['sportsTimePerDay'],
                 'ifSmoke'=>$postData['ifSmoke']==0? false : true,
                 'ifDrink'=>$postData['ifDrink']==0? false: true,
-                'illness' =>$postData['illness'],
+                //'illness' =>$postData['illness'],
                 'illnessDescription'=>$postData['illnessDescription'],
               
                 'medicineDescription'=>$postData['medicineDescription'],
