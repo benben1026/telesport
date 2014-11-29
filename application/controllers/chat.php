@@ -38,7 +38,7 @@ class Chat extends Acl_Ajax_Controller {
         }
         $userId = $this->user['id'];
         $this->load->model("chatmodel");
-        printJson($this->chatmode->getHistory($userId, $enrollId, $messageId, $offset));
+        printJson($this->chatmodel->getHistory($userId, $enrollId, $messageId, $offset));
     }
     
     function output($res){
