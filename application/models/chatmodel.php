@@ -74,5 +74,6 @@ class ChatModel extends CI_Model {
             'status'=>true,
             'data'=>$row,
         );
+        return $output;
     }
 }
