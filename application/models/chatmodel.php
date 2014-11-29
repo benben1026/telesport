@@ -67,8 +67,8 @@ class ChatModel extends CI_Model {
         if($messageId != 0){
             $constrain = "AND messageId < " . $messageId;
         }
-        $sql = "SELECT * FROM message WHERE enrollId=? " . $constrain . " AND (fromUser=? OR toUser=?) ORDER BY timestamp DESC LIMIT ?";
-        $query = $this->db->query($sql, array($enrollId, $userId, $userId, $offset));
+        $sql = "SELECT * FROM message WHERE enrollId=? " . $constrain . " AND (fromUser=? OR toUser=?) AND (status=1 OR status=2) ORDER BY timestamp DESC LIMIT " . $offset;
+        $query = $this->db->query($sql, array($enrollId, $userId, $userId));
         $row = $query->result_array();
         $output = array(
             'status'=>true,
