@@ -28,6 +28,19 @@ class Chat extends Acl_Ajax_Controller {
         
     }
     
+    function getHistory($enrollId, $messageId, $offset){
+        if(!is_numeric($enrollId) || !is_numeric($messageId) || !is_numeric($offset)){
+            printJson(array(
+                'status'=>false,
+                'error'=>'INVALID_ID',
+            ));
+            return;
+        }
+        $userId = $this->user['id'];
+        $this->load->model("chatmodel");
+        printJson($this->chatmode->getHistory($userId, $enrollId, $messageId, $offset));
+    }
+    
     function output($res){
         printJson($res);
     }

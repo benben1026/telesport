@@ -61,4 +61,18 @@ class ChatModel extends CI_Model {
         //$output['NEWMSG'] = $msg;
         //return $output;
     }
+    
+    function getHistory($userId, $enrollId, $messageId, $offset){
+        $constrain = "";
+        if($messageId != 0){
+            $constrain = "AND messageId < " . $messageId;
+        }
+        $sql = "SELECT * FROM message WHERE enrollId=? " . $constrain . " AND (fromUser=? OR toUser=?) ORDER BY timestamp DESC LIMIT ?";
+        $query = $this->db->query($sql, array($enrollId, $userId, $userId, $offset));
+        $row = $query->result_array();
+        $output = array(
+            'status'=>true,
+            'data'=>$row,
+        );
+    }
 }
