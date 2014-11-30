@@ -51,7 +51,7 @@ class EnrollModel extends CI_Model {
                     return $output;
 		}
             }else{
-                $sql = "UPDATE enroll SET statusId=1 WHERE programId=? AND traineeId=?";
+                $sql = "UPDATE enroll SET statusId=1, informTrainee=1, informTrainer=0 WHERE programId=? AND traineeId=?";
                 $query = $this->db->query($sql, array($programId, $userId));
                 if($query){
                     $output['status'] = true;
@@ -75,10 +75,10 @@ class EnrollModel extends CI_Model {
             }
             if($this->hasQuota($programId)){
                 $paymentCode = $this->createPaymentCode();
-                $sql = "UPDATE enroll SET statusId=3, paymentCode=? WHERE enrollId=?";
+                $sql = "UPDATE enroll SET statusId=3, paymentCode=?, informTrainee=0, informTrainer=1 WHERE enrollId=?";
                 $query = $this->db->query($sql, array($paymentCode, $enrollId));
             }else{
-                $sql = "UPDATE enroll SET statusId=2 WHERE enrollId=?";
+                $sql = "UPDATE enroll SET statusId=2, informTrainee=0, informTrainer=1 WHERE enrollId=?";
                 $query = $this->db->query($sql, array($enrollId));
             }
             if($query){
@@ -100,7 +100,7 @@ class EnrollModel extends CI_Model {
                 $output['error'] = 'ACCESS_DENIED';
                 return $output;
             }
-            $sql = "UPDATE enroll SET statusId=8, comment=? WHERE enrollId=?";
+            $sql = "UPDATE enroll SET statusId=8, comment=?, informTrainee=0, informTrainer=1  WHERE enrollId=?";
             $query = $this->db->query($sql, array($reason, $enrollId));
             if($query){
                 $output['status'] = true;
@@ -117,7 +117,7 @@ class EnrollModel extends CI_Model {
             $query = $this->db->query($sql, array($enrollId, $traineeId));
             $row = $query->result_array();
             if(count($row) == 1 && $row[0]['statusId'] == 3){
-                $sql = "UPDATE enroll SET statusId=4 WHERE enrollId=?";
+                $sql = "UPDATE enroll SET statusId=4, informTrainee=1, informTrainer=1 WHERE enrollId=?";
                 $query = $this->db->query($sql, array($enrollId));
                 if($query){
                     $output['status'] = true;
@@ -135,7 +135,7 @@ class EnrollModel extends CI_Model {
             $query = $this->db->query($sql, array($enrollId, $traineeId));
             $row = $query->result_array();
             if(count($row) == 1 && $row[0]['statusId'] == 5){
-                $sql = "UPDATE enroll SET statusId=6, startDate=? WHERE enrollId=?";
+                $sql = "UPDATE enroll SET statusId=6, startDate=?, informTrainee=0, informTrainer=0 WHERE enrollId=?";
                 $query = $this->db->query($sql, array(date("Y-m-d H:i:s"), $enrollId));
                 if($query){
                     $output['status'] = true;
@@ -153,7 +153,7 @@ class EnrollModel extends CI_Model {
             $query = $this->db->query($sql, array($enrollId, $traineeId));
             $row = $query->result_array();
             if(count($row) == 1 && $row[0]['statusId'] == 6){
-                $sql = "UPDATE enroll SET statusId=7 WHERE enrollId=?";
+                $sql = "UPDATE enroll SET statusId=7, informTrainee=0, informTrainer=0 WHERE enrollId=?";
                 $query = $this->db->query($sql, array($enrollId));
                 if($query){
                     $this->checkWaitingList($row[0]['programId']);
@@ -172,7 +172,7 @@ class EnrollModel extends CI_Model {
             $query = $this->db->query($sql, array($enrollId, $traineeId));
             $row = $query->result_array();
             if(count($row) == 1){
-                $sql = "UPDATE enroll SET statusId=9 WHERE enrollId=?";
+                $sql = "UPDATE enroll SET statusId=9, informTrainee=1, informTrainer=1 WHERE enrollId=?";
                 $query = $this->db->query($sql, array($enrollId));
                 if($query){
                     $this->checkWaitingList($row[0]['programId']);
