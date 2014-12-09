@@ -200,6 +200,52 @@ class EnrollModel extends CI_Model {
                 return false;
             }
         }
+
+        function updateStudyDay($userId, $enrollId){
+        	$sql = "SELECT numOfCompletedDay FROM enroll WHERE enrollId=? AND traineeId=?";
+        	$query = $this->db->query($sql, array($enrollId, $userId));
+        	$row = $query->result_array();
+        	if(count($row) == 0){
+        		return array(
+        			'status' => false,
+        			'error' => 'INVALID_ID',
+        		);
+        	}
+        	$day = $row[0]['numOfCompletedDay'] + 1;
+        	$sql = "UPDATE enroll SET numOfCompletedDay=? WHERE enrollId=?";
+        	$query = $this->db->query($sql, array($day, $enrollId));
+        	if($query){
+        		return array(
+        			'status' => true,
+        			'day' => $day,
+        		);
+        	}else{
+        		return array(
+        			'status' => false,
+        			'error' => 'INVALID_ID',
+        		);
+        	}
+        } 
+
+        function getStudyDay($userId, $enrollId){
+        	$sql = "SELECT numOfCompletedDay FROM enroll WHERE enrollId=? AND traineeId=?";
+        	$query = $this->db->query($sql, array($enrollId, $userId));
+        	$row = $query->result_array();
+        	if(count($row) == 0){
+        		return array(
+        			'status' => false,
+        			'error' => 'INVALID_ID',
+        		);
+        	}
+        	return array(
+        		'status' => true,
+        		'day' => $row[0]['numOfCompletedDay'],
+        	);
+        }
+
+        function ifExpire($userId, $enrollId){
+        	
+        }
         
 	function process($programId, $userId){
 		/*
