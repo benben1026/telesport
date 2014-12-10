@@ -169,7 +169,7 @@ class Program extends Acl_Ajax_Controller {
             printJson(array(
                 'status'=>false,
                 'error'=>'INVALID_ID',
-            ))
+            ));
             return;
         }
         $this->load->model("enrollmodel");
