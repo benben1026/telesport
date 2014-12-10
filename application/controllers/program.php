@@ -163,4 +163,17 @@ class Program extends Acl_Ajax_Controller {
             'templates'=>$program['templates']
             ));
     }
+
+    public function getStudyDay($enrollId){
+        if(!is_numeric($enrollId)){
+            printJson(array(
+                'status'=>false,
+                'error'=>'INVALID_ID',
+            ))
+            return;
+        }
+        $this->load->model("enrollmodel");
+        $userId = $this->user['id'];
+        printJson($this->enrollmodel->getStudyDay($userId, $enrollId)_;
+    }
 }
