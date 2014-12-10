@@ -176,4 +176,17 @@ class Program extends Acl_Ajax_Controller {
         $userId = $this->user['id'];
         printJson($this->enrollmodel->getStudyDay($userId, $enrollId));
     }
+
+    public function updateStudyDay($enrollId){
+        if(!is_numeric($enrollId)){
+            printJson(array(
+                'status'=>false,
+                'error'=>'INVALID_ID',
+            ));
+            return;
+        }
+        $this->load->model("enrollmodel");
+        $userId = $this->user['id'];
+        printJson($this->enrollmodel->updateStudyDay($userId, $enrollId));
+    }
 }
