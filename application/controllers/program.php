@@ -174,6 +174,6 @@ class Program extends Acl_Ajax_Controller {
         }
         $this->load->model("enrollmodel");
         $userId = $this->user['id'];
-        printJson($this->enrollmodel->getStudyDay($userId, $enrollId)_;
+        printJson($this->enrollmodel->getStudyDay($userId, $enrollId);
     }
 }
