@@ -147,4 +147,23 @@ class Traineeapi extends Acl_Ajax_Controller {
         $this->load->model('enrollmodel');
         printJson($this->enrollmodel->exitProgram($enrollId, $id));
     }
+
+    function getNewMessage(){
+        $id = $this->user['id'];
+        $type = $this->user['type'];
+        $this->load->model('newmessagemodel');
+        printJson($this->newmessagemodel->getNewMessage($id, $type));
+    }
+
+    function setMsgRead($msgList){
+        $id = $this->user['id'];
+        $type = $this->user['type'];
+        $postData = $this->input->post();
+        $this->load->model('newmessagemodel');
+        if($type == 1){
+            printJson($this->newmessagemodel->setTrainerRead($id, $msgList));
+        }else{
+            printJson($this->newmessagemodel->setTraineeRead($id, $msgList));
+        }
+    }
 }

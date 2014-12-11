@@ -135,7 +135,7 @@ class EnrollModel extends CI_Model {
             $query = $this->db->query($sql, array($enrollId, $traineeId));
             $row = $query->result_array();
             if(count($row) == 1 && $row[0]['statusId'] == 5){
-                $sql = "UPDATE enroll SET statusId=6, startDate=?, informTrainee=0, informTrainer=0 WHERE enrollId=?";
+                $sql = "UPDATE enroll SET statusId=6, startDate=?, informTrainee=1, informTrainer=0 WHERE enrollId=?";
                 $query = $this->db->query($sql, array(date("Y-m-d H:i:s"), $enrollId));
                 if($query){
                     $output['status'] = true;
