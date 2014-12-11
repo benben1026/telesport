@@ -269,13 +269,13 @@ class Register extends CI_Controller {
                 if($res==-1){
                     printJson(array(
                         'status'=>false,
-                        'err'=>'wrong email address'
+                        'err'=>'Invalid email address'
                     ));
                 }
                 else{
                     printJson(array(
                         'status'=>false,
-                        'err'=>'wrong token or email'
+                        'err'=>'Invalid new password (should be different from former password)'
                     ));
                 }
             }
