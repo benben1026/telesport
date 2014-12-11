@@ -120,13 +120,19 @@ class UserModel extends CI_Model {
                 $update=array("password"=>md5(md5($newpwd)));
                 $this->db->where("email",$email);
                 $this->db->update("user", $update);
-                return $this->db->affected_rows();
+                if($this->db->affected_rows()==0){
+                    return array("status"=>false, "error"=>"new password is the same as previous one");
+                }
+                else{
+                    return array("status"=>true);
+                }
             }
             else{
-                return -2;
+                return array("status"=>false, "error"=>"invalid password");
             }
         }
-        return -1;
-
+        else{
+            return array("status"=>false, "error"=>"invalid email address");
+        }
     }
 }
