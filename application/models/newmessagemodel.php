@@ -9,10 +9,11 @@
 class NewMessageModel extends CI_Model {
     function getNewMessage($id, $type){
         $output = array();
-        $sql = "SELECT message.type, message.content,message.timestamp, message.enrollId,newTable.programId, newTable.name "
+        $sql = "SELECT user.username, user.userId, message.type, message.content,message.timestamp, message.enrollId,newTable.programId, newTable.name "
                 . "FROM message LEFT JOIN "
                 . "(SELECT enroll.enrollId, program.programId, program.name FROM enroll LEFT JOIN program ON enroll.programId=program.programId) AS newTable "
-                . "ON newTable.enrollId=message.enrollId WHERE message.toUser=? AND (message.status=0 OR message.status=1)ORDER BY message.enrollId, message.timestamp";
+                . "ON newTable.enrollId=message.enrollId "
+                . "LEFT JOIN user ON user.userId=message.fromUser WHERE message.toUser=? AND (message.status=0 OR message.status=1)ORDER BY message.enrollId, message.timestamp";
         $query = $this->db->query($sql, array($id));
         $output['chat'] = $query->result_array();
         if($type == 1){
